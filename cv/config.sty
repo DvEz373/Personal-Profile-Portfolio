@@ -17,6 +17,15 @@
 \usepackage{titlesec}
 \usepackage{hyperref}
 
+% --- Header email: personal by default; build with \def\UseWorkEmail{} for the work one ---
+\newcommand{\personalemail}{ezekiel.devin@gmail.com}
+\newcommand{\workemail}{devin@leanpowersolutions.com}
+\ifdefined\UseWorkEmail
+    \newcommand{\cvemail}{\workemail}
+\else
+    \newcommand{\cvemail}{\personalemail}
+\fi
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -25,7 +34,7 @@
     pdftitle={Devin Ezekiel Purba - CV},
     pdfauthor={Devin Ezekiel Purba},
     pdfsubject={Curriculum Vitae},
-    pdfkeywords={Power Systems, Control Systems, PSCAD, PSS/E, MATLAB, Python, Machine Learning, Reinforcement Learning},
+    pdfkeywords={Control Systems, Power System Dynamics, RMS, EMT, Excitation Systems, Power Plant Controller, Grid Code Compliance, PSCAD, PSS/E, MATLAB, Python, Machine Learning, Reinforcement Learning},
     pdfpagemode=UseNone,
 }
 

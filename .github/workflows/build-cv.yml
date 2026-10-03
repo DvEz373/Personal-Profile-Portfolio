@@ -10,26 +10,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - variant: personal
+            jobname: main
+            pretex: ""
+            email: ezekiel.devin@gmail.com
+          - variant: work
+            jobname: main-work
+            pretex: '-usepretex=\def\UseWorkEmail{}'
+            email: devin@leanpowersolutions.com
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile LaTeX
+      - name: Compile LaTeX (${{ matrix.variant }} email)
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
           working_directory: cv
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -jobname=${{ matrix.jobname }} ${{ matrix.pretex }}
 
       - name: ATS text-extraction check
         run: |
           sudo apt-get install -y poppler-utils >/dev/null
-          pdftotext -enc UTF-8 cv/main.pdf cv/main.txt
-          for kw in "Devin Ezekiel Purba" "Education" "Experience" "Skills" "PSCAD" "Python"; do
-            grep -q "$kw" cv/main.txt || { echo "::error::'$kw' not extractable from PDF"; exit 1; }
+          pdftotext -enc UTF-8 cv/${{ matrix.jobname }}.pdf cv/${{ matrix.jobname }}.txt
+          for kw in "Devin Ezekiel Purba" "Education" "Experience" "Skills" "PSCAD" "Python" "${{ matrix.email }}"; do
+            grep -qF "$kw" cv/${{ matrix.jobname }}.txt || { echo "::error::'$kw' not extractable from PDF"; exit 1; }
           done
           echo "ATS check passed"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          name: CV_Devin_Ezekiel_Purba
-          path: cv/main.pdf
+          name: CV_Devin_Ezekiel_Purba_${{ matrix.variant }}
+          path: cv/${{ matrix.jobname }}.pdf
