@@ -9,6 +9,7 @@
     timeline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><path d="M6 8v8M11 6h9M11 18h9M11 12h6"/></svg>',
     grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
     bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+    cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg>',
     user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
     sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
     moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>',
@@ -28,7 +29,7 @@
   const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
 
   // ---------- Shell ----------
-  const pages = [["index.html", "Home", "home"], ["experience.html", "Experience", "experience"], ["projects.html", "Projects", "projects"], ["skills.html", "Skills", "skills"], ["about.html", "About", "about"]];
+  const pages = [["index.html", "Home", "home"], ["experience.html", "Experience", "experience"], ["education.html", "Education", "education"], ["projects.html", "Projects", "projects"], ["skills.html", "Skills", "skills"], ["about.html", "About", "about"]];
   document.body.insertAdjacentHTML("afterbegin", `
     <a class="skip" href="#main">Skip to content</a>
     <header class="nav"><div class="wrap nav-inner">
@@ -88,8 +89,9 @@
           </div>
           <canvas id="wave" aria-label="Animated three-phase waveform. Move your pointer over it to change frequency and amplitude." role="img"></canvas>
           <p class="wave-hint">Move over the waves to tune them</p>
+          <ul class="focus" aria-label="Areas of focus">${P.focus.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
         </div></section>
-        <section class="wrap"><div class="stats">${P.stats.map((s) => `<div class="stat"><b data-to="${s.value}" data-dec="${s.decimals || 0}" data-suf="${s.suffix || ""}">0</b><span>${esc(s.label)}</span></div>`).join("")}</div></section>
+        <section class="wrap"><div class="stats">${P.stats.map((s) => `<div class="stat"><b data-to="${s.count ? P[s.count].length : s.value}" data-dec="${s.decimals || 0}" data-suf="${s.suffix || ""}">0</b><span>${esc(s.label)}</span></div>`).join("")}</div></section>
         <nav class="wrap doors" aria-label="Sections">${P.doors.map((d) => `
           <a class="door" href="${d.href}"><span class="ico">${ICONS[d.icon]}</span><h3>${d.title}</h3><p>${esc(d.line)}</p><span class="arrow" aria-hidden="true">→</span></a>`).join("")}</nav>`;
       document.querySelectorAll(".door").forEach(reveal);
@@ -108,24 +110,24 @@
     },
 
     experience() {
-      const types = [["all", "All"], ["work", "Work"], ["research", "Research"], ["leadership", "Leadership"]];
-      main.innerHTML = `
-        <header class="page-head narrow"><h1>Experience</h1><p>Tap an entry to see the details.</p></header>
-        <div class="narrow">
-          <div class="chips" role="group" aria-label="Filter by type">${types.map(([k, t], i) => `<button class="chip" data-f="${k}" aria-pressed="${i === 0}">${t}</button>`).join("")}</div>
-          <div class="legend"><span><i style="background:var(--pc)"></i>Work</span><span><i style="background:var(--pb)"></i>Research</span><span><i style="background:var(--pa)"></i>Leadership</span></div>
-          <ol class="timeline">${P.experience.map((e, i) => `
-            <li class="tl-item" data-type="${e.type}"><details class="tl-card"${i === 0 ? " open" : ""}>
-              <summary><span class="date">${e.start} – ${e.end}</span><h3>${esc(e.role)}</h3><span class="org">${esc(e.org)} · ${esc(e.place)}</span><span class="sum">${esc(e.summary)}</span><span class="plus" aria-hidden="true">+</span></summary>
-              <div class="tl-body"><ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>${e.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-            </details></li>`).join("")}</ol>
-        </div>`;
-      document.querySelectorAll(".tl-item").forEach(reveal);
-      filter(".chip", ".tl-item", (el, f) => el.dataset.type === f);
+      timelinePage({
+        title: "Experience", intro: "Jobs, internships and campus roles. Tap an entry for details.",
+        types: [["work", "Work", "--pc"], ["internship", "Internships", "--pb"], ["campus", "Campus & academic", "--pa"]],
+        items: P.experience.map((e) => ({ type: e.type, date: `${e.start} – ${e.end}`, title: e.role, sub: `${e.org} · ${e.place}`, summary: e.summary, points: e.points, tags: e.tags })),
+      });
+    },
+
+    education() {
+      timelinePage({
+        title: "Education", intro: "Degree, exchange and continued learning.",
+        types: [["degree", "Degree", "--pc"], ["exchange", "Exchange", "--pb"], ["courses", "Courses", "--pa"], ["school", "School", "--muted"]],
+        items: P.education.map((e) => ({ type: e.kind, date: `${e.start} – ${e.end}`, title: e.title, sub: e.place, summary: e.summary, points: e.points, tags: [], link: e.link })),
+        openFirst: "degree",
+      });
     },
 
     projects() {
-      const cats = [["all", "All"], ["power", "Power systems"], ["ai", "AI / ML"], ["iot", "IoT"]];
+      const cats = [["all", "All"], ["energy", "Energy & power"], ["ai", "AI / ML"], ["iot", "IoT & automation"]];
       main.innerHTML = `
         <header class="page-head wrap"><h1>Projects</h1><p>Open a card for the problem, approach and result.</p></header>
         <div class="wrap">
@@ -172,7 +174,7 @@
               <div class="bar"><label><span>${esc(n)}</span><span class="mono muted">${v}%</span></label>
               <div class="track" role="progressbar" aria-label="${esc(n)}" aria-valuenow="${v}" aria-valuemin="0" aria-valuemax="100"><div class="fill" data-w="${v}"></div></div></div>`).join("")}
             </section>`).join("")}</div>
-          <h2>Certifications</h2>
+          <h2 id="certs">Certifications</h2>
           <ul class="certs">${P.certs.map(([n, by, yr, url]) => `<li><a href="${url}"><span><b>${esc(n)}</b><br><span class="muted" style="font-size:.88rem">${esc(by)}</span></span><span class="yr">${yr}</span></a></li>`).join("")}</ul>
         </div>`;
       document.querySelectorAll(".sgroup").forEach((g) => {
@@ -182,16 +184,13 @@
     },
 
     about() {
-      const E = P.education;
       main.innerHTML = `
         <header class="page-head wrap"><h1>About</h1></header>
         <div class="wrap about-grid">
           <div class="portrait">${ph("Portrait")}</div>
           <div>
-            <section class="card"><h2>Hello</h2><p style="margin:0">${esc(P.bio)}</p></section>
-            <section class="card"><h2>Education</h2>
-              <p style="margin:0"><b>${esc(E.school)}</b> <span class="mono muted" style="font-size:.85rem">${E.years}</span><br>${esc(E.degree)} · ${esc(E.focus)}<br><span class="muted">${esc(E.gpa)}</span></p>
-              <ul>${E.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></section>
+            <section class="card"><h2>Hello</h2>${P.bio.map((b) => `<p>${esc(b)}</p>`).join("")}</section>
+            <section class="card"><h2>What I work on</h2><ul class="focus left">${P.focus.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></section>
             <section class="card" id="contact"><h2>Contact</h2>
               <div class="contact-list">
                 <button class="btn" id="copy-email">✉ ${esc(P.email)}</button>
@@ -211,6 +210,24 @@
       });
     },
   };
+
+  // Shared filterable, expandable timeline (Experience and Education)
+  function timelinePage({ title, intro, types, items, openFirst }) {
+    const first = openFirst ? items.findIndex((it) => it.type === openFirst) : 0;
+    main.innerHTML = `
+      <header class="page-head narrow"><h1>${title}</h1><p>${intro}</p></header>
+      <div class="narrow">
+        <div class="chips" role="group" aria-label="Filter">${[["all", "All"], ...types].map(([k, t], i) => `<button class="chip" data-f="${k}" aria-pressed="${i === 0}">${t}</button>`).join("")}</div>
+        <div class="legend">${types.map(([, t, c]) => `<span><i style="background:var(${c})"></i>${t}</span>`).join("")}</div>
+        <ol class="timeline">${items.map((e, i) => `
+          <li class="tl-item" data-type="${e.type}" style="--dot:var(${types.find((t) => t[0] === e.type)[2]})"><details class="tl-card"${i === first ? " open" : ""}>
+            <summary><span class="date">${e.date}</span><h3>${esc(e.title)}</h3><span class="org">${esc(e.sub)}</span><span class="sum">${esc(e.summary)}</span><span class="plus" aria-hidden="true">+</span></summary>
+            <div class="tl-body">${e.points.length ? `<ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : "<p></p>"}${e.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}${e.link ? `<p><a href="${e.link}">More →</a></p>` : ""}</div>
+          </details></li>`).join("")}</ol>
+      </div>`;
+    document.querySelectorAll(".tl-item").forEach(reveal);
+    filter(".chip", ".tl-item", (el, f) => el.dataset.type === f);
+  }
 
   function filter(chipSel, itemSel, match) {
     const chips = document.querySelectorAll(chipSel);

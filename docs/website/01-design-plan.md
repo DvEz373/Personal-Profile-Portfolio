@@ -1,6 +1,6 @@
 # Website design plan
 
-Status: **Draft for review** · Prototype: [`design/prototype/`](../../design/prototype/)
+Status: **Draft v2 for review** (v1 feedback applied, see the work log) · Prototype: [`design/prototype/`](../../design/prototype/)
 
 ## 1. Goals (from the brief)
 
@@ -15,14 +15,15 @@ Status: **Draft for review** · Prototype: [`design/prototype/`](../../design/pr
 ## 2. Information architecture
 
 ```
-index.html        Home       — who, what, 4 stats, 4 doorways
-experience.html   Experience — filterable timeline (Work · Research · Leadership), expandable entries
-projects.html     Projects   — filterable card grid, click a card → detail modal with figures
-skills.html       Skills     — skill groups with proficiency bars, certifications list
-about.html        About      — short bio, education, contact, CV download
+index.html        Home       — who, what, focus chips, 4 stats, 5 doorways
+experience.html   Experience — jobs, internships, campus & academic roles (filterable timeline)
+education.html    Education  — degree, exchange, online courses, school (same timeline component)
+projects.html     Projects   — filterable card grid (Energy & power · AI/ML · IoT & automation) → detail modal
+skills.html       Skills     — 4 groups with bars, certifications list
+about.html        About      — bio, what I work on, contact, CV download
 ```
 
-Every page shares one top bar (logo, 5 links, theme toggle) that collapses to a menu button below 760 px.
+Every page shares one top bar (logo, 6 links, theme toggle) that collapses to a menu button below 760 px.
 
 ## 3. Wireframes
 
@@ -128,3 +129,17 @@ Trade-off: content rendered by JS is less visible to search engines than static 
 2. Is the waveform hero the right tone, or do you prefer something calmer?
 3. Should the phone number appear anywhere on the site? (Current plan: no.)
 4. Colour: keep the blue accent, or choose another?
+
+## 11. Positioning (v2)
+
+The site speaks to a general Electrical/Computer Engineering and Computer Science audience, not only power system specialists.
+
+| Layer | Message |
+|---|---|
+| Headline | Power System Engineer (job title) |
+| Tagline | Renewable energy · Power systems · AI & intelligent control |
+| Current focus | Renewable energy, distributed energy resources, power system dynamics, power electronics, AI/ML/DL/RL |
+| Background | Control systems, automation, digitalization, digital twin |
+| Identity | AI and digital transformation enthusiast |
+
+Specialist detail (limiters, grid codes, PSS/E) stays on the Experience page, not the front page.

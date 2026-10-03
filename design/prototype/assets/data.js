@@ -2,7 +2,7 @@
 window.PROFILE = {
   name: "Devin Ezekiel Purba",
   title: "Power System Engineer",
-  tagline: "Control systems · Power system dynamics",
+  tagline: "Renewable energy · Power systems · AI & intelligent control",
   location: "Jakarta, Indonesia",
   email: "ezekiel.devin@gmail.com",
   links: {
@@ -12,27 +12,36 @@ window.PROFILE = {
   },
   cv: "cv.pdf",
 
+  // Stats with "count" are computed from the lists below, so they stay correct when you add entries.
   stats: [
     { value: 3.84, decimals: 2, label: "GPA, Cum Laude" },
-    { value: 5, suffix: "+", label: "Plant types modelled" },
-    { value: 2, label: "Grid codes (AEMO, TRGC)" },
-    { value: 7, label: "Certifications" },
+    { count: "experience", label: "Roles & internships" },
+    { count: "projects", label: "Projects" },
+    { count: "certs", label: "Certifications" },
   ],
+
+  // Areas shown as chips on the home page
+  focus: ["Renewable energy", "Distributed energy resources", "Power system dynamics", "Power electronics", "AI · ML · DL · RL", "Intelligent control", "Digital twin", "Automation & digitalization"],
 
   doors: [
-    { href: "experience.html", title: "Experience", line: "Power systems, research and leadership", icon: "timeline" },
-    { href: "projects.html", title: "Projects", line: "Reinforcement learning, IoT, vision", icon: "grid" },
-    { href: "skills.html", title: "Skills", line: "RMS/EMT modelling, control, ML", icon: "bolt" },
-    { href: "about.html", title: "About", line: "Education and contact", icon: "user" },
+    { href: "experience.html", title: "Experience", line: "Jobs, internships and campus roles", icon: "timeline" },
+    { href: "education.html", title: "Education", line: "Degree, exchange and courses", icon: "cap" },
+    { href: "projects.html", title: "Projects", line: "Energy, AI and IoT builds", icon: "grid" },
+    { href: "skills.html", title: "Skills", line: "Energy systems, AI, control", icon: "bolt" },
+    { href: "about.html", title: "About", line: "Who I am and how to reach me", icon: "user" },
   ],
 
-  bio: "Power System Engineer specializing in control systems and power system dynamics. I build RMS and EMT models of excitation systems, limiters, governors and power plant controllers, and run grid code compliance studies. Before that I studied control systems at Universitas Indonesia and worked on reinforcement learning for edge networks.",
+  bio: [
+    "I'm an electrical engineer working where energy systems meet intelligent software. My background is in control systems, automation and digitalization: I studied Control Systems and Automation at Universitas Indonesia and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks.",
+    "Today I work on renewable energy and power systems: power system dynamics, power electronics, distributed energy resources, and the controllers that keep generators, batteries and solar plants stable on the grid.",
+    "I'm an AI and digital transformation enthusiast, and I'm most interested in applying AI, machine learning, deep learning and reinforcement learning to intelligent control of energy systems.",
+  ],
 
   experience: [
     {
       type: "work", role: "Power System Engineer", org: "Lean Power Solutions Indonesia", place: "Jakarta",
       start: "Sep 2025", end: "Present",
-      summary: "RMS and EMT modelling of generators, condensers and hybrid plants.",
+      summary: "Dynamic modelling and control of conventional and renewable power plants.",
       points: [
         "Synchronous generator (CCGT) and synchronous condenser models with OEL, UEL, SCL, V/Hz limiter, PSS, governors, and P/Q controllers, RTU and PPC.",
         "User-defined PPC for multi-unit hybrid PV and BESS plants with grid-following control, in RMS and EMT.",
@@ -43,7 +52,7 @@ window.PROFILE = {
       tags: ["PSS/E", "PSCAD/EMTDC", "MATLAB/Simulink", "Fortran", "Python"],
     },
     {
-      type: "leadership", role: "Community and Development Staff", org: "Karya Salemba Empat UI", place: "Depok",
+      type: "campus", role: "Community and Development Staff", org: "Karya Salemba Empat UI", place: "Depok",
       start: "Sep 2023", end: "Sep 2025",
       summary: "Sustainability programmes and technical mentoring.",
       points: [
@@ -54,7 +63,7 @@ window.PROFILE = {
       tags: ["Leadership", "Mentoring"],
     },
     {
-      type: "work", role: "Laboratory Assistant", org: "Control Laboratory, Electrical Engineering UI", place: "Depok",
+      type: "campus", role: "Laboratory Assistant", org: "Control Laboratory, Electrical Engineering UI", place: "Depok",
       start: "Jan 2024", end: "Jul 2025",
       summary: "Taught and supported control engineering labs.",
       points: [
@@ -65,7 +74,7 @@ window.PROFILE = {
       tags: ["MATLAB", "Control systems", "Teaching"],
     },
     {
-      type: "research", role: "Expert Project Assistant", org: "UP2M DTE FTUI", place: "Depok",
+      type: "work", role: "Expert Project Assistant", org: "UP2M DTE FTUI", place: "Depok",
       start: "Oct 2024", end: "Dec 2024",
       summary: "ML optimisation for ore smelting.",
       points: [
@@ -75,7 +84,7 @@ window.PROFILE = {
       tags: ["TensorFlow", "scikit-learn", "Pandas"],
     },
     {
-      type: "research", role: "Taiwan Experience Education Program", org: "National Taiwan University of Science and Technology", place: "Taipei",
+      type: "internship", role: "Research Intern, Taiwan Experience Education Program", org: "National Taiwan University of Science and Technology", place: "Taipei",
       start: "Jun 2024", end: "Aug 2024",
       summary: "Energy saving for 5G Open RAN.",
       points: [
@@ -85,7 +94,7 @@ window.PROFILE = {
       tags: ["Python", "C++", "Kubernetes", "5G"],
     },
     {
-      type: "work", role: "Network Planning Engineer Intern", org: "PLN ICON+", place: "Jakarta",
+      type: "internship", role: "Network Planning Engineer Intern", org: "PLN ICON+", place: "Jakarta",
       start: "Jan 2024", end: "Apr 2024",
       summary: "Telecom planning for power distribution networks.",
       points: [
@@ -94,7 +103,7 @@ window.PROFILE = {
       tags: ["Telecom", "Google Earth"],
     },
     {
-      type: "leadership", role: "Training and Development Staff", org: "EXERCISE FTUI", place: "Depok",
+      type: "campus", role: "Training and Development Staff", org: "EXERCISE FTUI", place: "Depok",
       start: "Jan 2023", end: "Jan 2024",
       summary: "Software and hardware training for students.",
       points: ["Organized MATLAB, Proteus and DigSilent training for 100+ students."],
@@ -110,7 +119,7 @@ window.PROFILE = {
       problem: "Edge servers in industrial IoT get overloaded when tasks are offloaded without coordination.",
       approach: "Formulated offloading as a Markov Decision Process and trained multi-agent deep RL agents in a Python simulation of the edge network.",
       result: "Adaptive offloading policy that balances computational load under changing network conditions.",
-      tags: ["TensorFlow", "PyTorch", "Python"],
+      tags: ["Reinforcement learning", "Digital twin", "TensorFlow", "PyTorch"],
       figures: 2,
     },
     {
@@ -136,7 +145,7 @@ window.PROFILE = {
       figures: 2,
     },
     {
-      id: "ppc", cat: "power", title: "Hybrid PV-BESS Plant Controller",
+      id: "ppc", cat: "energy", title: "Hybrid PV-BESS Plant Controller",
       context: "Work sample · placeholder",
       blurb: "Grid-following PPC for multi-unit PV and battery plants.",
       problem: "Hybrid plants must meet grid code P/Q and voltage requirements as one unit.",
@@ -148,9 +157,10 @@ window.PROFILE = {
   ],
 
   skillGroups: [
-    { name: "Power system dynamics", items: [["RMS/EMT modelling", 90], ["Excitation systems & limiters", 85], ["Power plant controllers", 85], ["Grid code compliance", 75]] },
-    { name: "Tools", items: [["PSS/E", 90], ["PSCAD/EMTDC", 90], ["MATLAB/Simulink", 85], ["Fortran", 75]] },
-    { name: "Programming & ML", items: [["Python", 90], ["TensorFlow / PyTorch", 75], ["C/C++", 65], ["Flutter, HTML/CSS/JS", 60]] },
+    { name: "Renewable energy & power systems", items: [["Power system dynamics (RMS/EMT)", 90], ["Renewables, BESS & DER integration", 80], ["Power electronics", 70], ["Power plant control & grid codes", 80]] },
+    { name: "AI & intelligent control", items: [["Machine & deep learning", 80], ["Reinforcement learning", 80], ["Intelligent & optimal control", 75], ["Digital twin", 70]] },
+    { name: "Automation & digitalization", items: [["Control systems", 90], ["IoT & embedded (ESP32)", 70], ["Process automation (Python)", 85], ["Data analysis", 80]] },
+    { name: "Tools & languages", items: [["Python", 90], ["MATLAB/Simulink", 85], ["PSS/E · PSCAD/EMTDC", 90], ["C/C++ · Fortran", 70]] },
   ],
 
   certs: [
@@ -163,9 +173,33 @@ window.PROFILE = {
     ["Deep Learning Specialization", "DeepLearning.AI", "2023", "https://coursera.org/share/483a4f1431dacdf4c2c279b29fde1627"],
   ],
 
-  education: {
-    school: "Universitas Indonesia", degree: "B.Eng. Electrical Engineering", focus: "Control Systems and Automation",
-    years: "2021 – 2025", gpa: "3.84 / 4.00 · Cum Laude",
-    notes: ["Thesis: multi-agent deep RL for digital-twin I-IoT edge networks", "Karya Salemba Empat scholarship", "Funded research internship at NTUST"],
-  },
+  // Education timeline, newest end date first. kind: degree | exchange | courses | school
+  education: [
+    {
+      kind: "degree", title: "B.Eng. Electrical Engineering", place: "Universitas Indonesia · Depok",
+      start: "Aug 2021", end: "Jul 2025",
+      summary: "Control Systems and Automation · GPA 3.84 / 4.00 · Cum Laude",
+      points: ["Thesis: computation utility optimization with multi-agent deep reinforcement learning in a digital twin of I-IoT edge networks.", "Karya Salemba Empat (KSE) merit scholarship awardee."],
+    },
+    {
+      kind: "courses", title: "Online specializations in AI", place: "Coursera (DeepLearning.AI, IBM, Google, University of Alberta)",
+      start: "Jul 2023", end: "Oct 2024",
+      summary: "7 certificates covering deep learning, reinforcement learning, ML engineering and automation.",
+      points: ["Deep Learning and TensorFlow Developer (DeepLearning.AI)", "Reinforcement Learning Specialization (University of Alberta)", "IBM AI Engineering, Data Science and Machine Learning", "Google IT Automation with Python"],
+      link: "skills.html#certs",
+    },
+    {
+      kind: "exchange", title: "Taiwan Experience Education Program", place: "National Taiwan University of Science and Technology · Taipei",
+      start: "Jun 2024", end: "Aug 2024",
+      summary: "Fully funded research exchange on AI for 5G Open RAN energy saving.",
+      points: ["Selected for a fully funded research-based program in collaboration with NTUST.", "Details of the research work are on the Experience page."],
+      link: "experience.html",
+    },
+    {
+      kind: "school", title: "Senior high school (placeholder)", place: "School name · City",
+      start: "20XX", end: "2021",
+      summary: "Placeholder: add your school, major and any highlights, or delete this entry.",
+      points: [],
+    },
+  ],
 };
