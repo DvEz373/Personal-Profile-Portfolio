@@ -140,3 +140,9 @@ Request: upgrade the frontend, research frameworks first (React, Vue, Next.js or
 2. Replace placeholders: project figures, skill levels, the hybrid PPC project.
 3. Turn on GitHub Pages (repo public or GitHub Pro → Source: GitHub Actions) and set the `PAGES_ENABLED` variable to `true`.
 4. Optional: delete `design/prototype/` once v4 is approved.
+
+## Step 9: Website v4.1 (PR #7)
+Single Geist typeface; removed section numbers, § and FIG labels; clearer section titles; motion pass (hero entrance, scroll reveals, smooth dropdowns, mobile menu slide, nav underline). Deployed 2026-10-03.
+
+## Step 10: Online name card with QR
+Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. Added `/card/`, `/card/print/` and `/card-qr.svg`.
