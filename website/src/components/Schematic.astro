@@ -1,0 +1,151 @@
+---
+/** Line-art ornaments for page headers: grid, wind, solar, neural net, circuit. Purely decorative. */
+interface Props {
+  variant: "grid" | "turbine" | "solar" | "neural" | "circuit";
+}
+const { variant } = Astro.props;
+---
+
+<svg class:list={["schematic", variant]} viewBox="0 0 560 340" aria-hidden="true" focusable="false">
+  {
+    variant === "grid" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+        <path d="M150 330 L200 70 L250 330 M165 260 H235 M176 200 H224 M200 70 V48 M140 96 H260 M152 124 H248 M170 260 L224 200 M230 260 L176 200" />
+        <path d="M410 330 L450 120 L490 330 M422 270 H478 M431 220 H469 M450 120 V104 M398 140 H502 M408 162 H492" />
+        <path class="flow" d="M140 96 Q 300 150 398 140 M260 96 Q 330 128 398 140 M152 124 Q 290 175 408 162 M0 110 Q 70 90 140 96 M502 140 Q 540 150 560 146" />
+        <g fill="currentColor" stroke="none">
+          <circle cx="140" cy="96" r="3" />
+          <circle cx="260" cy="96" r="3" />
+          <circle cx="398" cy="140" r="3" />
+          <circle cx="502" cy="140" r="3" />
+        </g>
+      </g>
+    )
+  }
+  {
+    variant === "turbine" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M300 120 L292 340 H308 Z" fill="currentColor" opacity="0.35" />
+        <g class="blades" style="transform-origin: 300px 120px">
+          <path d="M300 120 V22 M300 120 L385 169 M300 120 L215 169" />
+          <circle cx="300" cy="120" r="7" fill="currentColor" />
+        </g>
+        <path d="M450 190 L445 340 H455 Z" fill="currentColor" opacity="0.3" />
+        <g class="blades slow" style="transform-origin: 450px 190px">
+          <path d="M450 190 V126 M450 190 L505 222 M450 190 L395 222" />
+          <circle cx="450" cy="190" r="5" fill="currentColor" />
+        </g>
+        <path class="flow" d="M60 320 H540" />
+      </g>
+    )
+  }
+  {
+    variant === "solar" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <g transform="translate(150 190) skewX(-20)">
+          <rect width="250" height="110" rx="3" />
+          <path d="M62 0V110M125 0V110M187 0V110M0 37H250M0 73H250" />
+        </g>
+        <path d="M200 300 V336 M330 300 V336" />
+        <g class="sun-art">
+          <circle cx="440" cy="90" r="34" />
+          <path d="M440 30v-16M440 166v-16M380 90h-16M516 90h-16M397 47l-11-11M494 144l-11-11M397 133l-11 11M494 36l-11 11" />
+        </g>
+        <path class="flow" d="M60 336 H540" />
+      </g>
+    )
+  }
+  {
+    variant === "neural" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M150 70 L300 40 M150 70 L300 130 M150 70 L300 220 M150 170 L300 40 M150 170 L300 130 M150 170 L300 220 M150 270 L300 130 M150 270 L300 220 M150 270 L300 310 M300 40 L450 120 M300 130 L450 120 M300 220 L450 120 M300 130 L450 240 M300 220 L450 240 M300 310 L450 240" />
+        <path class="flow" d="M150 170 L300 130 L450 120 M150 270 L300 220 L450 240" />
+        <g fill="var(--panel)">
+          <circle cx="150" cy="70" r="11" />
+          <circle cx="150" cy="170" r="11" />
+          <circle cx="150" cy="270" r="11" />
+          <circle cx="300" cy="40" r="11" />
+          <circle cx="300" cy="130" r="11" />
+          <circle cx="300" cy="220" r="11" />
+          <circle cx="300" cy="310" r="11" />
+          <circle cx="450" cy="120" r="11" />
+          <circle cx="450" cy="240" r="11" />
+        </g>
+      </g>
+    )
+  }
+  {
+    variant === "circuit" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <rect x="250" y="110" width="110" height="110" rx="6" />
+        <path d="M270 110v-16M295 110v-16M320 110v-16M345 110v-16M270 220v16M295 220v16M320 220v16M345 220v16M250 135h-16M250 165h-16M250 195h-16M360 135h16M360 165h16M360 195h16" />
+        <path d="M234 135 H150 L120 105 H40 M234 165 H130 L100 195 H30 M376 165 H470 L500 135 H560 M376 195 H450 L480 235 H540 M295 236 V300 H200" />
+        <path class="flow" d="M40 105 H120 L150 135 H234 M376 165 H470 L500 135 H560" />
+        <g fill="currentColor" stroke="none">
+          <circle cx="40" cy="105" r="4" />
+          <circle cx="30" cy="195" r="4" />
+          <circle cx="560" cy="135" r="4" />
+          <circle cx="540" cy="235" r="4" />
+          <circle cx="200" cy="300" r="4" />
+        </g>
+        <text x="305" y="172" text-anchor="middle" fill="currentColor" stroke="none" font-family="ui-monospace, monospace" font-size="15">AI</text>
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .schematic {
+    position: absolute;
+    z-index: -1;
+    right: max(-60px, calc((100vw - var(--wrap)) / 2 - 140px));
+    top: 18px;
+    width: min(560px, 62vw);
+    height: auto;
+    color: var(--signal);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .flow {
+    stroke: var(--sun);
+    stroke-width: 2.4;
+    stroke-dasharray: 3 9;
+  }
+  .neural .flow,
+  .circuit .flow {
+    stroke: var(--leaf);
+  }
+  .sun-art {
+    stroke: var(--sun);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow {
+      animation: flow 1.6s linear infinite;
+    }
+    .blades {
+      animation: spin 9s linear infinite;
+    }
+    .blades.slow {
+      animation-duration: 13s;
+    }
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (max-width: 759px) {
+    .schematic {
+      right: -150px;
+      top: auto;
+      bottom: -20px;
+      width: 420px;
+      opacity: 0.14;
+    }
+  }
+</style>

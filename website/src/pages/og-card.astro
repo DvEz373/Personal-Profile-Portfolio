@@ -1,0 +1,95 @@
+---
+// 1200×630 social preview, rendered once and saved as public/og.png (see website/README.md).
+// Not linked anywhere and excluded from the sitemap.
+import { Font } from "astro:assets";
+import { Picture } from "astro:assets";
+import "../styles/global.css";
+import portrait from "../assets/photos/portrait.jpg";
+import { getProfile } from "../lib/content";
+const p = await getProfile();
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>OG card</title>
+    <Font cssVariable="--font-sans" />
+    <Font cssVariable="--font-mono" />
+    <Font cssVariable="--font-serif" />
+  </head>
+  <body>
+    <div class="card drafting">
+      <div class="left">
+        <p class="label">§ 00 · {p.headline} · {p.city}, {p.country}</p>
+        <h1 class="serif">{p.name}</h1>
+        <p class="hl">{p.headline} <span class="sep">—</span> <em class="accent">{p.headlineAccent}</em></p>
+        <p class="tag mono">{p.tagline}</p>
+        <svg class="waves" viewBox="0 0 600 60" aria-hidden="true">
+          <path d="M0 30 C50 0 100 0 150 30 S250 60 300 30 400 0 450 30 550 60 600 30" stroke="#f5c518" />
+          <path d="M0 50 C50 40 100 10 150 10 S250 40 300 50 400 40 450 10 550 20 600 50" stroke="#7aacff" />
+          <path d="M0 10 C50 20 100 50 150 50 S250 20 300 10 400 20 450 50 550 40 600 10" stroke="#2fc4ae" />
+        </svg>
+      </div>
+      <div class="right">
+        <Picture src={portrait} alt="" formats={["webp"]} widths={[600]} sizes="400px" />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .card {
+    width: 1200px;
+    height: 630px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+    align-items: center;
+    padding: 0 64px;
+  }
+  h1 {
+    font-size: 96px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 18px 0 18px;
+  }
+  .hl {
+    font-size: 34px;
+    margin: 0 0 18px;
+    font-weight: 500;
+  }
+  .hl em {
+    color: var(--signal);
+  }
+  .sep {
+    color: var(--line-strong);
+  }
+  .tag {
+    background: none;
+    padding: 0;
+    font-size: 18px;
+    color: var(--ink-2);
+  }
+  .waves {
+    width: 560px;
+    margin-top: 28px;
+    fill: none;
+    stroke-width: 3;
+  }
+  .right :global(img) {
+    width: 420px;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid var(--line-strong);
+  }
+</style>

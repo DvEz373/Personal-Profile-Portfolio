@@ -1,0 +1,1 @@
+{"name":"sveltekit-static","private":true,"type":"module","scripts":{"build":"vite build"},"devDependencies":{"@sveltejs/kit":"3.0.0","@sveltejs/adapter-static":"latest","@sveltejs/vite-plugin-svelte":"latest","svelte":"5.57.1","vite":"8.3.2"}}

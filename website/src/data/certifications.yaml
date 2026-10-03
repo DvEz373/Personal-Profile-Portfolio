@@ -1,0 +1,7 @@
+- { id: tf-developer, name: TensorFlow Developer Professional Certificate, issuer: DeepLearning.AI, start: "2024-08", end: "2024-10", url: "https://coursera.org/share/0303786ebfb376c8c67fc7f9c3af14a4" }
+- { id: rl-specialization, name: Reinforcement Learning Specialization, issuer: University of Alberta, start: "2024-03", end: "2024-05", url: "https://coursera.org/share/5360f415cf7616da410084059e3bb31a" }
+- { id: google-it-automation, name: Google IT Automation with Python, issuer: Google, start: "2023-08", end: "2024-02", url: "https://coursera.org/share/41aaa60812a27a23cd6b35c4d035a933" }
+- { id: ibm-ai-engineering, name: IBM AI Engineering Professional Certificate, issuer: IBM, start: "2023-07", end: "2023-11", url: "https://coursera.org/share/2cec23adffb2c7041f9b84fe34e226d6" }
+- { id: ibm-data-science, name: IBM Data Science Professional Certificate, issuer: IBM, start: "2023-07", end: "2023-11", url: "https://coursera.org/share/b23a8d7904b01ee98299b31c0db18b9f" }
+- { id: ibm-machine-learning, name: IBM Machine Learning Professional Certificate, issuer: IBM, start: "2023-08", end: "2023-11", url: "https://coursera.org/share/5a3fe4887b6105e8cae81dfeb1067ee5" }
+- { id: deep-learning, name: Deep Learning Specialization, issuer: DeepLearning.AI, start: "2023-08", end: "2023-11", url: "https://coursera.org/share/483a4f1431dacdf4c2c279b29fde1627" }

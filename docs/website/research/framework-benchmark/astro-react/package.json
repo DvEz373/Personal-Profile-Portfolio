@@ -1,0 +1,1 @@
+{"name":"astro-react","private":true,"type":"module","scripts":{"build":"astro build"},"dependencies":{"astro":"7.3.5","@astrojs/react":"latest","react":"19.3.0","react-dom":"19.3.0"}}

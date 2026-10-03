@@ -1,0 +1,364 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ProjectArt from "../../components/ProjectArt.astro";
+import Schematic from "../../components/Schematic.astro";
+import Icon from "../../components/Icon.astro";
+import { getProjects, CATEGORY_LABEL } from "../../lib/content";
+import { formatDuration, formatRange } from "../../lib/dates";
+import { url } from "../../lib/url";
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, index: i, prev: projects[i - 1], next: projects[i + 1] },
+  }));
+}
+
+const { entry, index, prev, next } = Astro.props;
+const p = entry.data;
+const { Content } = await render(entry);
+const fig = `FIG. ${String(index + 1).padStart(2, "0")}`;
+const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
+const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
+---
+
+<Base title={p.title} description={`${p.title}: ${p.blurb}`}>
+  <article class:list={["project", TONE[p.category]]}>
+    <header class="head">
+      <div class="wrap">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <a href={url("projects/")}>Projects</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{p.title}</span>
+        </nav>
+        <p class="label cat">§ 03.{index + 1} · {CATEGORY_LABEL[p.category]}</p>
+        <h1 class="serif" transition:name={`title-${entry.id}`}>{p.title}</h1>
+        <p class="blurb">{p.blurb}</p>
+        {
+          p.placeholder && (
+            <p class="notice mono" role="note">
+              Placeholder entry: replace with a non-confidential write-up or delete <code>src/content/projects/{entry.id}.md</code>.
+            </p>
+          )
+        }
+      </div>
+      <Schematic variant={art[p.category]} />
+    </header>
+
+    <div class="wrap layout">
+      <div class="figure" transition:name={`fig-${entry.id}`}>
+        <ProjectArt id={entry.id} category={p.category} fig={fig} />
+      </div>
+
+      <aside class="spec" aria-label="Project details">
+        <p class="label">Datasheet</p>
+        <dl>
+          <div><dt>Context</dt><dd>{p.context}</dd></div>
+          <div><dt>Period</dt><dd>{formatRange(p.start, p.end)} <span class="muted">· {formatDuration(p.start, p.end)}</span></dd></div>
+          <div><dt>Category</dt><dd>{CATEGORY_LABEL[p.category]}</dd></div>
+          <div>
+            <dt>Stack</dt>
+            <dd class="stack">{p.stack.map((s) => <span class="tag">{s}</span>)}</dd>
+          </div>
+          {
+            p.links.length > 0 && (
+              <div>
+                <dt>Links</dt>
+                <dd class="links">
+                  {p.links.map((l) => (
+                    <a href={l.href} rel="noopener">
+                      {l.label} <Icon name="arrow-up-right" size={14} />
+                    </a>
+                  ))}
+                </dd>
+              </div>
+            )
+          }
+        </dl>
+      </aside>
+
+      <div class="story">
+        <section aria-labelledby="h-problem">
+          <p class="step mono">01</p>
+          <h2 id="h-problem">Problem</h2>
+          <p>{p.problem}</p>
+        </section>
+        <section aria-labelledby="h-approach">
+          <p class="step mono">02</p>
+          <h2 id="h-approach">Approach</h2>
+          <p>{p.approach}</p>
+        </section>
+        <section aria-labelledby="h-result">
+          <p class="step mono">03</p>
+          <h2 id="h-result">Result</h2>
+          <p>{p.result}</p>
+        </section>
+        <div class="prose">
+          <Content />
+        </div>
+
+        <section aria-labelledby="h-figs" class="figs">
+          <h2 id="h-figs" class="label">Figures</h2>
+          <ol>
+            {
+              p.figures.map((caption, i) => (
+                <li class="ticks">
+                  <span class="slot mono" aria-hidden="true">
+                    {fig}.{i + 1}
+                  </span>
+                  <span class="cap">{caption}</span>
+                  <span class="todo mono">Image to come</span>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </div>
+    </div>
+
+    <nav class="wrap pager" aria-label="More projects">
+      {
+        prev ? (
+          <a href={url(`projects/${prev.id}/`)} class="prev">
+            <span class="label">← Previous</span>
+            <span class="t serif">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a href={url(`projects/${next.id}/`)} class="next">
+            <span class="label">Next →</span>
+            <span class="t serif">{next.data.title}</span>
+          </a>
+        ) : (
+          <a href={url("projects/")} class="next">
+            <span class="label">All projects →</span>
+            <span class="t serif">Back to the list</span>
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .head {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(28px, 5vw, 56px) clamp(24px, 4vw, 40px);
+  }
+  .crumbs {
+    display: flex;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+  }
+  .crumbs a {
+    color: var(--ink-2);
+  }
+  .cat {
+    color: var(--c-ink);
+  }
+  h1 {
+    font-size: clamp(2.6rem, 1.6rem + 4.4vw, 4.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 10px 0 14px;
+    font-weight: 400;
+  }
+  .blurb {
+    max-width: 56ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .notice {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 8px 12px;
+    border: 1px dashed var(--sun);
+    border-radius: var(--radius-s);
+    background: var(--sun-soft);
+    font-size: 0.78rem;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 28px 40px;
+    align-items: start;
+  }
+  .figure {
+    grid-column: 1;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+  }
+  .spec {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--c);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .spec dl {
+    margin: 10px 0 0;
+  }
+  .spec dl > div {
+    padding: 10px 0;
+    border-top: 1px dashed var(--line);
+  }
+  .spec dt {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .spec dd {
+    margin: 4px 0 0;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .links {
+    display: grid;
+    gap: 4px;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .story {
+    grid-column: 1;
+    max-width: 68ch;
+  }
+  .story section {
+    position: relative;
+    padding: 22px 0 6px 56px;
+    border-top: 1px solid var(--line);
+  }
+  .step {
+    position: absolute;
+    left: 0;
+    top: 26px;
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--c-ink);
+  }
+  .story h2 {
+    font-size: var(--step-1);
+    margin-bottom: 8px;
+  }
+  .prose {
+    padding-left: 56px;
+    color: var(--ink-2);
+  }
+  .prose :global(p) {
+    margin: 12px 0;
+  }
+  .figs {
+    padding-left: 0 !important;
+  }
+  .figs h2 {
+    font-size: var(--step--1);
+    margin-bottom: 14px;
+  }
+  .figs ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .figs li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 150px;
+    padding: 16px;
+    border-radius: var(--radius-s);
+    background-color: var(--panel);
+  }
+  .slot {
+    font-size: 0.72rem;
+    color: var(--ink-2);
+  }
+  .cap {
+    font-weight: 550;
+  }
+  .todo {
+    margin-top: auto;
+    font-size: 0.7rem;
+    color: var(--sun-ink);
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: clamp(40px, 6vw, 72px);
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color var(--t-ui) var(--ease);
+  }
+  .pager a:hover {
+    border-color: var(--signal);
+  }
+  .pager .next {
+    text-align: right;
+  }
+  .pager .t {
+    font-size: 1.5rem;
+    line-height: 1.1;
+  }
+  @media (max-width: 959px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .spec {
+      grid-column: 1;
+      grid-row: auto;
+      position: static;
+    }
+  }
+  @media (max-width: 559px) {
+    .story section {
+      padding-left: 0;
+    }
+    .step {
+      position: static;
+      margin-bottom: 4px;
+    }
+    .prose {
+      padding-left: 0;
+    }
+    .pager {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

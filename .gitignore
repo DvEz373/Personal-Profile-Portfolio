@@ -8,7 +8,6 @@
 *.toc
 *.xdv
 cv/main*.pdf
-website/cv.pdf
 
 # OS / editor
 .DS_Store

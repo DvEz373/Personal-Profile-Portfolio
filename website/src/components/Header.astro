@@ -1,0 +1,239 @@
+---
+import Icon from "./Icon.astro";
+import { url, routeOf } from "../lib/url";
+
+const items = [
+  { href: "experience/", label: "Experience", idx: "01" },
+  { href: "education/", label: "Education", idx: "02" },
+  { href: "projects/", label: "Projects", idx: "03" },
+  { href: "skills/", label: "Skills", idx: "04" },
+  { href: "about/", label: "About", idx: "05" },
+];
+const route = routeOf(Astro.url.pathname);
+const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${href}`);
+---
+
+<header class="site-header" transition:name="header" transition:animate="none" data-header>
+  <div class="wrap bar">
+    <a class="brand" href={url()} aria-label="Devin Ezekiel Purba, home">
+      <svg class="gen" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+        <path d="M8.5 16c1.9-5 3.8-5 5.6 0s3.7 5 5.6 0 3.7-5 4.8-2" fill="none" stroke="var(--signal)" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+      <span class="brand-name">Devin <span class="mid">Ezekiel</span> Purba</span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-links" id="nav-links" data-nav>
+        {
+          items.map((item) => (
+            <li>
+              <a href={url(item.href)} aria-current={isActive(item.href) ? "page" : undefined}>
+                <span class="idx" aria-hidden="true">{item.idx}</span>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <button class="tool search" type="button" data-cmdk-open aria-label="Search and quick actions" aria-keyshortcuts="Control+K Meta+K">
+        <Icon name="search" size={18} />
+        <span class="kbd" data-kbd>Ctrl K</span>
+      </button>
+      <button class="tool" type="button" data-theme-toggle aria-label="Switch theme">
+        <Icon name="moon" size={18} class="i-moon" />
+        <Icon name="sun" size={18} class="i-sun" />
+      </button>
+      <button class="tool menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <Icon name="menu" size={20} class="i-open" />
+        <Icon name="close" size={20} class="i-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--t-ui) var(--ease);
+  }
+  .site-header[data-scrolled] {
+    border-bottom-color: var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: var(--header-h);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .gen {
+    width: 30px;
+    height: 30px;
+    transition: transform var(--t-page) var(--ease-settle);
+  }
+  .brand:hover .gen {
+    transform: rotate(90deg);
+  }
+  .nav {
+    margin-left: auto;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: var(--radius-s);
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color var(--t-ui) var(--ease), background-color var(--t-ui) var(--ease);
+  }
+  .nav-links .idx {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.7rem;
+    color: var(--ink-2);
+    transition: color var(--t-ui) var(--ease);
+  }
+  .nav-links a:hover {
+    color: var(--ink);
+    background: var(--panel-2);
+  }
+  .nav-links a:hover .idx,
+  .nav-links a[aria-current="page"] .idx {
+    color: var(--signal);
+  }
+  .nav-links a[aria-current="page"] {
+    color: var(--ink);
+  }
+  .nav-links a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 2px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--signal);
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: var(--radius-s);
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color var(--t-ui) var(--ease);
+  }
+  .tool:hover {
+    border-color: var(--signal);
+  }
+  .tool .kbd {
+    border: 0;
+    padding: 0;
+  }
+  :global([data-theme="dark"]) .tool :global(.i-moon),
+  :global([data-theme="light"]) .tool :global(.i-sun),
+  .tool :global(.i-close),
+  .tool[aria-expanded="true"] :global(.i-open) {
+    display: none;
+  }
+  .tool[aria-expanded="true"] :global(.i-close) {
+    display: block;
+  }
+  .menu {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .mid {
+      display: none;
+    }
+    .nav-links .idx {
+      display: none;
+    }
+  }
+  @media (max-width: 859px) {
+    .menu {
+      display: inline-flex;
+    }
+    .search .kbd {
+      display: none;
+    }
+    .nav {
+      position: absolute;
+      inset: var(--header-h) 0 auto 0;
+      margin: 0;
+    }
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      padding: 8px var(--gutter) 20px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .nav-links[data-open] {
+      display: flex;
+    }
+    .nav-links a {
+      padding: 14px 4px;
+      font-size: 1.15rem;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+    }
+    .nav-links .idx {
+      display: inline;
+      font-size: 0.8rem;
+    }
+    .nav-links a[aria-current="page"]::after {
+      left: 0;
+      right: auto;
+      top: 14px;
+      bottom: 14px;
+      width: 2px;
+      height: auto;
+    }
+    .tools {
+      margin-left: auto;
+    }
+  }
+</style>

@@ -1,0 +1,45 @@
+# Domains appear in "order". Self-assessed levels, 1 to 5: 1 Aware · 2 Familiar · 3 Proficient · 4 Advanced · 5 Expert.
+# PLACEHOLDER levels: confirm or adjust before publishing.
+- id: energy
+  order: 1
+  name: Renewable energy & power systems
+  blurb: Modelling and controlling plants and grids.
+  color: sun
+  items:
+    - { name: "Power system dynamics (RMS/EMT)", level: 4 }
+    - { name: "Renewables, BESS & DER integration", level: 4 }
+    - { name: "Power plant control & grid codes", level: 4 }
+    - { name: "Power electronics", level: 3 }
+
+- id: ai
+  order: 2
+  name: AI & intelligent control
+  blurb: Learning systems that make decisions.
+  color: signal
+  items:
+    - { name: "Machine & deep learning", level: 4 }
+    - { name: "Reinforcement learning", level: 4 }
+    - { name: "Intelligent & optimal control", level: 3 }
+    - { name: "Digital twin", level: 3 }
+
+- id: automation
+  order: 3
+  name: Automation & digitalization
+  blurb: Making processes measurable and automatic.
+  color: leaf
+  items:
+    - { name: "Control systems", level: 4 }
+    - { name: "Process automation (Python)", level: 4 }
+    - { name: "Data analysis", level: 4 }
+    - { name: "IoT & embedded (ESP32)", level: 3 }
+
+- id: tools
+  order: 4
+  name: Tools & languages
+  blurb: What the work is built with.
+  color: ink
+  items:
+    - { name: "PSS/E · PSCAD/EMTDC", level: 4 }
+    - { name: "Python", level: 4 }
+    - { name: "MATLAB/Simulink", level: 4 }
+    - { name: "C/C++ · Fortran", level: 3 }

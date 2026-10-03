@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Photo from "../components/Photo.astro";
+import Timeline, { type TimelineItem } from "../components/Timeline.astro";
+import graduation from "../assets/photos/graduation.jpg";
+import graduationWide from "../assets/photos/graduation-wide.jpg";
+import { getEducation, KIND_LABEL } from "../lib/content";
+import { formatDuration, formatRange } from "../lib/dates";
+
+const education = await getEducation();
+const TONE = { degree: "c-signal", exchange: "c-sun", courses: "c-leaf" } as const;
+
+const items: TimelineItem[] = education.map((e) => ({
+  id: e.id,
+  type: e.kind,
+  typeLabel: KIND_LABEL[e.kind],
+  tone: TONE[e.kind],
+  dateLabel: formatRange(e.start, e.end),
+  duration: formatDuration(e.start, e.end),
+  title: e.title,
+  sub: e.place,
+  summary: e.summary,
+  points: e.points,
+  tags: [],
+  callout: e.callout,
+  link: e.link,
+  photo: e.photo ? { src: graduation, alt: "Devin in a graduation gown beside the #UI Graduation sign at Universitas Indonesia" } : undefined,
+}));
+const filters = (["degree", "exchange", "courses"] as const).map((k) => ({ key: k, label: KIND_LABEL[k], tone: TONE[k] }));
+---
+
+<Base title="Education" description="Devin Ezekiel Purba's education: B.Eng. in Electrical Engineering (Control Systems and Automation, Cum Laude) from Universitas Indonesia, an NTUST research exchange, and AI specializations.">
+  <PageHead index="02" eyebrow="Education" title="Education" intro="A control-systems degree, a research exchange in Taiwan, and a steady habit of learning AI." art="neural" />
+
+  <section class="wrap">
+    <Photo
+      src={graduationWide}
+      alt="Devin in a graduation gown and cap, arms crossed, beside the large #UI Graduation sign, with the Universitas Indonesia rectorate tower behind"
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 1240px) 1200px, 100vw"
+      ratio="16 / 9"
+      caption="FIG. 02 · Graduation day, Universitas Indonesia, 2025"
+      label="B.ENG · CUM LAUDE"
+      eager
+      class="banner"
+    />
+  </section>
+
+  <section class="section" aria-labelledby="s-path">
+    <div class="wrap narrow">
+      <SectionHead index="02.1" title="Path" id="s-path" />
+      <Timeline items={items} filters={filters} label="Education" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 880px;
+  }
+  .banner :global(.frame) {
+    border-radius: var(--radius-l);
+  }
+</style>

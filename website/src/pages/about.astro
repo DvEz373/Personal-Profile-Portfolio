@@ -1,0 +1,257 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import Photo from "../components/Photo.astro";
+import Icon from "../components/Icon.astro";
+import portrait from "../assets/photos/portrait.jpg";
+import graduation from "../assets/photos/graduation.jpg";
+import { getProfile, getEducation } from "../lib/content";
+import { formatMonth } from "../lib/dates";
+import { url } from "../lib/url";
+
+const profile = await getProfile();
+const degree = (await getEducation()).find((e) => e.kind === "degree");
+const tel = profile.phone.replace(/\s/g, "");
+---
+
+<Base title="About" description={`About ${profile.name}: ${profile.headline} in ${profile.city} working on renewable energy, power systems, AI and intelligent control. Contact details, CV and contact card.`}>
+  <PageHead index="05" eyebrow="About" title="About" intro="An electrical engineer between power grids and intelligent software." art="solar" />
+
+  <div class="wrap layout">
+    <div class="photos">
+      <Photo src={portrait} alt={`Portrait of ${profile.name}`} widths={[300, 450, 600]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5" label="FIG. 05.1" />
+      <Photo src={graduation} alt="Devin in a graduation gown beside the #UI Graduation sign at Universitas Indonesia" widths={[300, 450, 640]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5" label="FIG. 05.2" caption="Graduation, Universitas Indonesia, 2025" />
+    </div>
+
+    <div class="text">
+      <section class="bio" aria-labelledby="h-bio">
+        <h2 id="h-bio" class="label">Hello</h2>
+        {profile.bio.map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
+      </section>
+
+      <section class="spec" aria-labelledby="h-spec">
+        <h2 id="h-spec" class="label">Spec sheet</h2>
+        <dl>
+          <div><dt>Name</dt><dd>{profile.name}</dd></div>
+          <div><dt>Role</dt><dd>{profile.role}, {profile.org}</dd></div>
+          <div>
+            <dt>Based in</dt>
+            <dd>{profile.city}, {profile.country} <span class="mono muted">· <time data-clock data-tz={profile.timezone}>--:--</time> WIB (UTC+7)</span></dd>
+          </div>
+          {
+            degree && (
+              <div>
+                <dt>Education</dt>
+                <dd>
+                  {degree.title}, {degree.place.split(" · ")[0]} ({formatMonth(degree.end)})
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>Focus</dt>
+            <dd class="focus">{profile.chain.flatMap((c) => c.items).map((f) => <span class="tag">{f}</span>)}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="h-contact">
+        <h2 id="h-contact" class="label">Contact</h2>
+        <p class="serif big">Open to conversations about <em>energy, control and AI</em>.</p>
+        <ul class="actions">
+          <li>
+            <button class="row" type="button" data-copy={profile.email}>
+              <Icon name="mail" />
+              <span class="k">Email</span>
+              <span class="v">{profile.email}</span>
+              <span class="hint mono">copy</span>
+            </button>
+          </li>
+          <li>
+            <a class="row" href={`tel:${tel}`}>
+              <Icon name="phone" />
+              <span class="k">Phone</span>
+              <span class="v">{profile.phone}</span>
+              <span class="hint mono">call</span>
+            </a>
+          </li>
+          <li>
+            <a class="row" href={profile.links.linkedin} rel="me noopener">
+              <Icon name="linkedin" />
+              <span class="k">LinkedIn</span>
+              <span class="v">/in/devin-ezekiel</span>
+              <span class="hint mono">open ↗</span>
+            </a>
+          </li>
+          <li>
+            <a class="row" href={profile.links.github} rel="me noopener">
+              <Icon name="github" />
+              <span class="k">GitHub</span>
+              <span class="v">@DvEz373</span>
+              <span class="hint mono">open ↗</span>
+            </a>
+          </li>
+          <li>
+            <a class="row" href={profile.links.instagram} rel="me noopener">
+              <Icon name="instagram" />
+              <span class="k">Instagram</span>
+              <span class="v">@dvn.ezekiel</span>
+              <span class="hint mono">open ↗</span>
+            </a>
+          </li>
+        </ul>
+        <div class="docs">
+          <a class="btn primary" href={url("cv.pdf")} download="CV_Devin_Ezekiel_Purba.pdf"><Icon name="download" />Download CV</a>
+          <a class="btn" href={url("devin-ezekiel-purba.vcf")} download><Icon name="vcard" />Save contact (.vcf)</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: start;
+  }
+  .photos {
+    display: grid;
+    gap: 18px;
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+  }
+  .text {
+    display: grid;
+    gap: clamp(36px, 5vw, 56px);
+    max-width: 70ch;
+  }
+  .text h2 {
+    margin-bottom: 14px;
+  }
+  .lead {
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .spec dl {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .spec dl > div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .spec dt {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    padding-top: 3px;
+  }
+  .spec dd {
+    margin: 0;
+  }
+  .focus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .big {
+    font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+    line-height: 1.1;
+    margin: 0 0 22px;
+  }
+  .big em {
+    color: var(--signal);
+  }
+  .actions {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 22px 110px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 6px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--t-ui) var(--ease);
+  }
+  .row:hover {
+    background: var(--panel);
+  }
+  .row :global(svg) {
+    color: var(--signal);
+  }
+  .k {
+    font-weight: 600;
+  }
+  .v {
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+  .hint {
+    font-size: 0.72rem;
+    color: var(--ink-2);
+  }
+  .row:hover .hint {
+    color: var(--signal);
+  }
+  .docs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  @media (max-width: 959px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .photos {
+      position: static;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 559px) {
+    .spec dl > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .row {
+      grid-template-columns: 22px 1fr auto;
+    }
+    .k {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { toast } from "../scripts/shell";
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((b) =>
+      b.addEventListener("click", async () => {
+        const text = b.dataset.copy ?? "";
+        try {
+          await navigator.clipboard.writeText(text);
+          toast(`Copied ${text}`);
+        } catch {
+          window.location.href = `mailto:${text}`;
+        }
+      }),
+    );
+  });
+</script>

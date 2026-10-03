@@ -1,0 +1,221 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<figure class="instrument" data-instrument data-controller="off" aria-labelledby="inst-title">
+  <figcaption class="head">
+    <span class="fig-label">FIG. 01</span>
+    <h3 id="inst-title">Grid frequency after a generator trip</h3>
+    <span class="status mono" data-status data-state="run">● RUN</span>
+  </figcaption>
+
+  <div class="screen">
+    <canvas
+      data-canvas
+      role="img"
+      aria-label="Oscilloscope. Top: three-phase voltage waveforms. Bottom: grid frequency over the last 12 seconds around 50 hertz. Use the buttons below to trip a generator and switch the controller on or off."
+    ></canvas>
+    <div class="cursor mono" data-cursor hidden></div>
+  </div>
+
+  <dl class="readouts mono">
+    <div><dt>f</dt><dd><span data-f>50.000</span> Hz</dd></div>
+    <div><dt>RoCoF</dt><dd><span data-rocof>0.00</span> Hz/s</dd></div>
+    <div><dt>Nadir</dt><dd><span data-nadir>—</span> Hz</dd></div>
+    <div><dt>Settled in</dt><dd><span data-settle>—</span> s</dd></div>
+  </dl>
+
+  <div class="controls">
+    <button class="btn primary" type="button" data-trip><Icon name="bolt" />Trip a generator</button>
+    <div class="seg" role="group" aria-label="Controller">
+      <span class="seg-label mono">Controller</span>
+      <button type="button" data-ctl="off" aria-pressed="true">Off</button>
+      <button type="button" data-ctl="on" aria-pressed="false">On</button>
+    </div>
+    <button class="btn ghost run" type="button" data-run aria-pressed="true"><Icon name="pause" size={16} /><span>Pause</span></button>
+  </div>
+  <p class="hint mono" aria-hidden="true">Now switch the controller <b>On</b> and trip again →</p>
+  <p class="note label">Toy model · damped second-order response, ζ = 0.08 (off) / 0.55 (on) · for illustration</p>
+  <p class="visually-hidden" aria-live="polite" data-announce></p>
+</figure>
+
+<style>
+  .instrument {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .head .fig-label {
+    white-space: nowrap;
+  }
+  .head h3 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .status {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--leaf-ink);
+    white-space: nowrap;
+  }
+  .status[data-state="stop"] {
+    color: var(--ink-2);
+  }
+  .screen {
+    position: relative;
+    height: clamp(300px, 34vw, 400px);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  :global([data-theme="dark"]) .screen {
+    background-color: #080b0f;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    touch-action: pan-y;
+  }
+  .cursor {
+    position: absolute;
+    top: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .readouts div {
+    padding: 12px 18px;
+    border-right: 1px solid var(--line);
+  }
+  .readouts div:last-child {
+    border-right: 0;
+  }
+  .readouts dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .readouts dd {
+    margin: 2px 0 0;
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 16px 18px 6px;
+  }
+  .seg {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-s);
+    background: var(--paper);
+  }
+  .seg-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    padding: 0 10px 0 8px;
+  }
+  .seg button {
+    min-width: 52px;
+    min-height: 36px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ink-2);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--t-ui) var(--ease), color var(--t-ui) var(--ease);
+  }
+  .seg button[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .seg button[data-ctl="on"][aria-pressed="true"] {
+    background: var(--leaf-ink);
+    color: var(--paper);
+  }
+  .run {
+    margin-left: auto;
+  }
+  .hint {
+    margin: 4px 18px 0;
+    font-size: 0.78rem;
+    color: var(--leaf-ink);
+    opacity: 0;
+    transition: opacity var(--t-page) var(--ease);
+  }
+  .instrument[data-tripped][data-controller="off"] .hint {
+    opacity: 1;
+  }
+  .note {
+    margin: 6px 18px 16px;
+    font-size: 0.7rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 639px) {
+    .readouts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .readouts div:nth-child(2) {
+      border-right: 0;
+    }
+    .readouts div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+    .head h3 {
+      font-size: 0.92rem;
+    }
+    .run {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  import { initInstrument } from "../scripts/instrument";
+  let cleanup: (() => void) | undefined;
+  document.addEventListener("astro:page-load", () => {
+    cleanup?.();
+    cleanup = undefined;
+    const root = document.querySelector<HTMLElement>("[data-instrument]");
+    if (root) cleanup = initInstrument(root);
+  });
+  document.addEventListener("astro:before-swap", () => {
+    cleanup?.();
+    cleanup = undefined;
+  });
+</script>

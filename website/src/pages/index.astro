@@ -1,0 +1,211 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import Photo from "../components/Photo.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Instrument from "../components/Instrument.astro";
+import FeederNav from "../components/FeederNav.astro";
+import SignalChain from "../components/SignalChain.astro";
+import Schematic from "../components/Schematic.astro";
+import portrait from "../assets/photos/portrait.jpg";
+import { getProfile, getExperience, getEducation, getProjects, getSkills } from "../lib/content";
+import { url } from "../lib/url";
+
+const profile = await getProfile();
+const [experience, education, projects, skills] = await Promise.all([getExperience(), getEducation(), getProjects(), getSkills()]);
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+const feeders = [
+  { href: url("experience/"), idx: "01", title: "Experience", line: "Jobs, internships and campus roles", meta: plural(experience.length, "role", "roles") },
+  { href: url("education/"), idx: "02", title: "Education", line: "Degree, exchange and courses", meta: plural(education.length, "entry", "entries") },
+  { href: url("projects/"), idx: "03", title: "Projects", line: "Energy, AI and IoT builds", meta: plural(projects.length, "build", "builds") },
+  { href: url("skills/"), idx: "04", title: "Skills", line: "Domains, tools and certificates", meta: plural(skills.length, "domain", "domains") },
+  { href: url("about/"), idx: "05", title: "About", line: "Who I am, how to reach me", meta: "bio & contact" },
+];
+---
+
+<Base description={`${profile.name}: ${profile.headline} working on ${profile.tagline.toLowerCase()}. ${profile.role} at ${profile.org}, ${profile.city}.`}>
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="wrap grid">
+      <div class="intro">
+        <p class="label eyebrow">§ 00 · {profile.headline} · {profile.city}, {profile.country}</p>
+        <h1 id="hero-name" class="name serif">{profile.name}</h1>
+        <p class="headline">
+          {profile.headline} <span class="sep" aria-hidden="true">—</span>
+          <em class="accent">{profile.headlineAccent}</em>
+        </p>
+        <p class="now">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>{profile.role} at {profile.org}</span>
+        </p>
+        <div class="actions">
+          <a class="btn primary" href={url("cv.pdf")} download="CV_Devin_Ezekiel_Purba.pdf"><Icon name="download" />Download CV</a>
+          <a class="btn" href={url("about/#contact")}><Icon name="mail" />Get in touch</a>
+          <button class="btn ghost" type="button" data-cmdk-open><Icon name="search" />Search <span class="kbd" data-kbd>Ctrl K</span></button>
+        </div>
+      </div>
+
+      <div class="portrait-wrap">
+        <Photo src={portrait} alt={`Portrait of ${profile.name}`} widths={[280, 420, 600]} sizes="(min-width: 960px) 360px, 60vw" ratio="1" eager class="portrait">
+          <div slot="overlay" class="annot mono" aria-hidden="true">
+            <span class="a1">SUBJECT · D. E. PURBA</span>
+            <span class="a2">{profile.coordinates}</span>
+            <span class="a3">JKT · <time data-clock data-tz={profile.timezone}>--:--</time> WIB</span>
+          </div>
+        </Photo>
+      </div>
+    </div>
+    <Schematic variant="turbine" />
+  </section>
+
+  <section class="section" aria-labelledby="s-demo">
+    <div class="wrap">
+      <SectionHead index="01" title="Try it" id="s-demo" note="Energy systems × intelligent control, in one figure" />
+      <Instrument />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s-explore">
+    <div class="wrap">
+      <SectionHead index="02" title="Explore" id="s-explore" note="Five feeders off one bus. Pick a circuit" />
+      <FeederNav feeders={feeders} source={profile.initials} />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="s-chain">
+    <div class="wrap">
+      <SectionHead index="03" title="Signal chain" id="s-chain" note="Where I come from, what I do, where I'm heading" />
+      <SignalChain chain={profile.chain} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(36px, 7vw, 96px) clamp(28px, 5vw, 64px);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 30%, transparent 75%);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+  .name {
+    font-size: var(--step-3);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 14px 0 18px;
+  }
+  .headline {
+    font-size: clamp(1.35rem, 1.1rem + 1.1vw, 2rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    margin: 0 0 18px;
+  }
+  .headline .accent {
+    color: var(--signal);
+    font-size: 1.12em;
+  }
+  .sep {
+    color: var(--line-strong);
+  }
+  .now {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel);
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    margin-bottom: 28px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .portrait-wrap {
+    justify-self: end;
+    width: min(100%, 380px);
+  }
+  .portrait-wrap :global(.frame) {
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow);
+  }
+  .annot span {
+    position: absolute;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    padding: 3px 7px;
+    border-radius: 3px;
+    background: rgb(10 13 18 / 0.6);
+    color: #e9eef3;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+  }
+  .a1 {
+    left: 10px;
+    top: 10px;
+  }
+  .a2 {
+    left: 10px;
+    bottom: 10px;
+  }
+  .a3 {
+    right: 10px;
+    top: 10px;
+  }
+  .hero :global(.schematic) {
+    right: auto;
+    left: -120px;
+    top: auto;
+    bottom: -40px;
+    width: 420px;
+    opacity: 0.12;
+  }
+  @media (max-width: 959px) {
+    .a2 {
+      display: none;
+    }
+    .a3 {
+      top: auto;
+      right: auto;
+      left: 10px;
+      bottom: 10px;
+    }
+    .now {
+      border-radius: 14px;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .portrait-wrap {
+      order: -1;
+      justify-self: start;
+      width: min(100%, 260px);
+    }
+    .hero :global(.schematic) {
+      left: auto;
+      right: -160px;
+      bottom: auto;
+      top: 10px;
+    }
+  }
+</style>

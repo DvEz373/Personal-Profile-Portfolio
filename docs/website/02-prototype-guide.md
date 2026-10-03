@@ -1,4 +1,6 @@
-# Prototype review guide
+# Prototype review guide (v3, superseded)
+
+> The live site is now the Astro build in [`website/`](../../website/). This vanilla-JS prototype is kept only for before/after comparison and can be deleted.
 
 The prototype lives in `design/prototype/`. It is separate from the live `website/` folder, so nothing changes on the published site until the design is approved.
 

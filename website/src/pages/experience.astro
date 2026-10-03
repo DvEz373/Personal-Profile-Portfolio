@@ -1,0 +1,49 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Gantt from "../components/Gantt.astro";
+import Timeline, { type TimelineItem } from "../components/Timeline.astro";
+import { getExperience, TYPE_LABEL } from "../lib/content";
+import { formatDuration, formatRange } from "../lib/dates";
+
+const experience = await getExperience();
+const TONE = { work: "c-signal", internship: "c-sun", campus: "c-leaf" } as const;
+
+const items: TimelineItem[] = experience.map((e) => ({
+  id: e.id,
+  type: e.type,
+  typeLabel: TYPE_LABEL[e.type],
+  tone: TONE[e.type],
+  dateLabel: formatRange(e.start, e.end),
+  duration: formatDuration(e.start, e.end),
+  title: e.role,
+  sub: `${e.org} · ${e.place}`,
+  summary: e.summary,
+  points: e.points,
+  tags: e.tags,
+}));
+const bars = experience.map((e) => ({ id: e.id, title: e.short ?? e.role, org: e.org, kind: e.type, tone: TONE[e.type], start: e.start, end: e.end }));
+const filters = (["work", "internship", "campus"] as const).map((k) => ({ key: k, label: TYPE_LABEL[k], tone: TONE[k] }));
+---
+
+<Base title="Experience" description="Devin Ezekiel Purba's jobs, internships and campus roles: power system engineering, research internships in Taiwan and Indonesia, teaching and leadership.">
+  <PageHead index="01" eyebrow="Experience" title="Experience" intro="Jobs, internships and campus roles. Newest first; open any entry for the details." art="grid" />
+
+  <section class="wrap" aria-label="Career chart">
+    <Gantt bars={bars} caption="FIG. 01 · Career timeline · hover a bar to find its entry" />
+  </section>
+
+  <section class="section" aria-labelledby="s-roles">
+    <div class="wrap narrow">
+      <SectionHead index="01.1" title="Roles" id="s-roles" />
+      <Timeline items={items} filters={filters} label="Roles" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 880px;
+  }
+</style>

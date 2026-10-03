@@ -1,0 +1,80 @@
+name: Website
+
+on:
+  push:
+    branches: [main]
+    paths: ["website/**", "cv/**", ".github/workflows/website.yml"]
+  pull_request:
+    paths: ["website/**", ".github/workflows/website.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@v7
+
+      # The "Download CV" button serves the personal-email CV built from cv/.
+      - name: Compile CV
+        if: github.event_name != 'pull_request'
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          working_directory: cv
+      - name: Add CV to the site
+        if: github.event_name != 'pull_request'
+        run: cp ../cv/main.pdf public/cv.pdf
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+      - name: Type-check code and content
+        run: npm run check
+      - name: Build
+        run: npm run build
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests (desktop + phone, accessibility)
+        run: npm test
+      - name: Keep test report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: website/playwright-report
+          retention-days: 7
+
+      - name: Upload site for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: website/dist
+
+  # Runs only once Pages is enabled and the repository variable PAGES_ENABLED is "true"
+  # (see website/README.md), so main stays green until then.
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.PAGES_ENABLED == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
