@@ -1,0 +1,128 @@
+---
+import Icon from "./Icon.astro";
+import { url } from "../lib/url";
+import { BUILD_DATE } from "../lib/dates";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  profile: CollectionEntry<"profile">["data"];
+}
+const { profile } = Astro.props;
+const tel = profile.phone.replace(/\s/g, "");
+const updated = BUILD_DATE.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: profile.timezone });
+const version = Astro.generator.replace(/^Astro v/, "");
+---
+
+<footer class="site-footer" transition:name="footer" transition:animate="none">
+  <div class="wrap">
+    <div class="cta">
+      <p class="label">§ 99 · Contact</p>
+      <h2 class="serif">Let's build <em>cleaner, smarter</em> energy systems.</h2>
+      <div class="actions">
+        <a class="btn primary" href={`mailto:${profile.email}`}><Icon name="mail" />Email me</a>
+        <a class="btn" href={`tel:${tel}`}><Icon name="phone" />{profile.phone}</a>
+        <a class="btn" href={url("devin-ezekiel-purba.vcf")} download><Icon name="vcard" />Save contact</a>
+      </div>
+    </div>
+
+    <div class="cols">
+      <nav aria-label="Footer">
+        <p class="label">Pages</p>
+        <ul>
+          <li><a href={url()}>Home</a></li>
+          <li><a href={url("experience/")}>Experience</a></li>
+          <li><a href={url("education/")}>Education</a></li>
+          <li><a href={url("projects/")}>Projects</a></li>
+          <li><a href={url("skills/")}>Skills</a></li>
+          <li><a href={url("about/")}>About</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="label">Elsewhere</p>
+        <ul>
+          <li><a href={profile.links.linkedin} rel="me noopener">LinkedIn <Icon name="arrow-up-right" size={14} /></a></li>
+          <li><a href={profile.links.github} rel="me noopener">GitHub <Icon name="arrow-up-right" size={14} /></a></li>
+          <li><a href={profile.links.instagram} rel="me noopener">Instagram <Icon name="arrow-up-right" size={14} /></a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="label">Documents</p>
+        <ul>
+          <li><a href={url("cv.pdf")} download="CV_Devin_Ezekiel_Purba.pdf">Curriculum vitae (PDF)</a></li>
+          <li><a href={url("devin-ezekiel-purba.vcf")} download>Contact card (.vcf)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bottom mono">
+      <span class="clock"><span class="live-dot" aria-hidden="true"></span>{profile.city} <time data-clock data-tz={profile.timezone}>--:--</time> WIB · UTC+7</span>
+      <span>Built with Astro {version} · Updated {updated}</span>
+      <span>© {BUILD_DATE.getFullYear()} {profile.name}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: clamp(64px, 10vw, 120px);
+    border-top: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .cta {
+    padding-block: clamp(48px, 7vw, 88px) clamp(32px, 5vw, 56px);
+    border-bottom: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-size: clamp(2.2rem, 1.4rem + 3.6vw, 4rem);
+    line-height: 1.02;
+    max-width: 18ch;
+    margin: 12px 0 28px;
+    letter-spacing: -0.02em;
+  }
+  .cta h2 em {
+    color: var(--signal);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 28px;
+    padding-block: 36px;
+  }
+  .cols ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .cols a {
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .cols a:hover {
+    color: var(--signal);
+  }
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px 24px;
+    padding-block: 20px 32px;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--ink-2);
+  }
+  .clock {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>

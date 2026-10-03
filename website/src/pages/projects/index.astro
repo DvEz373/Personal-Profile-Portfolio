@@ -1,0 +1,163 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHead from "../../components/PageHead.astro";
+import ProjectArt from "../../components/ProjectArt.astro";
+import { getProjects, CATEGORY_LABEL } from "../../lib/content";
+import { formatRange } from "../../lib/dates";
+import { url } from "../../lib/url";
+
+const projects = await getProjects();
+const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
+const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CATEGORY_LABEL[k], tone: TONE[k], n: projects.filter((p) => p.data.category === k).length }));
+---
+
+<Base title="Projects" description="Projects by Devin Ezekiel Purba: multi-agent reinforcement learning for edge computing, an AI-assisted IoT sound system, a computer-vision document scanner, and power plant control work.">
+  <PageHead index="03" eyebrow="Projects" title="Projects" intro="Things I have built across energy, AI and IoT. Open one for the problem, approach and result." art="circuit" />
+
+  <section class="wrap" data-filterable>
+    <div class="bar">
+      <div class="chips" role="group" aria-label="Filter projects by category">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">{projects.length}</span></button>
+        {
+          cats.map((c) => (
+            <button class:list={["chip", c.tone]} type="button" data-filter={c.key} aria-pressed="false">
+              <i class="dot" aria-hidden="true" />
+              {c.label}
+              <span class="count">{c.n}</span>
+            </button>
+          ))
+        }
+      </div>
+      <p class="label" aria-live="polite" data-shown>Showing {projects.length} of {projects.length}</p>
+    </div>
+
+    <ul class="grid">
+      {
+        projects.map((p, i) => (
+          <li data-kind={p.data.category} class={TONE[p.data.category]}>
+            <a class="card" href={url(`projects/${p.id}/`)}>
+              <span class="fig" transition:name={`fig-${p.id}`}>
+                <ProjectArt id={p.id} category={p.data.category} fig={`FIG. ${String(i + 1).padStart(2, "0")}`} />
+              </span>
+              <span class="body">
+                <span class="meta mono">
+                  <span class="cat">{CATEGORY_LABEL[p.data.category]}</span>
+                  <span>{formatRange(p.data.start, p.data.end)}</span>
+                </span>
+                <span class="title" transition:name={`title-${p.id}`}>{p.data.title}</span>
+                <span class="blurb">{p.data.blurb}</span>
+                <span class="stack">
+                  {p.data.stack.slice(0, 4).map((s) => (
+                    <span class="tag">{s}</span>
+                  ))}
+                </span>
+                <span class="go mono">
+                  Read the datasheet <span aria-hidden="true">→</span>
+                </span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    margin-bottom: 28px;
+  }
+  .bar .label {
+    margin: 0;
+  }
+  .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 20px;
+  }
+  .grid li[hidden] {
+    display: none;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    transition: border-color var(--t-ui) var(--ease), transform var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease);
+  }
+  .card:hover,
+  .card:focus-visible {
+    border-color: var(--c);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    --play: running;
+  }
+  .fig {
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-bottom: 1px solid var(--line);
+  }
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.74rem;
+    color: var(--ink-2);
+  }
+  .cat {
+    color: var(--c-ink);
+  }
+  .title {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .blurb {
+    color: var(--ink-2);
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .go {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 0.78rem;
+    color: var(--signal);
+  }
+</style>
+
+<script>
+  import { initFilterablePage } from "../../scripts/filters";
+  document.addEventListener("astro:page-load", initFilterablePage);
+</script>

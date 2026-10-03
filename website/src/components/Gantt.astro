@@ -1,0 +1,192 @@
+---
+import { BUILD_DATE, formatRange, yearFraction } from "../lib/dates";
+
+/** Career chart: one bar per role on a shared time axis. Bars link to the entries below. */
+interface Bar {
+  id: string;
+  title: string;
+  org: string;
+  kind: string;
+  tone: string;
+  start: string;
+  end: string;
+}
+interface Props {
+  bars: Bar[];
+  caption: string;
+}
+const { bars, caption } = Astro.props;
+
+const from = Math.floor(Math.min(...bars.map((b) => yearFraction(b.start))));
+const to = BUILD_DATE.getUTCFullYear() + 1;
+const span = to - from;
+const pct = (y: number) => ((y - from) / span) * 100;
+const years = Array.from({ length: span }, (_, i) => from + i);
+const now = pct(yearFraction("present"));
+const rows = [...bars].sort((a, b) => yearFraction(a.start) - yearFraction(b.start));
+---
+
+<figure class="gantt" data-gantt style={`--years: ${span}`}>
+  <figcaption class="fig-label">{caption}</figcaption>
+  <div class="chart">
+    <div class="axis mono" aria-hidden="true">
+      <span class="lab-col"></span>
+      <span class="years">
+        {years.map((y) => <span style={`left: ${pct(y + 0.5)}%`}>{y}</span>)}
+        <span class="now-label" style={`left: ${now}%`}>now</span>
+      </span>
+    </div>
+    <ol class="rows">
+      {
+        rows.map((b) => (
+          <li class:list={["row", b.tone]}>
+            <span class="lab">
+              <span class="t">{b.title}</span>
+              <span class="o">{b.org}</span>
+            </span>
+            <span class="track">
+              <span class="now" style={`left: ${now}%`} aria-hidden="true" />
+              <a
+                class="bar"
+                href={`#${b.id}`}
+                data-target={b.id}
+                data-kind={b.kind}
+                style={`left: ${pct(yearFraction(b.start))}%; width: max(10px, ${pct(yearFraction(b.end) + (b.end === "present" ? 0 : 1 / 12)) - pct(yearFraction(b.start))}%)`}
+                aria-label={`${b.title}, ${b.org}, ${formatRange(b.start, b.end)}`}
+              />
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</figure>
+
+<style>
+  .gantt {
+    margin: 0;
+    padding: 18px 18px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+  }
+  .chart {
+    margin-top: 14px;
+  }
+  .axis,
+  .row {
+    display: grid;
+    grid-template-columns: minmax(150px, 230px) 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .years {
+    position: relative;
+    height: 22px;
+    font-size: 0.72rem;
+    color: var(--ink-2);
+  }
+  .years span {
+    position: absolute;
+    translate: -50% 0;
+    top: 2px;
+  }
+  .years .now-label {
+    color: var(--leaf-ink);
+    top: 2px;
+    translate: -100% 0;
+    padding-right: 4px;
+  }
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    min-height: 40px;
+    border-top: 1px dashed var(--line);
+  }
+  .lab {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    padding-block: 6px;
+    min-width: 0;
+  }
+  .lab .t {
+    font-size: 0.86rem;
+    font-weight: 550;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lab .o {
+    font-size: 0.74rem;
+    color: var(--ink-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track {
+    position: relative;
+    height: 40px;
+    background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: calc(100% / var(--years)) 100%;
+  }
+  .now {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 2px dotted var(--leaf);
+  }
+  .bar {
+    position: absolute;
+    top: 12px;
+    height: 16px;
+    border-radius: 4px;
+    background: var(--c);
+    opacity: 0.88;
+    transition: opacity var(--t-ui) var(--ease), transform var(--t-ui) var(--ease-settle), box-shadow var(--t-ui) var(--ease);
+  }
+  .bar:hover,
+  .bar[data-hot] {
+    opacity: 1;
+    transform: scaleY(1.35);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent);
+  }
+  .bar[data-dim] {
+    opacity: 0.18;
+  }
+  @media (max-width: 639px) {
+    .gantt {
+      padding: 14px 12px 10px;
+    }
+    .axis,
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .axis .lab-col {
+      display: none;
+    }
+    .lab {
+      padding: 8px 0 0;
+    }
+    .lab .t {
+      white-space: normal;
+    }
+    .lab .o {
+      display: none;
+    }
+    .years .now-label {
+      display: none;
+    }
+    .track {
+      height: 30px;
+    }
+    .bar {
+      top: 7px;
+    }
+  }
+</style>

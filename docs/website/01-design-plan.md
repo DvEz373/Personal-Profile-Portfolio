@@ -1,6 +1,6 @@
 # Website design plan
 
-Status: **Draft v3 for review** (review rounds 1–2 applied, see the work log) · Prototype: [`design/prototype/`](../../design/prototype/)
+Status: **Superseded for visuals by [05-visual-direction.md](05-visual-direction.md)** (v4, built in `website/`). Page structure (§2, §11), positioning and palette (§12) still apply. v3 prototype: [`design/prototype/`](../../design/prototype/)
 
 ## 1. Goals (from the brief)
 

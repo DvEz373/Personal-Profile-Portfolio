@@ -1,0 +1,17 @@
+---
+/** "§ 01 Title" heading with a hairline rule and an optional mono note. */
+interface Props {
+  index: string;
+  title: string;
+  note?: string;
+  id?: string;
+}
+const { index, title, note, id } = Astro.props;
+---
+
+<div class="section-head">
+  <span class="idx">§ {index}</span>
+  <h2 id={id}>{title}</h2>
+  <span class="rule" aria-hidden="true"></span>
+  {note && <p class="note label">{note}</p>}
+</div>

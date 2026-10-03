@@ -1,0 +1,169 @@
+---
+import Icon from "./Icon.astro";
+import { url } from "../lib/url";
+import { getProfile, getExperience, getEducation, getProjects } from "../lib/content";
+
+const profile = await getProfile();
+const [experience, education, projects] = await Promise.all([getExperience(), getEducation(), getProjects()]);
+
+type Item = { id: string; group: string; title: string; hint?: string; href?: string; action?: string; external?: boolean; download?: string; keywords?: string };
+
+const items: Item[] = [
+  { id: "p-home", group: "Pages", title: "Home", href: url(), keywords: "start index grid frequency" },
+  { id: "p-exp", group: "Pages", title: "Experience", hint: "Jobs, internships, campus roles", href: url("experience/"), keywords: "work career timeline" },
+  { id: "p-edu", group: "Pages", title: "Education", hint: "Degree, exchange, courses", href: url("education/"), keywords: "university school thesis" },
+  { id: "p-proj", group: "Pages", title: "Projects", hint: "Energy, AI and IoT builds", href: url("projects/"), keywords: "portfolio work samples" },
+  { id: "p-skills", group: "Pages", title: "Skills", hint: "Domains, tools, certificates", href: url("skills/"), keywords: "certifications tools" },
+  { id: "p-about", group: "Pages", title: "About", hint: "Bio and contact", href: url("about/"), keywords: "contact bio photo" },
+  ...projects.map((p) => ({ id: `pr-${p.id}`, group: "Projects", title: p.data.title, hint: p.data.context, href: url(`projects/${p.id}/`), keywords: p.data.stack.join(" ") })),
+  ...experience.map((e) => ({ id: `ex-${e.id}`, group: "Experience", title: e.role, hint: e.org, href: url(`experience/#${e.id}`), keywords: e.tags.join(" ") })),
+  ...education.map((e) => ({ id: `ed-${e.id}`, group: "Education", title: e.title, hint: e.place, href: url(`education/#${e.id}`) })),
+  { id: "a-email", group: "Actions", title: "Copy email address", hint: profile.email, action: "copy-email", keywords: "mail contact" },
+  { id: "a-call", group: "Actions", title: "Call", hint: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}`, keywords: "phone whatsapp contact" },
+  { id: "a-cv", group: "Actions", title: "Download CV (PDF)", href: url("cv.pdf"), download: "CV_Devin_Ezekiel_Purba.pdf", keywords: "resume curriculum vitae" },
+  { id: "a-vcf", group: "Actions", title: "Save contact card", hint: ".vcf", href: url("devin-ezekiel-purba.vcf"), download: "devin-ezekiel-purba.vcf", keywords: "vcard address book" },
+  { id: "a-theme", group: "Actions", title: "Switch light / dark theme", action: "toggle-theme", keywords: "dark mode light mode appearance" },
+  { id: "l-li", group: "Links", title: "LinkedIn", href: profile.links.linkedin, external: true },
+  { id: "l-gh", group: "Links", title: "GitHub", href: profile.links.github, external: true },
+  { id: "l-ig", group: "Links", title: "Instagram", href: profile.links.instagram, external: true },
+];
+---
+
+<dialog class="cmdk" data-cmdk aria-label="Search and quick actions">
+  <div class="box">
+    <div class="field">
+      <Icon name="search" size={18} />
+      <input
+        type="text"
+        data-cmdk-input
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="cmdk-list"
+        aria-autocomplete="list"
+        aria-label="Search pages, projects and actions"
+        placeholder="Search pages, projects, roles, or type an action…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="kbd">Esc</span>
+    </div>
+    <ul id="cmdk-list" role="listbox" aria-label="Results" data-cmdk-list></ul>
+    <p class="empty mono" data-cmdk-empty hidden>No match. Try "projects", "cv" or "email".</p>
+    <div class="foot mono"><span><span class="kbd">↑</span> <span class="kbd">↓</span> move</span><span><span class="kbd">Enter</span> open</span><span><span class="kbd">Esc</span> close</span></div>
+  </div>
+</dialog>
+<script type="application/json" data-cmdk-data set:html={JSON.stringify(items)} />
+
+<style>
+  .cmdk {
+    width: min(640px, calc(100% - 24px));
+    max-height: min(560px, calc(100dvh - 48px));
+    margin: 12vh auto auto;
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+    color: var(--ink);
+    box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.45);
+    overflow: hidden;
+  }
+  .cmdk::backdrop {
+    background: rgb(8 11 15 / 0.45);
+    backdrop-filter: blur(3px);
+  }
+  .cmdk[open] {
+    animation: cmdk-in var(--t-ui) var(--ease);
+  }
+  @keyframes cmdk-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.985);
+    }
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+  }
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+  }
+  .field input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 1.05rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  ul :global(.group) {
+    padding: 10px 10px 4px;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  ul :global([role="option"]) {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-s);
+    cursor: pointer;
+  }
+  ul :global([role="option"] .hint) {
+    margin-left: auto;
+    color: var(--ink-2);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
+  }
+  ul :global([role="option"][aria-selected="true"]) {
+    background: var(--signal-soft);
+    box-shadow: inset 2px 0 0 var(--signal);
+  }
+  .empty {
+    padding: 24px;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.85rem;
+  }
+  .foot {
+    display: flex;
+    gap: 18px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--line);
+    font-size: 0.75rem;
+    color: var(--ink-2);
+  }
+  @media (max-width: 559px) {
+    .foot {
+      display: none;
+    }
+    .cmdk {
+      margin-top: 8vh;
+    }
+  }
+</style>
+
+<script>
+  import { initCommandPalette } from "../scripts/cmdk";
+  document.addEventListener("astro:page-load", initCommandPalette);
+</script>

@@ -1,0 +1,252 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHead from "../components/PageHead.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Icon from "../components/Icon.astro";
+import { getSkills, getCertifications, LEVEL_LABEL } from "../lib/content";
+import { formatRange } from "../lib/dates";
+
+const [skills, certs] = await Promise.all([getSkills(), getCertifications()]);
+const tone = (c: string) => `c-${c}`;
+---
+
+<Base title="Skills" description="Devin Ezekiel Purba's skills across renewable energy and power systems, AI and intelligent control, automation and digitalization, plus seven certificates in deep learning, reinforcement learning and AI engineering.">
+  <PageHead index="04" eyebrow="Skills" title="Skills" intro="Four domains, measured like a VU meter: five segments, honest bands instead of fake percentages." art="neural">
+    <ol class="scale mono" aria-label="Level scale">
+      {
+        [1, 2, 3, 4, 5].map((n) => (
+          <li>
+            <span class="pips" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <i class:list={{ on: i <= n }} />
+              ))}
+            </span>
+            {LEVEL_LABEL[n]}
+          </li>
+        ))
+      }
+    </ol>
+    <p class="caveat mono">Self-assessed. Levels are placeholders until confirmed.</p>
+  </PageHead>
+
+  <section class="wrap domains" aria-label="Skill domains">
+    {
+      skills.map((g, gi) => (
+        <section class:list={["domain", tone(g.color)]} aria-labelledby={`d-${g.id}`}>
+          <p class="label idx">04.{gi + 1}</p>
+          <h2 id={`d-${g.id}`}>{g.name}</h2>
+          <p class="blurb">{g.blurb}</p>
+          <ul class="meters">
+            {g.items.map((s) => (
+              <li>
+                <span class="name">{s.name}</span>
+                <span class="meter" role="img" aria-label={`${s.name}: level ${s.level} of 5, ${LEVEL_LABEL[s.level]}`}>
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <i class:list={{ on: i <= s.level }} style={`--i: ${i}`} />
+                  ))}
+                </span>
+                <span class="lvl mono" aria-hidden="true">
+                  {LEVEL_LABEL[s.level]}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </section>
+
+  <section class="section" aria-labelledby="certificates">
+    <div class="wrap">
+      <SectionHead index="04.5" title="Certificates" id="certificates" note={`${certs.length} completed specializations and professional certificates`} />
+      <ol class="certs">
+        {
+          certs.map((c, i) => (
+            <li>
+              <a href={c.url} rel="noopener">
+                <span class="n mono">{String(i + 1).padStart(2, "0")}</span>
+                <span class="what">
+                  <span class="t">{c.name}</span>
+                  <span class="by">{c.issuer}</span>
+                </span>
+                <span class="when mono">{formatRange(c.start, c.end)}</span>
+                <Icon name="arrow-up-right" size={16} class="out" />
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    list-style: none;
+    margin: 24px 0 8px;
+    padding: 0;
+    font-size: 0.75rem;
+    color: var(--ink-2);
+  }
+  .scale li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pips {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .pips i {
+    width: 6px;
+    height: 10px;
+    border-radius: 1px;
+    background: var(--line);
+  }
+  .pips i.on {
+    background: var(--ink-2);
+  }
+  .caveat {
+    font-size: 0.72rem;
+    color: var(--sun-ink);
+    margin: 0;
+  }
+  .domains {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .domain {
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--c);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .idx {
+    margin: 0 0 6px;
+    color: var(--c-ink);
+  }
+  .domain h2 {
+    font-family: var(--font-serif), Georgia, serif;
+    font-weight: 400;
+    font-size: 1.85rem;
+    letter-spacing: -0.01em;
+  }
+  .blurb {
+    color: var(--ink-2);
+    margin: 6px 0 18px;
+  }
+  .meters {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .meters li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "name lvl" "meter meter";
+    gap: 6px 12px;
+    align-items: baseline;
+  }
+  .name {
+    grid-area: name;
+    font-weight: 500;
+  }
+  .lvl {
+    grid-area: lvl;
+    font-size: 0.72rem;
+    color: var(--ink-2);
+  }
+  .meter {
+    grid-area: meter;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .meter i {
+    height: 10px;
+    border-radius: 2px;
+    background: var(--panel-2);
+  }
+  .meter i.on {
+    background: var(--c);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .meter i.on {
+      animation: seg-on 420ms var(--ease-settle) both;
+      animation-delay: calc(var(--i) * 70ms + 150ms);
+    }
+  }
+  @keyframes seg-on {
+    from {
+      transform: scaleY(0.2);
+      opacity: 0.2;
+    }
+  }
+  .certs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .certs a {
+    display: grid;
+    grid-template-columns: 36px 1fr auto 20px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 6px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color var(--t-ui) var(--ease);
+  }
+  .certs a:hover {
+    background: var(--panel);
+  }
+  .certs .n {
+    font-size: 0.75rem;
+    color: var(--ink-2);
+  }
+  .what {
+    display: flex;
+    flex-direction: column;
+  }
+  .t {
+    font-weight: 550;
+  }
+  .by {
+    font-size: 0.88rem;
+    color: var(--ink-2);
+  }
+  .when {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .certs :global(.out) {
+    color: var(--ink-2);
+    transition: transform var(--t-ui) var(--ease);
+  }
+  .certs a:hover :global(.out) {
+    transform: translate(2px, -2px);
+    color: var(--signal);
+  }
+  @media (max-width: 759px) {
+    .domains {
+      grid-template-columns: 1fr;
+    }
+    .certs a {
+      grid-template-columns: 28px 1fr 20px;
+    }
+    .when {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+# Personal details shown across the site. Edit and rebuild; the build checks every field.
+- id: devin
+  name: Devin Ezekiel Purba
+  givenNames: Devin Ezekiel
+  familyName: Purba
+  initials: DEP
+  headline: Electrical Engineer
+  headlineAccent: Energy & AI
+  tagline: Renewable energy · Power systems · AI & intelligent control
+  role: Power System Engineer
+  org: Lean Power Solutions Indonesia
+  city: Jakarta
+  country: Indonesia
+  timezone: Asia/Jakarta
+  coordinates: "6.2088° S, 106.8456° E"
+  email: ezekiel.devin@gmail.com
+  phone: "+62 812 9161 5474"
+  links:
+    linkedin: https://www.linkedin.com/in/devin-ezekiel/
+    github: https://github.com/DvEz373
+    instagram: https://www.instagram.com/dvn.ezekiel/
+  bio:
+    - "I'm an electrical engineer working where energy systems meet intelligent software. My background is in control systems, automation and digitalization: I studied Control Systems and Automation at Universitas Indonesia and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks."
+    - "Today I work on renewable energy and power systems: power system dynamics, power electronics, distributed energy resources, and the controllers that keep generators, batteries and solar plants stable on the grid."
+    - "I'm an AI and digital transformation enthusiast, and I'm most interested in applying AI, machine learning, deep learning and reinforcement learning to intelligent control of energy systems."
+  # The three blocks of the "signal chain" on the home page.
+  chain:
+    - stage: Foundation
+      label: Where I come from
+      items: [Control systems, Automation, Digitalization, Digital twin]
+    - stage: Practice
+      label: What I do now
+      items: [Renewable energy, Distributed energy resources, Power system dynamics, Power electronics]
+    - stage: Direction
+      label: Where I'm heading
+      items: [AI · ML · DL · RL, Intelligent control, Digital transformation]

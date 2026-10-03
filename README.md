@@ -5,7 +5,7 @@ Devin Ezekiel Purba's personal profile hub.
 | # | Part | Folder | Status |
 |---|------|--------|--------|
 | 1 | ATS-friendly CV (LaTeX) | [`cv/`](cv/) | ✅ Building |
-| 2 | Personal profile website (GitHub Pages) | [`website/`](website/), redesign in [`design/prototype/`](design/prototype/) | 🎨 Redesign in review |
+| 2 | Personal profile website (GitHub Pages) | [`website/`](website/) (Astro) | 🚧 Built and tested; Pages not enabled yet |
 | 3 | Online name card with QR code | `card/` | 🔜 Planned |
 
 ## 1. CV
@@ -30,13 +30,8 @@ checks that an ATS can extract its text, and uploads both variants (personal and
 
 ## 2. Website
 
-Plain static site in `website/` (`index.html` + `style.css`, no build step). Open `website/index.html`
-in a browser to preview.
+Astro 7 + TypeScript site in [`website/`](website/): run, edit and publish instructions are in [`website/README.md`](website/README.md).
+The **Website** workflow type-checks, builds and browser-tests every change; it deploys to
+<https://dvez373.github.io/Personal-Profile-Portfolio/> once Pages is enabled and the `PAGES_ENABLED` repository variable is `true`.
 
-The **Deploy website** Action runs on pushes to `main` that touch `website/` or `cv/`. It compiles
-the CV (personal-email variant), copies it to `cv.pdf` for the "Download CV" button, and deploys to
-GitHub Pages at <https://dvez373.github.io/Personal-Profile-Portfolio/>.
-
-One-time setup: make the repo public (or use GitHub Pro), then **Settings → Pages → Source: GitHub Actions**.
-
-Design plan, prototype review guide and work log: [`docs/`](docs/).
+Research, design decisions and the step-by-step log: [`docs/`](docs/).

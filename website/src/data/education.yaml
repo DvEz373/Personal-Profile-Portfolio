@@ -1,0 +1,44 @@
+# Education timeline. kind: degree | exchange | courses. Dates are "YYYY-MM".
+- id: ui-bachelor
+  kind: degree
+  title: B.Eng. Electrical Engineering
+  place: Universitas Indonesia · Depok
+  start: "2021-08"
+  end: "2025-07"
+  summary: Control Systems and Automation · GPA 3.84 / 4.00 · Cum Laude
+  photo: true
+  callout:
+    label: Thesis
+    text: Computation utility optimization with multi-agent deep reinforcement learning in a digital twin of I-IoT edge networks.
+  points:
+    - Karya Salemba Empat (KSE) merit scholarship awardee.
+    - Selected for a fully funded, research-based internship with NTUST.
+
+- id: coursera-ai
+  kind: courses
+  title: Online specializations in AI
+  place: Coursera · DeepLearning.AI, IBM, Google, University of Alberta
+  start: "2023-07"
+  end: "2024-10"
+  summary: Seven certificates covering deep learning, reinforcement learning, ML engineering and automation.
+  points:
+    - Deep Learning Specialization and TensorFlow Developer (DeepLearning.AI)
+    - Reinforcement Learning Specialization (University of Alberta)
+    - IBM AI Engineering, Data Science and Machine Learning
+    - Google IT Automation with Python
+  link:
+    href: skills/#certificates
+    label: See all certificates
+
+- id: teep
+  kind: exchange
+  title: Taiwan Experience Education Program
+  place: National Taiwan University of Science and Technology · Taipei
+  start: "2024-06"
+  end: "2024-08"
+  summary: Fully funded research exchange on AI for 5G Open RAN energy saving.
+  points:
+    - Selected for a fully funded, research-based program in collaboration with NTUST.
+  link:
+    href: experience/#teep-ntust
+    label: Read about the research work
