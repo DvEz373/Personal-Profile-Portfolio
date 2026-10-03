@@ -132,6 +132,7 @@ Request: upgrade the frontend, research frameworks first (React, Vue, Next.js or
 
   Lab results on a fast machine, not field data from real visitors.
 - **CI:** the `Website` workflow now runs `check`, `build` and the browser tests on every pull request. It deploys only when `PAGES_ENABLED` is set, replacing the old deploy workflow that failed while Pages was off.
+- **First CI run caught a type error** that my local check missed, because I had type-checked before writing the tests. `@axe-core/playwright` pulled in `playwright-core` 1.63.0 while `@playwright/test` uses 1.56.1, so their `Page` types differed. Fixed with an npm `overrides` entry that pins one `playwright-core`. Reproduced locally first, then `npm ci`, `astro check` (0 errors) and all 45 tests passed before pushing.
 
 ## Next (after review)
 
