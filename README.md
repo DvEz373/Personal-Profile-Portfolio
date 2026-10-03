@@ -5,7 +5,7 @@ Devin Ezekiel Purba's personal profile hub.
 | # | Part | Folder | Status |
 |---|------|--------|--------|
 | 1 | ATS-friendly CV (LaTeX) | [`cv/`](cv/) | ✅ Building |
-| 2 | Personal profile website (GitHub Pages) | [`website/`](website/) | 🚧 Ready, Pages not enabled |
+| 2 | Personal profile website (GitHub Pages) | [`website/`](website/), redesign in [`design/prototype/`](design/prototype/) | 🎨 Redesign in review |
 | 3 | Online name card with QR code | `card/` | 🔜 Planned |
 
 ## 1. CV
@@ -38,3 +38,5 @@ the CV (personal-email variant), copies it to `cv.pdf` for the "Download CV" but
 GitHub Pages at <https://dvez373.github.io/Personal-Profile-Portfolio/>.
 
 One-time setup: make the repo public (or use GitHub Pro), then **Settings → Pages → Source: GitHub Actions**.
+
+Design plan, prototype review guide and work log: [`docs/`](docs/).
