@@ -22,6 +22,45 @@
     <svg viewBox="0 0 160 90" preserveAspectRatio="none"><path d="M0 45 Q20 15 40 45 T80 45 T120 45 T160 45" fill="none" stroke="currentColor" stroke-width="1"/><path d="M0 55 Q20 25 40 55 T80 55 T120 55 T160 55" fill="none" stroke="currentColor" stroke-width=".6"/></svg>
     <span>${esc(label)}</span></div>`;
 
+  // Real photo with WebP + JPEG fallback
+  const pic = (base, alt, cls = "") => `<picture class="${cls}"><source srcset="${base}.webp" type="image/webp"><img src="${base}.jpg" alt="${esc(alt)}" loading="lazy" decoding="async"></picture>`;
+
+  // ---------- Background ornaments: circuit traces, wind turbine, solar array, transmission tower, data blocks ----------
+  const ORNAMENTS = `<svg class="ornaments" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="currentColor"/></pattern></defs>
+    <rect width="1440" height="900" fill="url(#dots)" opacity=".35"/>
+    <g class="orn-circuit" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M0 140 H120 L160 100 H300 M160 100 V40 M300 100 L340 140 H420"/>
+      <path d="M0 220 H80 L120 180 H220 M220 180 V260 H330"/>
+      <g fill="currentColor"><circle cx="420" cy="140" r="4"/><circle cx="160" cy="40" r="4"/><circle cx="330" cy="260" r="4"/><circle cx="300" cy="100" r="3"/></g>
+      <rect x="236" y="20" width="44" height="44" rx="4"/><path d="M244 20v-8M258 20v-8M272 20v-8M244 64v8M258 64v8M272 64v8"/>
+    </g>
+    <g class="orn-turbine" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M1290 380 L1282 640 H1298 Z" fill="currentColor" opacity=".5"/>
+      <g class="blades" style="transform-origin:1290px 380px"><path d="M1290 380 V290 M1290 380 L1368 425 M1290 380 L1212 425"/><circle cx="1290" cy="380" r="6" fill="currentColor"/></g>
+      <path d="M1380 470 L1376 640 H1386 Z" fill="currentColor" opacity=".4"/>
+      <g class="blades slow" style="transform-origin:1381px 470px"><path d="M1381 470 V412 M1381 470 L1431 499 M1381 470 L1331 499"/></g>
+    </g>
+    <g class="orn-solar" fill="none" stroke="currentColor" stroke-width="1.6">
+      <g transform="translate(70 720) skewX(-18)"><rect width="200" height="96" rx="3"/><path d="M50 0V96M100 0V96M150 0V96M0 32H200M0 64H200"/></g>
+      <path d="M110 816 V860 M210 816 V860"/>
+    </g>
+    <g class="orn-grid" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M1000 900 L1040 700 L1080 900 M1012 840 H1068 M1022 790 H1058 M1040 700 V680 M1000 720 H1080 M1010 740 H1070 M1018 840 L1058 790 M1062 840 L1022 790"/>
+      <path class="lines" d="M1000 720 Q900 780 760 760 M1080 720 Q1180 770 1300 750 M1010 740 Q905 800 770 780 M1070 740 Q1175 790 1310 770"/>
+    </g>
+    <g class="orn-accent" fill="none">
+        <path class="pulse" d="M0 140 H120 L160 100 H300 L340 140 H420"/>
+        <path class="pulse p2" d="M0 220 H80 L120 180 H220 V260 H330"/>
+        <circle class="sun" cx="330" cy="660" r="22"/><path class="sun" d="M330 620v-12M330 712v-12M290 660h-12M382 660h-12M302 632l-8-8M366 696l-8-8M302 688l-8 8M366 624l-8 8"/>
+    </g>
+    <g class="orn-data" fill="currentColor" font-family="ui-monospace,monospace" font-size="13" opacity=".9">
+      <text x="1120" y="70">01001101 01001100</text><text x="1150" y="92">∑ wᵢxᵢ + b</text><text x="1100" y="114">dx/dt = Ax + Bu</text>
+      <g fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="1360" cy="150" r="7"/><circle cx="1410" cy="125" r="7"/><circle cx="1410" cy="175" r="7"/><circle cx="1310" cy="125" r="7"/><circle cx="1310" cy="175" r="7"/><path d="M1317 125 L1353 150 M1317 175 L1353 150 M1367 150 L1403 125 M1367 150 L1403 175"/></g>
+    </g>
+  </svg>`;
+  document.body.insertAdjacentHTML("afterbegin", ORNAMENTS);
+
   // ---------- Theme ----------
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
   const saved = store.get("theme");
@@ -40,7 +79,7 @@
     </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
     <footer><div class="wrap"><span>© ${new Date().getFullYear()} ${esc(P.name)}</span>
-      <nav><a href="${P.links.linkedin}">LinkedIn</a><a href="${P.links.github}">GitHub</a><a href="${P.links.instagram}">Instagram</a><a href="mailto:${P.email}">Email</a></nav></div></footer>`);
+      <nav><a href="${P.links.linkedin}">LinkedIn</a><a href="${P.links.github}">GitHub</a><a href="${P.links.instagram}">Instagram</a><a href="mailto:${P.email}">Email</a><a href="tel:${P.phone.replace(/\s/g, "")}">${esc(P.phone)}</a></nav></div></footer>`);
 
   const themeBtn = $(".theme-btn");
   const paintThemeBtn = () => (themeBtn.innerHTML = isDark() ? ICONS.sun : ICONS.moon);
@@ -79,11 +118,12 @@
       main.innerHTML = `
         <section class="hero"><div class="wrap">
           <div class="hero-grid">
-            <div class="portrait">${ph("Portrait")}</div>
+            <div class="portrait">${pic(P.portrait, "Portrait of " + P.name)}</div>
             <div>
               <h1>${esc(P.name)}</h1>
               <p class="title">${esc(P.title)}</p>
               <p class="tagline">${esc(P.tagline)}</p>
+              <p class="role-now"><span class="live" aria-hidden="true"></span>${esc(P.role)}</p>
               <div class="actions"><a class="btn primary" href="${P.cv}" download>Download CV</a><a class="btn" href="about.html#contact">Get in touch</a></div>
             </div>
           </div>
@@ -112,7 +152,7 @@
     experience() {
       timelinePage({
         title: "Experience", intro: "Jobs, internships and campus roles. Tap an entry for details.",
-        types: [["work", "Work", "--pc"], ["internship", "Internships", "--pb"], ["campus", "Campus & academic", "--pa"]],
+        types: [["work", "Work", "--pb"], ["internship", "Internships", "--pa"], ["campus", "Campus & academic", "--pc"]],
         items: P.experience.map((e) => ({ type: e.type, date: `${e.start} – ${e.end}`, title: e.role, sub: `${e.org} · ${e.place}`, summary: e.summary, points: e.points, tags: e.tags })),
       });
     },
@@ -120,9 +160,10 @@
     education() {
       timelinePage({
         title: "Education", intro: "Degree, exchange and continued learning.",
-        types: [["degree", "Degree", "--pc"], ["exchange", "Exchange", "--pb"], ["courses", "Courses", "--pa"], ["school", "School", "--muted"]],
-        items: P.education.map((e) => ({ type: e.kind, date: `${e.start} – ${e.end}`, title: e.title, sub: e.place, summary: e.summary, points: e.points, tags: [], link: e.link })),
+        types: [["degree", "Degree", "--pb"], ["exchange", "Exchange", "--pa"], ["courses", "Courses", "--pc"]],
+        items: P.education.map((e) => ({ type: e.kind, date: `${e.start} – ${e.end}`, title: e.title, sub: e.place, summary: e.summary, points: e.points, tags: [], link: e.link, photo: e.photo, photoAlt: e.photoAlt })),
         openFirst: "degree",
+        banner: { base: P.photos.graduationWide, alt: "Graduation day at Universitas Indonesia", caption: "Graduation day, Universitas Indonesia, 2025" },
       });
     },
 
@@ -187,12 +228,13 @@
       main.innerHTML = `
         <header class="page-head wrap"><h1>About</h1></header>
         <div class="wrap about-grid">
-          <div class="portrait">${ph("Portrait")}</div>
+          <div class="about-photos"><div class="portrait">${pic(P.portrait, "Portrait of " + P.name)}</div><figure class="photo-card">${pic(P.photos.graduation, "Graduation at Universitas Indonesia")}<figcaption>Graduation, Universitas Indonesia</figcaption></figure></div>
           <div>
             <section class="card"><h2>Hello</h2>${P.bio.map((b) => `<p>${esc(b)}</p>`).join("")}</section>
             <section class="card"><h2>What I work on</h2><ul class="focus left">${P.focus.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></section>
             <section class="card" id="contact"><h2>Contact</h2>
               <div class="contact-list">
+                <a class="btn" href="tel:${P.phone.replace(/\s/g, "")}">☎ ${esc(P.phone)}</a>
                 <button class="btn" id="copy-email">✉ ${esc(P.email)}</button>
                 <a class="btn" href="${P.links.linkedin}">LinkedIn</a>
                 <a class="btn" href="${P.links.github}">GitHub</a>
@@ -212,17 +254,18 @@
   };
 
   // Shared filterable, expandable timeline (Experience and Education)
-  function timelinePage({ title, intro, types, items, openFirst }) {
+  function timelinePage({ title, intro, types, items, openFirst, banner }) {
     const first = openFirst ? items.findIndex((it) => it.type === openFirst) : 0;
     main.innerHTML = `
       <header class="page-head narrow"><h1>${title}</h1><p>${intro}</p></header>
+      ${banner ? `<figure class="banner narrow">${pic(banner.base, banner.alt)}<figcaption>${esc(banner.caption)}</figcaption></figure>` : ""}
       <div class="narrow">
         <div class="chips" role="group" aria-label="Filter">${[["all", "All"], ...types].map(([k, t], i) => `<button class="chip" data-f="${k}" aria-pressed="${i === 0}">${t}</button>`).join("")}</div>
         <div class="legend">${types.map(([, t, c]) => `<span><i style="background:var(${c})"></i>${t}</span>`).join("")}</div>
         <ol class="timeline">${items.map((e, i) => `
           <li class="tl-item" data-type="${e.type}" style="--dot:var(${types.find((t) => t[0] === e.type)[2]})"><details class="tl-card"${i === first ? " open" : ""}>
             <summary><span class="date">${e.date}</span><h3>${esc(e.title)}</h3><span class="org">${esc(e.sub)}</span><span class="sum">${esc(e.summary)}</span><span class="plus" aria-hidden="true">+</span></summary>
-            <div class="tl-body">${e.points.length ? `<ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : "<p></p>"}${e.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}${e.link ? `<p><a href="${e.link}">More →</a></p>` : ""}</div>
+            <div class="tl-body">${e.photo ? `<figure class="tl-photo">${pic(e.photo, e.photoAlt || e.title)}</figure>` : ""}${e.points.length ? `<ul>${e.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : "<p></p>"}${e.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}${e.link ? `<p><a href="${e.link}">More →</a></p>` : ""}</div>
           </details></li>`).join("")}</ol>
       </div>`;
     document.querySelectorAll(".tl-item").forEach(reveal);

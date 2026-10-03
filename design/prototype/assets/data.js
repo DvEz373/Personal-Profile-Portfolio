@@ -1,10 +1,14 @@
 // All site content lives here. Edit this file to update the website.
 window.PROFILE = {
   name: "Devin Ezekiel Purba",
-  title: "Power System Engineer",
+  title: "Electrical Engineer · Energy & AI",
+  role: "Power System Engineer at Lean Power Solutions Indonesia",
   tagline: "Renewable energy · Power systems · AI & intelligent control",
   location: "Jakarta, Indonesia",
   email: "ezekiel.devin@gmail.com",
+  phone: "+62 812 9161 5474",
+  portrait: "assets/img/portrait",       // .webp + .jpg
+  photos: { graduation: "assets/img/graduation", graduationWide: "assets/img/graduation-wide" },
   links: {
     linkedin: "https://www.linkedin.com/in/devin-ezekiel/",
     github: "https://github.com/DvEz373",
@@ -173,12 +177,13 @@ window.PROFILE = {
     ["Deep Learning Specialization", "DeepLearning.AI", "2023", "https://coursera.org/share/483a4f1431dacdf4c2c279b29fde1627"],
   ],
 
-  // Education timeline, newest end date first. kind: degree | exchange | courses | school
+  // Education timeline, newest end date first. kind: degree | exchange | courses. Optional photo: path without extension.
   education: [
     {
       kind: "degree", title: "B.Eng. Electrical Engineering", place: "Universitas Indonesia · Depok",
       start: "Aug 2021", end: "Jul 2025",
       summary: "Control Systems and Automation · GPA 3.84 / 4.00 · Cum Laude",
+      photo: "assets/img/graduation", photoAlt: "Devin in graduation gown beside the #UI Graduation sign at Universitas Indonesia",
       points: ["Thesis: computation utility optimization with multi-agent deep reinforcement learning in a digital twin of I-IoT edge networks.", "Karya Salemba Empat (KSE) merit scholarship awardee."],
     },
     {
@@ -194,12 +199,6 @@ window.PROFILE = {
       summary: "Fully funded research exchange on AI for 5G Open RAN energy saving.",
       points: ["Selected for a fully funded research-based program in collaboration with NTUST.", "Details of the research work are on the Experience page."],
       link: "experience.html",
-    },
-    {
-      kind: "school", title: "Senior high school (placeholder)", place: "School name · City",
-      start: "20XX", end: "2021",
-      summary: "Placeholder: add your school, major and any highlights, or delete this entry.",
-      points: [],
     },
   ],
 };
