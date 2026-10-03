@@ -115,8 +115,6 @@ const phasor = (k: number) => {
       </g>
     )
   }
-  <text x="14" y="24" class="fig">{fig}</text>
-  <text x={W - 14} y={H - 14} text-anchor="end" class="fig small">ILLUSTRATION</text>
 </svg>
 
 <style>
@@ -184,7 +182,7 @@ const phasor = (k: number) => {
     stroke: var(--leaf);
   }
   .fig {
-    font-family: var(--font-mono), monospace;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 11px;
     letter-spacing: 0.08em;
     fill: var(--ink-2);

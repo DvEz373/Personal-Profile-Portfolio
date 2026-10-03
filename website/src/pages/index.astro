@@ -28,11 +28,11 @@ const feeders = [
   <section class="hero" aria-labelledby="hero-name">
     <div class="wrap grid">
       <div class="intro">
-        <p class="label eyebrow">§ 00 · {profile.headline} · {profile.city}, {profile.country}</p>
+        <p class="label eyebrow">{profile.headline} · {profile.city}, {profile.country}</p>
         <h1 id="hero-name" class="name serif">{profile.name}</h1>
         <p class="headline">
           {profile.headline} <span class="sep" aria-hidden="true">—</span>
-          <em class="accent">{profile.headlineAccent}</em>
+          <span class="accent">{profile.headlineAccent}</span>
         </p>
         <p class="now">
           <span class="live-dot" aria-hidden="true"></span>
@@ -67,7 +67,7 @@ const feeders = [
 
   <section class="section" aria-labelledby="s-explore">
     <div class="wrap">
-      <SectionHead index="02" title="Explore" id="s-explore" note="Five feeders off one bus. Pick a circuit" />
+      <SectionHead index="02" title="Explore" id="s-explore" note="Experience, education, projects, skills and contact" />
       <FeederNav feeders={feeders} source={profile.initials} />
     </div>
   </section>
@@ -105,9 +105,10 @@ const feeders = [
     align-items: center;
   }
   .name {
-    font-size: var(--step-3);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
     margin: 14px 0 18px;
   }
   .headline {
@@ -119,7 +120,6 @@ const feeders = [
   }
   .headline .accent {
     color: var(--signal);
-    font-size: 1.12em;
   }
   .sep {
     color: var(--line-strong);

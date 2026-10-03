@@ -37,7 +37,7 @@ const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CAT
           <li data-kind={p.data.category} class={TONE[p.data.category]}>
             <a class="card" href={url(`projects/${p.id}/`)}>
               <span class="fig" transition:name={`fig-${p.id}`}>
-                <ProjectArt id={p.id} category={p.data.category} fig={`FIG. ${String(i + 1).padStart(2, "0")}`} />
+                <ProjectArt id={p.id} category={p.data.category} fig="" />
               </span>
               <span class="body">
                 <span class="meta mono">
@@ -136,7 +136,7 @@ const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CAT
     color: var(--c-ink);
   }
   .title {
-    font-family: var(--font-serif), Georgia, serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 1.75rem;
     line-height: 1.1;
     letter-spacing: -0.01em;

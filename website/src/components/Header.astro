@@ -29,8 +29,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
           items.map((item) => (
             <li>
               <a href={url(item.href)} aria-current={isActive(item.href) ? "page" : undefined}>
-                <span class="idx" aria-hidden="true">{item.idx}</span>
-                {item.label}
+                                {item.label}
               </a>
             </li>
           ))
@@ -116,7 +115,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     transition: color var(--t-ui) var(--ease), background-color var(--t-ui) var(--ease);
   }
   .nav-links .idx {
-    font-family: var(--font-mono), monospace;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.7rem;
     color: var(--ink-2);
     transition: color var(--t-ui) var(--ease);
@@ -132,7 +131,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
   .nav-links a[aria-current="page"] {
     color: var(--ink);
   }
-  .nav-links a[aria-current="page"]::after {
+  .nav-links a::after {
     content: "";
     position: absolute;
     left: 12px;
@@ -141,6 +140,15 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     height: 2px;
     border-radius: 2px;
     background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-ui) var(--ease);
+  }
+  .nav-links a:hover::after {
+    transform: scaleX(0.4);
+  }
+  .nav-links a[aria-current="page"]::after {
+    transform: scaleX(1);
   }
   .tools {
     display: flex;
@@ -164,6 +172,12 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
   }
   .tool:hover {
     border-color: var(--signal);
+  }
+  .tool :global(svg) {
+    transition: transform var(--t-page) var(--ease-settle);
+  }
+  [data-theme-toggle]:active :global(svg) {
+    transform: rotate(90deg) scale(0.9);
   }
   .tool .kbd {
     border: 0;
@@ -203,7 +217,16 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       margin: 0;
     }
     .nav-links {
-      display: none;
+      display: flex;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      clip-path: inset(0 0 100% 0);
+      transition:
+        opacity var(--t-ui) var(--ease),
+        transform var(--t-ui) var(--ease),
+        clip-path var(--t-page) var(--ease),
+        visibility 0s linear var(--t-page);
       flex-direction: column;
       gap: 0;
       padding: 8px var(--gutter) 20px;
@@ -212,7 +235,11 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       box-shadow: var(--shadow);
     }
     .nav-links[data-open] {
-      display: flex;
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      clip-path: inset(0 0 0 0);
+      transition-delay: 0s;
     }
     .nav-links a {
       padding: 14px 4px;
@@ -223,6 +250,9 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     .nav-links .idx {
       display: inline;
       font-size: 0.8rem;
+    }
+    .nav-links a::after {
+      transform-origin: top;
     }
     .nav-links a[aria-current="page"]::after {
       left: 0;

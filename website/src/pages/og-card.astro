@@ -16,15 +16,13 @@ const p = await getProfile();
     <meta name="robots" content="noindex" />
     <title>OG card</title>
     <Font cssVariable="--font-sans" />
-    <Font cssVariable="--font-mono" />
-    <Font cssVariable="--font-serif" />
   </head>
   <body>
     <div class="card drafting">
       <div class="left">
-        <p class="label">§ 00 · {p.headline} · {p.city}, {p.country}</p>
+        <p class="label">{p.headline} · {p.city}, {p.country}</p>
         <h1 class="serif">{p.name}</h1>
-        <p class="hl">{p.headline} <span class="sep">—</span> <em class="accent">{p.headlineAccent}</em></p>
+        <p class="hl">{p.headline} <span class="sep">—</span> <span class="accent">{p.headlineAccent}</span></p>
         <p class="tag mono">{p.tagline}</p>
         <svg class="waves" viewBox="0 0 600 60" aria-hidden="true">
           <path d="M0 30 C50 0 100 0 150 30 S250 60 300 30 400 0 450 30 550 60 600 30" stroke="#f5c518" />

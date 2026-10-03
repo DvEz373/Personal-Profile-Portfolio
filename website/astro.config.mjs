@@ -19,30 +19,17 @@ export default defineConfig({
   trailingSlash: "ignore",
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   integrations: [sitemap({ filter: (page) => !page.includes("/og-card") })],
+  // One typeface for the whole site (Geist, upright + italic); hierarchy comes from weight, size and colour.
   fonts: [
     {
       provider: local,
       name: "Geist",
       cssVariable: "--font-sans",
       fallbacks: ["system-ui", "sans-serif"],
-      options: { variants: [{ src: [font("-variable/geist/files/geist-latin-wght-normal.woff2")], weight: "100 900", style: "normal" }] },
-    },
-    {
-      provider: local,
-      name: "Geist Mono",
-      cssVariable: "--font-mono",
-      fallbacks: ["ui-monospace", "monospace"],
-      options: { variants: [{ src: [font("-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2")], weight: "100 900", style: "normal" }] },
-    },
-    {
-      provider: local,
-      name: "Instrument Serif",
-      cssVariable: "--font-serif",
-      fallbacks: ["Georgia", "serif"],
       options: {
         variants: [
-          { src: [font("/instrument-serif/files/instrument-serif-latin-400-normal.woff2")], weight: 400, style: "normal" },
-          { src: [font("/instrument-serif/files/instrument-serif-latin-400-italic.woff2")], weight: 400, style: "italic" },
+          { src: [font("-variable/geist/files/geist-latin-wght-normal.woff2")], weight: "100 900", style: "normal" },
+          { src: [font("-variable/geist/files/geist-latin-wght-italic.woff2")], weight: "100 900", style: "italic" },
         ],
       },
     },

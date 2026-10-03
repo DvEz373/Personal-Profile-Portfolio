@@ -161,26 +161,28 @@ button {
 
 /* ---------- Type helpers ---------- */
 .mono {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-feature-settings: "zero" 1;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 0;
 }
 .serif {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 .serif em,
 em.serif,
 .accent {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
+  color: var(--signal);
 }
 .label {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: var(--step--1);
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -200,13 +202,14 @@ em.serif,
 /* ---------- Section heading: "§ 01 ── Title ───── note" ---------- */
 .section-head {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
   align-items: baseline;
   column-gap: 16px;
   margin-bottom: clamp(24px, 4vw, 40px);
 }
 .section-head .idx {
-  font-family: var(--font-mono), monospace;
+  display: none;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--step--1);
   color: var(--signal);
 }
@@ -286,7 +289,7 @@ em.serif,
   flex: none;
 }
 .kbd {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.75rem;
   padding: 1px 6px;
   border: 1px solid var(--line-strong);
@@ -333,14 +336,14 @@ em.serif,
   color: var(--paper);
 }
 .chip .count {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.75rem;
   opacity: 0.7;
   margin-left: 6px;
 }
 .tag {
   display: inline-block;
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.75rem;
   line-height: 1.4;
   padding: 3px 8px;
@@ -407,9 +410,10 @@ em.serif,
   border-radius: var(--radius);
 }
 .fig-label {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -443,11 +447,11 @@ em.serif,
   isolation: isolate;
 }
 .page-head h1 {
-  font-family: var(--font-serif), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(2.6rem, 1.6rem + 4.5vw, 4.75rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 650;
+  font-size: clamp(2.4rem, 1.6rem + 3.6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   margin: 10px 0 14px;
 }
 .page-head p {
@@ -501,4 +505,69 @@ em.serif,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ==========================================================================
+   Motion pass (v4.1): every animation is short, eased, and off for reduced motion.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero and page headers: staggered entrance on load */
+  .hero .intro > *,
+  .hero .portrait-wrap,
+  .page-head .wrap > * {
+    animation: rise 700ms var(--ease) both;
+  }
+  .hero .intro > :nth-child(2),
+  .page-head .wrap > :nth-child(2) { animation-delay: 60ms; }
+  .hero .intro > :nth-child(3),
+  .page-head .wrap > :nth-child(3) { animation-delay: 120ms; }
+  .hero .intro > :nth-child(4) { animation-delay: 180ms; }
+  .hero .intro > :nth-child(5) { animation-delay: 240ms; }
+  .hero .portrait-wrap { animation-delay: 160ms; animation-name: rise-fade; }
+
+  /* Scroll reveal for content blocks (scroll-driven where supported; always visible otherwise) */
+  @supports (animation-timeline: view()) {
+    .section-head,
+    .instrument,
+    .sld li,
+    .blocks > li,
+    .gantt,
+    .list > .item,
+    .grid > li,
+    .domain,
+    .certs li,
+    .text > section,
+    .photos .photo,
+    .story > section,
+    .figs li {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 18%;
+    }
+  }
+
+  /* Expandable entries open and close smoothly */
+  :root { interpolate-size: allow-keywords; }
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 320ms var(--ease), content-visibility 320ms allow-discrete;
+  }
+  details[open]::details-content { block-size: auto; }
+  details[open] > :not(summary) { animation: fade-down 360ms var(--ease) both; }
+
+  /* Items revealed by a filter fade in */
+  [data-kind]:not([hidden]) { animation: fade-in 280ms var(--ease) both; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+}
+@keyframes rise-fade {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+}
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
 }

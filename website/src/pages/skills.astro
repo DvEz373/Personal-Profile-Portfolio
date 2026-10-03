@@ -33,8 +33,7 @@ const tone = (c: string) => `c-${c}`;
     {
       skills.map((g, gi) => (
         <section class:list={["domain", tone(g.color)]} aria-labelledby={`d-${g.id}`}>
-          <p class="label idx">04.{gi + 1}</p>
-          <h2 id={`d-${g.id}`}>{g.name}</h2>
+                    <h2 id={`d-${g.id}`}>{g.name}</h2>
           <p class="blurb">{g.blurb}</p>
           <ul class="meters">
             {g.items.map((s) => (
@@ -64,7 +63,7 @@ const tone = (c: string) => `c-${c}`;
           certs.map((c, i) => (
             <li>
               <a href={c.url} rel="noopener">
-                <span class="n mono">{String(i + 1).padStart(2, "0")}</span>
+                
                 <span class="what">
                   <span class="t">{c.name}</span>
                   <span class="by">{c.issuer}</span>
@@ -131,8 +130,8 @@ const tone = (c: string) => `c-${c}`;
     color: var(--c-ink);
   }
   .domain h2 {
-    font-family: var(--font-serif), Georgia, serif;
-    font-weight: 400;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: 600;
     font-size: 1.85rem;
     letter-spacing: -0.01em;
   }
