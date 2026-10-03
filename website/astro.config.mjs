@@ -18,7 +18,7 @@ export default defineConfig({
   base,
   trailingSlash: "ignore",
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
-  integrations: [sitemap({ filter: (page) => !page.includes("/og-card") })],
+  integrations: [sitemap({ filter: (page) => !page.includes("/og-card") && !page.includes("/card/print") })],
   // One typeface for the whole site (Geist, upright + italic); hierarchy comes from weight, size and colour.
   fonts: [
     {

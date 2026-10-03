@@ -1,0 +1,307 @@
+---
+import Bare from "../../layouts/Bare.astro";
+import Icon from "../../components/Icon.astro";
+import Photo from "../../components/Photo.astro";
+import portrait from "../../assets/photos/portrait.jpg";
+import { getProfile } from "../../lib/content";
+import { url } from "../../lib/url";
+import { cardUrl, qrSvg } from "../../lib/qr";
+
+const p = await getProfile();
+const link = cardUrl(Astro.site);
+const qr = await qrSvg(link);
+const tel = p.phone.replace(/\s/g, "");
+const wa = `https://wa.me/${tel.replace(/^\+/, "")}`;
+const home = new URL(url(), Astro.site).toString();
+const short = link.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+const links = [
+  { href: `mailto:${p.email}`, icon: "mail", label: "Email", sub: p.email },
+  { href: `tel:${tel}`, icon: "phone", label: "Call", sub: p.phone },
+  { href: wa, icon: "whatsapp", label: "WhatsApp", sub: "Chat on WhatsApp" },
+  { href: p.links.linkedin, icon: "linkedin", label: "LinkedIn", sub: "devin-ezekiel" },
+  { href: p.links.instagram, icon: "instagram", label: "Instagram", sub: "@dvn.ezekiel" },
+  { href: p.links.github, icon: "github", label: "GitHub", sub: "DvEz373" },
+  { href: home, icon: "globe", label: "Website", sub: "Portfolio, experience and projects" },
+] as const;
+---
+
+<Bare title={`${p.name} · Name card`} description={`${p.name}, ${p.role} at ${p.org}. Save contact, email, WhatsApp, LinkedIn, Instagram and GitHub.`}>
+  <main class="card-page">
+    <article class="card">
+      <header class="top">
+        <Photo src={portrait} alt={`Portrait of ${p.name}`} widths={[160, 240]} sizes="96px" ratio="1" eager class="avatar" />
+        <h1>{p.name}</h1>
+        <p class="role">{p.role} · {p.org}</p>
+        <p class="head">{p.headline} · <span>{p.headlineAccent}</span></p>
+      </header>
+
+      <a class="btn primary save" href={url("devin-ezekiel-purba.vcf")} download><Icon name="vcard" />Save contact</a>
+
+      <ul class="links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener">
+                <Icon name={l.icon} />
+                <span class="t">
+                  <strong>{l.label}</strong>
+                  <span>{l.sub}</span>
+                </span>
+                <Icon name="arrow-up-right" class="go" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="actions">
+        <button class="btn" type="button" data-share data-url={link} data-title={p.name}><Icon name="share" /><span>Share</span></button>
+        <button class="btn" type="button" data-show-qr><Icon name="qr" />Show QR</button>
+      </div>
+      <p class="more">
+        <a href={url("card-qr.svg")} download="qr-devin-ezekiel-purba.svg">Download QR</a>
+        <span class="dot" aria-hidden="true">·</span>
+        <a href={url("card/print/")}>Print card</a>
+      </p>
+    </article>
+  </main>
+
+  <dialog class="qr" data-qr aria-label="QR code for this card">
+    <div class="qr-box" role="img" aria-label={`QR code linking to ${short}`} set:html={qr} />
+    <p class="qr-name">{p.name}</p>
+    <p class="qr-url">{short}</p>
+    <form method="dialog"><button class="btn" type="submit"><Icon name="close" />Close</button></form>
+  </dialog>
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+</Bare>
+
+<script>
+  const toast = (msg: string) => {
+    const el = document.querySelector<HTMLElement>("[data-toast]");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    window.setTimeout(() => el.classList.remove("show"), 2200);
+  };
+  const share = document.querySelector<HTMLButtonElement>("[data-share]");
+  if (share) {
+    const data = { title: share.dataset.title, url: share.dataset.url };
+    if (!navigator.share) share.querySelector("span")!.textContent = "Copy link";
+    share.addEventListener("click", async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share(data);
+        } catch {
+          /* closed */
+        }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(data.url || location.href);
+        toast("Link copied");
+      } catch {
+        toast(data.url || location.href);
+      }
+    });
+  }
+  const dialog = document.querySelector<HTMLDialogElement>("[data-qr]");
+  document.querySelector("[data-show-qr]")?.addEventListener("click", () => dialog?.showModal());
+  dialog?.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>
+
+<style>
+  .card-page {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px 40px;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, var(--signal-soft), transparent 70%),
+      var(--paper);
+  }
+  .card {
+    width: min(100%, 420px);
+    padding: 28px 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    animation: rise var(--t-page) var(--ease) both;
+  }
+  .top {
+    text-align: center;
+  }
+  .top :global(.avatar) {
+    width: 96px;
+    margin: 0 auto 14px;
+  }
+  .top :global(.avatar .frame) {
+    border-radius: 50%;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+  }
+  .role {
+    margin: 0 0 4px;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+  }
+  .head {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .head span {
+    color: var(--signal);
+  }
+  .save {
+    width: 100%;
+    justify-content: center;
+    margin: 22px 0 14px;
+  }
+  .links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .links li + li {
+    border-top: 1px solid var(--line);
+  }
+  .links a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color var(--t-ui) var(--ease);
+  }
+  .links a:hover,
+  .links a:focus-visible {
+    background: var(--panel-2);
+  }
+  .links :global(svg) {
+    flex: none;
+  }
+  .t {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+  .t strong {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .t span {
+    color: var(--ink-2);
+    font-size: 0.82rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .links :global(.go) {
+    color: var(--ink-2);
+    transition: transform var(--t-ui) var(--ease);
+  }
+  .links a:hover :global(.go) {
+    transform: translate(2px, -2px);
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .actions .btn {
+    justify-content: center;
+  }
+  .more {
+    margin: 16px 0 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .more .dot {
+    margin: 0 8px;
+  }
+  .more a {
+    color: var(--signal);
+  }
+  .qr {
+    width: min(92vw, 400px);
+    padding: 28px 24px 22px;
+    border: 0;
+    border-radius: var(--radius-l);
+    background: #fff;
+    color: #12161c;
+    text-align: center;
+  }
+  .qr::backdrop {
+    background: rgb(10 13 18 / 0.7);
+    backdrop-filter: blur(4px);
+  }
+  .qr[open] {
+    animation: rise var(--t-ui) var(--ease) both;
+  }
+  .qr-box :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .qr-name {
+    margin: 8px 0 2px;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .qr-url {
+    margin: 0 0 16px;
+    font-size: 0.8rem;
+    color: #4c5866;
+    word-break: break-all;
+  }
+  .qr .btn {
+    --_bg: #fff;
+    --_fg: #12161c;
+    --_bd: #aeb8c3;
+  }
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    translate: -50% 16px;
+    padding: 10px 16px;
+    border-radius: var(--radius-s);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-ui) var(--ease), translate var(--t-ui) var(--ease);
+  }
+  .toast:global(.show) {
+    opacity: 1;
+    translate: -50% 0;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .qr[open] {
+      animation: none;
+    }
+  }
+</style>

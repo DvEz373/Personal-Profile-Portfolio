@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "skills/", "about/"];
+const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "skills/", "about/", "card/", "card/print/"];
 
 function collectErrors(page: Page) {
   const errors: string[] = [];
@@ -113,4 +113,17 @@ test("unknown pages show the 404 page", async ({ page }) => {
   const res = await page.goto("no-such-page/");
   expect(res?.status()).toBe(404);
   await expect(page.locator("h1")).toHaveText("This page isn't connected.");
+});
+
+test("name card links contact routes and shows a scannable QR", async ({ page, request }) => {
+  await page.goto("card/");
+  for (const name of ["Save contact", "Email", "WhatsApp", "LinkedIn", "Instagram", "GitHub", "Website"]) {
+    await expect(page.getByRole("link", { name: new RegExp(name) }).first()).toBeVisible();
+  }
+  await expect(page.locator('a[href^="https://wa.me/62"]')).toHaveCount(1);
+  await page.getByRole("button", { name: "Show QR" }).click();
+  await expect(page.locator("dialog[open] .qr-box svg")).toBeVisible();
+  const qr = await request.get("card-qr.svg");
+  expect(qr.status()).toBe(200);
+  expect(await qr.text()).toContain("<svg");
 });

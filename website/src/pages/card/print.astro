@@ -1,0 +1,204 @@
+---
+/**
+ * Print-ready name card, front and back. Each side prints on its own page at
+ * 91 × 61 mm: the 85 × 55 mm card plus 3 mm bleed on every edge, with text kept
+ * 4 mm inside the trim line. Use "Save as PDF" with margins set to none.
+ */
+import Bare from "../../layouts/Bare.astro";
+import { getProfile } from "../../lib/content";
+import { cardUrl, qrSvg } from "../../lib/qr";
+
+const p = await getProfile();
+const link = cardUrl(Astro.site);
+const qr = await qrSvg(link, "#12161c", "#ffffff");
+const short = link.replace(/^https?:\/\//, "").replace(/\/$/, "");
+---
+
+<Bare title={`${p.name} · Printable name card`} description="Print-ready name card, front and back, 85 × 55 mm with 3 mm bleed." noindex>
+  <main class="sheet">
+    <div class="intro">
+      <h1>Printable name card</h1>
+      <p>85 × 55 mm with 3 mm bleed. Print or choose <strong>Save as PDF</strong>, margins <strong>None</strong>, scale <strong>100%</strong>, background graphics on. Test-scan a printed proof on iPhone and Android before ordering.</p>
+      <button class="btn primary" type="button" data-print>Print / Save as PDF</button>
+    </div>
+
+    <section class="side front" aria-label="Front">
+      <div class="safe">
+        <div class="accent" aria-hidden="true"></div>
+        <p class="name">{p.name}</p>
+        <p class="role">{p.role}</p>
+        <p class="org">{p.org}</p>
+        <ul class="contact">
+          <li>{p.phone}</li>
+          <li>{p.email}</li>
+          <li>linkedin.com/in/devin-ezekiel</li>
+          <li>instagram.com/dvn.ezekiel</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="side back" aria-label="Back">
+      <div class="safe">
+        <div class="qr" role="img" aria-label={`QR code linking to ${short}`} set:html={qr} />
+        <div class="cta">
+          <p class="h">{p.headline}<br /><span>{p.headlineAccent}</span></p>
+          <p class="s">Scan to save my contact, WhatsApp, LinkedIn, Instagram and portfolio.</p>
+          <p class="u" set:html={short.replace(/\//g, "/<wbr>")} />
+        </div>
+      </div>
+    </section>
+  </main>
+</Bare>
+
+<script>
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+</script>
+
+<style>
+  @page {
+    size: 91mm 61mm;
+    margin: 0;
+  }
+  .sheet {
+    min-height: 100dvh;
+    padding: 32px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 24px;
+    background: var(--paper);
+  }
+  .intro {
+    flex-basis: 100%;
+    max-width: 640px;
+    text-align: center;
+  }
+  .intro h1 {
+    font-size: 1.5rem;
+    margin: 0 0 8px;
+  }
+  .intro p {
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    margin: 0 0 16px;
+  }
+  .side {
+    /* Exact print size incl. bleed; outline marks the trim line on screen. */
+    position: relative;
+    width: 91mm;
+    height: 61mm;
+    padding: 7mm; /* 3 mm bleed + 4 mm safe margin */
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #12161c;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .side::after {
+    content: "";
+    position: absolute;
+    inset: 3mm;
+    border: 0.2mm dashed rgb(29 95 196 / 0.35);
+    pointer-events: none;
+  }
+  .safe {
+    position: relative;
+    height: 100%;
+  }
+  .front .accent {
+    position: absolute;
+    left: -7mm;
+    top: -7mm;
+    bottom: -7mm;
+    width: 5mm; /* 2 mm visible after trim */
+    background: linear-gradient(#1d5fc4, #0e8f7e 60%, #c99400);
+  }
+  .front .safe {
+    padding-left: 1mm;
+  }
+  .name {
+    margin: 0;
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .role {
+    margin: 1.2mm 0 0;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #1d5fc4;
+  }
+  .org {
+    margin: 0.4mm 0 0;
+    font-size: 7.5pt;
+    color: #4c5866;
+  }
+  .contact {
+    position: absolute;
+    bottom: 0;
+    left: 1mm;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 7pt;
+    line-height: 1.5;
+  }
+  .back .safe {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+  }
+  .back .qr {
+    flex: none;
+    width: 30mm; /* includes the 4-module quiet zone; the code itself is ≈ 24 mm */
+  }
+  .back .qr :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .h {
+    margin: 0 0 2mm;
+    font-size: 9pt;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h span {
+    color: #1d5fc4;
+  }
+  .s {
+    margin: 0 0 2mm;
+    font-size: 6.5pt;
+    line-height: 1.4;
+    color: #4c5866;
+  }
+  .u {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: 6pt;
+    font-weight: 600;
+  }
+  @media print {
+    .sheet {
+      display: block;
+      padding: 0;
+      min-height: 0;
+      background: none;
+    }
+    .intro {
+      display: none;
+    }
+    .side {
+      box-shadow: none;
+      break-after: page;
+    }
+    .side::after {
+      display: none;
+    }
+  }
+</style>
