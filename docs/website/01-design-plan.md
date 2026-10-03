@@ -1,6 +1,6 @@
 # Website design plan
 
-Status: **Draft v2 for review** (v1 feedback applied, see the work log) · Prototype: [`design/prototype/`](../../design/prototype/)
+Status: **Draft v3 for review** (review rounds 1–2 applied, see the work log) · Prototype: [`design/prototype/`](../../design/prototype/)
 
 ## 1. Goals (from the brief)
 
@@ -143,3 +143,29 @@ The site speaks to a general Electrical/Computer Engineering and Computer Scienc
 | Identity | AI and digital transformation enthusiast |
 
 Specialist detail (limiters, grid codes, PSS/E) stays on the Experience page, not the front page.
+
+## 12. Palette and imagery (v3)
+
+Colours are taken from the two photos so the page and the pictures belong together.
+
+| Token | Light | Dark | Source | Use |
+|---|---|---|---|---|
+| Neutrals `--bg/--surface` | `#f4f6f8` / `#ffffff` | `#0f1318` / `#171c23` | Charcoal studio backdrop of the portrait | Page and cards |
+| `--accent` | `#1d5fc4` | `#6fa6ff` | Blue of the #UI sign | Links, buttons, phase B |
+| `--sun` | `#c99400` | `#f5c518` | Yellow of the #UI sign, solar | Highlights, phase A (never body text on white) |
+| `--leaf` | `#0e8f7e` | `#2fc4ae` | Renewable / green campus | Status dot, phase C |
+
+The three waves and the timeline categories reuse sun / blue / leaf, and headings get a short sun→blue→leaf underline.
+
+**Background ornaments:** one fixed SVG layer behind all pages, 6–7 % opacity: dot grid, PCB circuit traces with travelling pulses, a chip, two rotating wind turbines, a solar array with a sun, a transmission tower with flowing lines, and a small neural network with control/ML equations. Phone widths hide the text parts. All motion stops under `prefers-reduced-motion`.
+
+**Photos:** `assets/img/`, each as WebP with JPEG fallback.
+
+| File | Crop | Used on |
+|---|---|---|
+| `portrait` 600×600 | Square | Home hero, About |
+| `graduation` 960×1200 | 4:5 around subject, sign and tower | About, Education degree entry |
+| `graduation-wide` 1600×900 | 16:9 subject + sign | Education page banner |
+
+**Touch-up applied:** tone-preserving auto-contrast, slight brightness and saturation lift, shadow lift on the graduation photo (subject was in shade), light sharpening, soft vignette. No retouching of the face.
+The portrait source is only 288×288 px, so it was upscaled to 600 px; a larger original would look sharper on high-resolution screens.
