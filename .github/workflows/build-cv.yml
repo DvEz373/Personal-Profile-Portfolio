@@ -1,0 +1,35 @@
+name: Build CV
+
+on:
+  push:
+    paths: ["cv/**", ".github/workflows/build-cv.yml"]
+  pull_request:
+    paths: ["cv/**"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: cv
+
+      - name: ATS text-extraction check
+        run: |
+          sudo apt-get install -y poppler-utils >/dev/null
+          pdftotext -enc UTF-8 cv/main.pdf cv/main.txt
+          for kw in "Devin Ezekiel Purba" "Education" "Experience" "Skills" "PSCAD" "Python"; do
+            grep -q "$kw" cv/main.txt || { echo "::error::'$kw' not extractable from PDF"; exit 1; }
+          done
+          echo "ATS check passed"
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: CV_Devin_Ezekiel_Purba
+          path: cv/main.pdf

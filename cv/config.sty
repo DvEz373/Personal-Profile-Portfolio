@@ -1,0 +1,42 @@
+\usepackage[a4paper,
+    left=10.6mm,
+    right=10.6mm,
+    top=11.6mm,
+    bottom=4.9mm]{geometry}
+
+% --- ATS: make every glyph map to real Unicode text when the PDF is parsed ---
+\input{glyphtounicode}
+\pdfgentounicode=1
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Devin Ezekiel Purba - CV},
+    pdfauthor={Devin Ezekiel Purba},
+    pdfsubject={Curriculum Vitae},
+    pdfkeywords={Power Systems, Control Systems, PSCAD, PSS/E, MATLAB, Python, Machine Learning, Reinforcement Learning},
+    pdfpagemode=UseNone,
+}
+
+\newcommand{\newEntry}[5]{
+    \noindent \textbf{#1} \hfill \textit{#2} \\
+    {\small \noindent \textit{#3} \hfill \textit{#4} }
+    {\small #5}
+}
+
+% Section heading with a full-width rule underneath
+\titleformat{\section}{\large\bfseries}{}{0em}{}[{\vspace{0.1em}\titlerule[1pt]}]
+\titlespacing*{\section}{0pt}{0.6em}{0.4em}
+
+\renewcommand{\baselinestretch}{1.0}
