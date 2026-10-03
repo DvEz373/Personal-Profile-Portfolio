@@ -19,8 +19,8 @@ const tel = profile.phone.replace(/\s/g, "");
 
   <div class="wrap layout">
     <div class="photos">
-      <Photo src={portrait} alt={`Portrait of ${profile.name}`} widths={[300, 450, 600]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5" label="FIG. 05.1" />
-      <Photo src={graduation} alt="Devin in a graduation gown beside the #UI Graduation sign at Universitas Indonesia" widths={[300, 450, 640]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5" label="FIG. 05.2" caption="Graduation, Universitas Indonesia, 2025" />
+      <Photo src={portrait} alt={`Portrait of ${profile.name}`} widths={[300, 450, 600]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5"  />
+      <Photo src={graduation} alt="Devin in a graduation gown beside the #UI Graduation sign at Universitas Indonesia" widths={[300, 450, 640]} sizes="(min-width: 960px) 320px, 45vw" ratio="4 / 5"  caption="Graduation, Universitas Indonesia, 2025" />
     </div>
 
     <div class="text">
@@ -146,7 +146,7 @@ const tel = profile.phone.replace(/\s/g, "");
     border-bottom: 1px solid var(--line);
   }
   .spec dt {
-    font-family: var(--font-mono), monospace;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.74rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;

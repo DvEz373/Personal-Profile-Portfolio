@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 const { entry, index, prev, next } = Astro.props;
 const p = entry.data;
 const { Content } = await render(entry);
-const fig = `FIG. ${String(index + 1).padStart(2, "0")}`;
+const fig = "";
 const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
 const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 ---
@@ -33,7 +33,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
           <span aria-hidden="true">/</span>
           <span aria-current="page">{p.title}</span>
         </nav>
-        <p class="label cat">§ 03.{index + 1} · {CATEGORY_LABEL[p.category]}</p>
+        <p class="label cat">{CATEGORY_LABEL[p.category]}</p>
         <h1 class="serif" transition:name={`title-${entry.id}`}>{p.title}</h1>
         <p class="blurb">{p.blurb}</p>
         {
@@ -81,18 +81,15 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 
       <div class="story">
         <section aria-labelledby="h-problem">
-          <p class="step mono">01</p>
-          <h2 id="h-problem">Problem</h2>
+                    <h2 id="h-problem">Problem</h2>
           <p>{p.problem}</p>
         </section>
         <section aria-labelledby="h-approach">
-          <p class="step mono">02</p>
-          <h2 id="h-approach">Approach</h2>
+                    <h2 id="h-approach">Approach</h2>
           <p>{p.approach}</p>
         </section>
         <section aria-labelledby="h-result">
-          <p class="step mono">03</p>
-          <h2 id="h-result">Result</h2>
+                    <h2 id="h-result">Result</h2>
           <p>{p.result}</p>
         </section>
         <div class="prose">
@@ -106,7 +103,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
               p.figures.map((caption, i) => (
                 <li class="ticks">
                   <span class="slot mono" aria-hidden="true">
-                    {fig}.{i + 1}
+                    Figure {i + 1}
                   </span>
                   <span class="cap">{caption}</span>
                   <span class="todo mono">Image to come</span>
@@ -221,7 +218,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     border-top: 1px dashed var(--line);
   }
   .spec dt {
-    font-family: var(--font-mono), monospace;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;

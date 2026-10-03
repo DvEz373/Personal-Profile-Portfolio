@@ -16,7 +16,7 @@ const tones = ["c-leaf", "c-sun", "c-signal"];
       chain.map((block, i) => (
         <li class:list={["block", tones[i]]}>
           <p class="stage mono">
-            <span class="n">{String(i + 1).padStart(2, "0")}</span> {block.stage}
+            {block.stage}
           </p>
           <h3>{block.label}</h3>
           <ul class="items">
@@ -85,8 +85,8 @@ const tones = ["c-leaf", "c-sun", "c-signal"];
     color: var(--ink-2);
   }
   h3 {
-    font-family: var(--font-serif), Georgia, serif;
-    font-weight: 400;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: 600;
     font-size: 1.6rem;
     letter-spacing: -0.01em;
     margin-bottom: 14px;

@@ -1,4 +1,4 @@
-// FIG. 01, the grid frequency instrument.
+// The grid frequency instrument on the home page.
 //
 // A toy model for illustration: frequency deviation Δf (Hz) from 50 Hz follows a
 // damped second-order system. Tripping a generator kicks the rate of change of
@@ -146,7 +146,7 @@ export function initInstrument(root: HTMLElement): () => void {
     draw();
   }
 
-  const monoFamily = getComputedStyle(document.documentElement).getPropertyValue("--font-mono").trim() || "ui-monospace, monospace";
+  const monoFamily = getComputedStyle(document.documentElement).getPropertyValue("--font-sans").trim() || "ui-monospace, monospace";
   const mono = (size: number) => `${size}px ${monoFamily}`;
 
   function draw() {

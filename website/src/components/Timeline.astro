@@ -80,7 +80,7 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
               )}
               {it.photo && (
                 <div class="photo">
-                  <Photo src={it.photo.src} alt={it.photo.alt} widths={[320, 480, 640]} sizes="(min-width: 640px) 320px, 80vw" ratio="4 / 5" label="FIG · 2025" />
+                  <Photo src={it.photo.src} alt={it.photo.alt} widths={[320, 480, 640]} sizes="(min-width: 640px) 320px, 80vw" ratio="4 / 5"  />
                 </div>
               )}
               {it.tags.length > 0 && (
@@ -274,7 +274,7 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
   }
   .callout p {
     margin: 4px 0 0;
-    font-family: var(--font-serif), Georgia, serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 1.2rem;
     line-height: 1.35;
   }

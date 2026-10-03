@@ -28,11 +28,11 @@ const feeders = [
   <section class="hero" aria-labelledby="hero-name">
     <div class="wrap grid">
       <div class="intro">
-        <p class="label eyebrow">§ 00 · {profile.headline} · {profile.city}, {profile.country}</p>
+        <p class="label eyebrow">{profile.headline} · {profile.city}, {profile.country}</p>
         <h1 id="hero-name" class="name serif">{profile.name}</h1>
         <p class="headline">
-          {profile.headline} <span class="sep" aria-hidden="true">—</span>
-          <em class="accent">{profile.headlineAccent}</em>
+          {profile.headline} <span class="sep" aria-hidden="true">·</span>
+          <span class="accent">{profile.headlineAccent}</span>
         </p>
         <p class="now">
           <span class="live-dot" aria-hidden="true"></span>
@@ -41,17 +41,11 @@ const feeders = [
         <div class="actions">
           <a class="btn primary" href={url("cv.pdf")} download="CV_Devin_Ezekiel_Purba.pdf"><Icon name="download" />Download CV</a>
           <a class="btn" href={url("about/#contact")}><Icon name="mail" />Get in touch</a>
-          <button class="btn ghost" type="button" data-cmdk-open><Icon name="search" />Search <span class="kbd" data-kbd>Ctrl K</span></button>
         </div>
       </div>
 
       <div class="portrait-wrap">
         <Photo src={portrait} alt={`Portrait of ${profile.name}`} widths={[280, 420, 600]} sizes="(min-width: 960px) 360px, 60vw" ratio="1" eager class="portrait">
-          <div slot="overlay" class="annot mono" aria-hidden="true">
-            <span class="a1">SUBJECT · D. E. PURBA</span>
-            <span class="a2">{profile.coordinates}</span>
-            <span class="a3">JKT · <time data-clock data-tz={profile.timezone}>--:--</time> WIB</span>
-          </div>
         </Photo>
       </div>
     </div>
@@ -60,21 +54,21 @@ const feeders = [
 
   <section class="section" aria-labelledby="s-demo">
     <div class="wrap">
-      <SectionHead index="01" title="Try it" id="s-demo" note="Energy systems × intelligent control, in one figure" />
+      <SectionHead index="01" title="Interactive demo" id="s-demo" note="How a controller stabilises grid frequency after a generator trips" />
       <Instrument />
     </div>
   </section>
 
   <section class="section" aria-labelledby="s-explore">
     <div class="wrap">
-      <SectionHead index="02" title="Explore" id="s-explore" note="Five feeders off one bus. Pick a circuit" />
+      <SectionHead index="02" title="Explore" id="s-explore" note="Experience, education, projects, skills and contact" />
       <FeederNav feeders={feeders} source={profile.initials} />
     </div>
   </section>
 
   <section class="section" aria-labelledby="s-chain">
     <div class="wrap">
-      <SectionHead index="03" title="Signal chain" id="s-chain" note="Where I come from, what I do, where I'm heading" />
+      <SectionHead index="03" title="Career direction" id="s-chain" note="Where I come from, what I do, where I'm heading" />
       <SignalChain chain={profile.chain} />
     </div>
   </section>
@@ -105,9 +99,10 @@ const feeders = [
     align-items: center;
   }
   .name {
-    font-size: var(--step-3);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
     margin: 14px 0 18px;
   }
   .headline {
@@ -119,9 +114,9 @@ const feeders = [
   }
   .headline .accent {
     color: var(--signal);
-    font-size: 1.12em;
   }
   .sep {
+    margin: 0 0.25em;
     color: var(--line-strong);
   }
   .now {
