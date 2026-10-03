@@ -174,7 +174,7 @@ button {
 em.serif,
 .accent {
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-style: italic;
+  font-style: normal;
   font-weight: 600;
   color: var(--signal);
 }
