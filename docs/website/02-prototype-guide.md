@@ -18,7 +18,7 @@ The "Download CV" button points to `cv.pdf`, which only exists once the site is 
 
 | File | Role |
 |---|---|
-| `index.html`, `experience.html`, `projects.html`, `skills.html`, `about.html` | Page shells. Each one only sets `data-page` |
+| `index.html`, `experience.html`, `education.html`, `projects.html`, `skills.html`, `about.html` | Page shells. Each one only sets `data-page` |
 | `assets/data.js` | **All content.** Edit this to change any text, link, stat or skill |
 | `assets/app.js` | Builds the menu bar and footer, renders each page from `data.js`, runs the interactions |
 | `assets/style.css` | Design tokens (colours, type, spacing) and all layout |
@@ -28,7 +28,7 @@ The "Download CV" button points to `cv.pdf`, which only exists once the site is 
 | Page | Try this |
 |---|---|
 | Home | Move the mouse (or drag a finger) across the waves: left/right changes frequency, up/down changes amplitude. Watch the numbers count up. Hover the four tiles |
-| Experience | Tap the filter chips. Tap an entry to expand or collapse it |
+| Experience / Education | Tap the filter chips. Tap an entry to expand or collapse it |
 | Projects | Filter by category. Click a card to open the details window, swipe the figures, close it with Esc, × or a click outside |
 | Skills | Scroll down so the bars fill |
 | About | Click the email button to copy your address |
@@ -36,4 +36,4 @@ The "Download CV" button points to `cv.pdf`, which only exists once the site is 
 
 ## Placeholders
 
-Every grey box with a dashed label is a placeholder figure: the portrait, the project figures, and a fourth project ("Hybrid PV-BESS Plant Controller") that is a stand-in for a work sample. The skill percentages are also placeholders. See section 9 of the design plan for what is needed to replace them.
+Every grey box with a dashed label is a placeholder figure: the portrait, the project figures, and a fourth project ("Hybrid PV-BESS Plant Controller") that is a stand-in for a work sample. The skill percentages and the high-school entry on the Education page are also placeholders. See section 9 of the design plan for what is needed to replace them.

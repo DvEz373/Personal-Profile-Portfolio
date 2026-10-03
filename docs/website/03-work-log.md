@@ -28,6 +28,16 @@ Each step records what was done, why, and how it was checked.
   - Sticky menu bar is at the top of the viewport.
   - Google Fonts could not load inside the build container (its network proxy), so screenshots used fallback fonts; this does not affect real visitors.
 
+## 2026-10-03 · Step 3: Review round 1
+
+Feedback: separate experience types, add an education timeline, keep the site general to ECE/CS, highlight AI and intelligent control, and present renewable energy and power systems as the main field.
+
+- **Experience** now has three types: Work, Internships, Campus & academic. TEEP and PLN ICON+ became internships; lab assistant, KSE and EXERCISE became campus roles.
+- **New Education page** using the same timeline component: degree, Coursera AI courses, the NTUST exchange, and a placeholder for high school. Ordered by end date.
+- **Repositioned content:** new tagline, 8 focus chips on Home and About, a 3-paragraph bio (background → current work → interests), skills regrouped into Renewable energy & power systems, AI & intelligent control, Automation & digitalization, and Tools. Project filters renamed. The thesis is tagged Reinforcement learning and Digital twin.
+- **Stats** (except GPA) are now counted from the content lists, so they update when entries are added.
+- **Check:** all 6 pages at 375, 800 and 1280 px: no JavaScript errors, no horizontal overflow.
+
 ## Next (after review)
 
 1. Apply review feedback to the plan and prototype.
