@@ -87,24 +87,35 @@ const certifications = defineCollection({
   }),
 });
 
+/** Projects may give just a year ("2025") when the exact month is not public. */
+const yearOrMonth = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, 'Use "YYYY" or "YYYY-MM", for example "2025" or "2025-09"');
+
 const projects = defineCollection({
   loader: glob({ base: "./src/content/projects", pattern: "*.md" }),
-  schema: z.object({
-    title: z.string(),
-    category: z.enum(["energy", "ai", "iot"]),
-    order: z.number().int(),
-    context: z.string(),
-    start: month,
-    end: monthOrPresent,
-    blurb: z.string(),
-    problem: z.string(),
-    approach: z.string(),
-    result: z.string(),
-    stack: z.array(z.string()),
-    links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),
-    figures: z.array(z.string()).min(1),
-    placeholder: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      category: z.enum(["energy", "ai", "iot"]),
+      /** Extra filter chips the project also appears under. */
+      also: z.array(z.enum(["energy", "ai", "iot"])).default([]),
+      /** professional = client work at an employer; academic = thesis, coursework, side projects. */
+      kind: z.enum(["professional", "academic"]),
+      order: z.number().int(),
+      /** Shown in the "Selected work" grid on the home page. */
+      featured: z.boolean().default(false),
+      context: z.string(),
+      start: yearOrMonth,
+      end: z.union([yearOrMonth, z.literal("present")]).optional(),
+      blurb: z.string(),
+      problem: z.string(),
+      approach: z.string(),
+      result: z.string(),
+      stack: z.array(z.string()),
+      facts: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+      links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),
+      /** Real figures. The first one is the cover on cards and the page header. */
+      figures: z.array(z.object({ src: image(), alt: z.string(), caption: z.string() })).default([]),
+    }),
 });
 
 export const collections = { profile, experience, education, skills, certifications, projects };

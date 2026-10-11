@@ -149,6 +149,17 @@ const rows = [...bars].sort((a, b) => yearFraction(a.start) - yearFraction(b.sta
     opacity: 0.88;
     transition: opacity var(--t-ui) var(--ease), transform var(--t-ui) var(--ease-settle), box-shadow var(--t-ui) var(--ease);
   }
+  /* Short roles draw as thin slivers; this invisible pad keeps every bar at least
+     24 × 24 px to tap (WCAG 2.2 target size) without changing what is drawn. */
+  .bar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 24px);
+    height: 24px;
+    transform: translate(-50%, -50%);
+  }
   .bar:hover,
   .bar[data-hot] {
     opacity: 1;

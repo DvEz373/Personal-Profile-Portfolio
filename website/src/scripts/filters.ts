@@ -13,7 +13,8 @@ export function initFilters() {
     const apply = (key: string) => {
       let n = 0;
       items.forEach((el) => {
-        const on = key === "all" || el.dataset.kind === key;
+        // data-kind may list several keys ("energy ai"); an item matches any of them.
+        const on = key === "all" || (el.dataset.kind ?? "").split(" ").includes(key);
         el.hidden = !on;
         if (on) n++;
       });

@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "skills/", "about/", "card/", "card/print/"];
+const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "projects/tw-fault-locator/", "skills/", "about/", "card/", "card/print/"];
 
 function collectErrors(page: Page) {
   const errors: string[] = [];
@@ -23,6 +23,24 @@ for (const path of pages) {
     expect(errors).toEqual([]);
   });
 
+  test(`page /${path} has no squeezed text or leftover placeholders`, async ({ page }) => {
+    await page.goto(path);
+    // A text block crushed into a narrow column (one word per line) means a grid track went wrong.
+    const squeezed = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>("body *")]
+        .filter((el) => [...el.childNodes].some((n) => n.nodeType === 3 && (n.textContent ?? "").trim().length >= 24))
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          const lh = parseFloat(getComputedStyle(el).lineHeight) || parseFloat(getComputedStyle(el).fontSize) * 1.4;
+          return r.width > 0 && r.width < 120 && r.height / lh >= 4;
+        })
+        .map((el) => (el.textContent ?? "").trim().slice(0, 40)),
+    );
+    expect(squeezed).toEqual([]);
+    const text = await page.locator("body").innerText();
+    expect(text).not.toMatch(/placeholder|image to come|replace with/i);
+  });
+
   test(`page /${path} has no serious accessibility violations`, async ({ page }) => {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
@@ -37,6 +55,21 @@ test("content is in the HTML before any JavaScript runs", async ({ request }) =>
   const exp = await (await request.get("experience/")).text();
   expect(exp).toContain("Power System Engineer");
   expect(exp).toContain('property="og:image"');
+});
+
+test("home shows selected work and project figures load", async ({ page }) => {
+  await page.goto("");
+  const cards = page.locator(`section[aria-labelledby="s-work"] .card`);
+  expect(await cards.count()).toBeGreaterThanOrEqual(1);
+  await cards.first().click();
+  await expect(page).toHaveURL(/\/projects\/[^/]+\/$/);
+  const imgs = page.locator(".lead img, .figs img");
+  expect(await imgs.count()).toBeGreaterThanOrEqual(1);
+  for (const img of await imgs.all()) {
+    await img.scrollIntoViewIfNeeded();
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    expect(await img.getAttribute("alt")).toBeTruthy();
+  }
 });
 
 test("command palette opens with the keyboard and navigates", async ({ page, isMobile }) => {

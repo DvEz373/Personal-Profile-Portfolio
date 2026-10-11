@@ -1,7 +1,8 @@
 ---
 title: SonoDirect
 category: iot
-order: 2
+kind: academic
+order: 21
 context: Electrical Engineering capstone project
 start: "2024-10"
 end: "2024-12"
@@ -12,8 +13,4 @@ result: About 19% better acoustic accuracy, 12% less distortion and 23% faster s
 stack: [ESP32, MEMS microphones, Flutter, scikit-learn, TensorFlow]
 links:
   - { label: Source code, href: "https://github.com/DvEz373/sonodirect-web-flutter" }
-figures:
-  - Sensor node hardware
-  - Dashboard screen
-  - Before and after frequency response
 ---

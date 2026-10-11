@@ -146,3 +146,37 @@ Single Geist typeface; removed section numbers, § and FIG labels; clearer secti
 
 ## Step 10: Online name card with QR
 Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. Added `/card/`, `/card/print/` and `/card-qr.svg`.
+
+## 2026-10-11 · Step 11: Design audit of the live site
+- Pulled `main` (`bd3a209`), built it and captured every page at 1440 px (light and dark) and 390 px.
+- Reviewed against taste-skill and ui-ux-pro-max, plus scripted measurements (text under 12 px, targets under 24 px, labels, dashes) and the existing 55-test suite (all pass).
+- Found two live P0 issues: the Skills certificates list collapses (a v4.1 leftover grid column) and developer placeholder notes are public.
+- Main gap: no proof of professional work on Home or in Projects.
+- Full record: [06-design-audit.md](06-design-audit.md).
+
+## 2026-10-11 · Step 12: P0 fixes and real client projects (branch `website-v5-audit-and-projects`)
+- **Certificates list:** the grid kept a 36 px column for the row number that v4.1 removed. Now `minmax(0, 1fr) auto 20px` (desktop) and `minmax(0, 1fr) 20px` (phone).
+- **Placeholders:** deleted `hybrid-ppc.md`; removed the "Image to come" figure slots and the placeholder notice; Skills caveat now reads "Levels are self-assessed."
+- **Project schema:** `kind` (professional / academic), `featured`, `client`, `also` (extra filter chips), `facts`, and `figures` as real images (`src`, `alt`, `caption`). Dates accept a bare year and `end` is optional.
+- **New components:** `ProjectCover` (first figure on a white sheet, falls back to the drawn illustration) and `ProjectCard` (shared by Projects and Home).
+- **Projects page:** "Client work" and "Academic and personal" groups; filters match any of a project's categories.
+- **Project page:** real lead figure with "Full size" link, client and key facts in the datasheet, full-width figure gallery, Markdown body styles; H1 back on the type system; removed the 56 px indent left from the step numbers.
+- **Home:** "Selected work" (first four `featured` projects) directly under the hero, then the demo.
+- **Career chart:** 24 × 24 px minimum hit area per bar.
+- **Added projects (figures from the project folders, checked for confidential content first):**
+  - `datacenter-grid-compliance`: two figures.
+  - `tw-fault-locator`: three figures.
+- **Blocked:** the other seven project folders were cloud-only OneDrive files. Pinning them (`attrib +P`) queued downloads, but nothing arrived within 10 minutes, and this session cannot trigger the download itself.
+- **Check:** `astro check` 0 errors; build 15 pages; Playwright 81 passed, 1 skipped. The new squeezed-text test fails on the old build, as intended.
+
+## 2026-10-11 · Step 13: Demo moved to the bottom of Home
+- Feedback: the interactive demo is not the most important thing on the page.
+- New Home order: hero → Selected work → Explore → Career direction → Interactive demo → contact. The demo already pauses when off-screen (IntersectionObserver), so it costs nothing until scrolled to.
+- **Check:** build 15 pages; Playwright 81 passed, 1 skipped.
+
+## 2026-10-11 · Step 14: Client work kept anonymous
+- Rule from Devin: client case studies name no client, employer or project, and no location.
+- Fault locator: dropped the client and country, and the employer from the context line; the body now says "the utility". Removed the development-path figure, because the client name is drawn into it.
+- Data center: "European Network Code on Demand Connection" is now "the grid code for demand connection".
+- Removed the `client` field from the project schema and page, so a name cannot slip back in; the README states the rule.
+- Every new figure is checked for drawn-in names before it is added.

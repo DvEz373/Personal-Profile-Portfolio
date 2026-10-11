@@ -6,6 +6,7 @@ import SectionHead from "../components/SectionHead.astro";
 import Instrument from "../components/Instrument.astro";
 import FeederNav from "../components/FeederNav.astro";
 import SignalChain from "../components/SignalChain.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 import Schematic from "../components/Schematic.astro";
 import portrait from "../assets/photos/portrait.jpg";
 import { getProfile, getExperience, getEducation, getProjects, getSkills } from "../lib/content";
@@ -13,6 +14,8 @@ import { url } from "../lib/url";
 
 const profile = await getProfile();
 const [experience, education, projects, skills] = await Promise.all([getExperience(), getEducation(), getProjects(), getSkills()]);
+const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
+const selected = projects.filter((p) => p.data.featured).slice(0, 4);
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const feeders = [
@@ -52,12 +55,27 @@ const feeders = [
     <Schematic variant="turbine" />
   </section>
 
-  <section class="section" aria-labelledby="s-demo">
-    <div class="wrap">
-      <SectionHead index="01" title="Interactive demo" id="s-demo" note="How a controller stabilises grid frequency after a generator trips" />
-      <Instrument />
-    </div>
-  </section>
+  {
+    selected.length > 0 && (
+      <section class="section" aria-labelledby="s-work">
+        <div class="wrap">
+          <SectionHead index="00" title="Selected work" id="s-work" note="Client studies in power system modelling, control and AI" />
+          <ul class="work">
+            {selected.map((p) => (
+              <li class={TONE[p.data.category]}>
+                <ProjectCard entry={p} />
+              </li>
+            ))}
+          </ul>
+          <p class="all">
+            <a class="btn" href={url("projects/")}>
+              All {projects.length} projects <span aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
 
   <section class="section" aria-labelledby="s-explore">
     <div class="wrap">
@@ -72,9 +90,32 @@ const feeders = [
       <SignalChain chain={profile.chain} />
     </div>
   </section>
+
+  <section class="section" aria-labelledby="s-demo">
+    <div class="wrap">
+      <SectionHead index="01" title="Interactive demo" id="s-demo" note="How a controller stabilises grid frequency after a generator trips" />
+      <Instrument />
+    </div>
+  </section>
 </Base>
 
 <style>
+  .work {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 20px;
+  }
+  @media (min-width: 760px) {
+    .work {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .all {
+    margin: 24px 0 0;
+  }
   .hero {
     position: relative;
     isolation: isolate;

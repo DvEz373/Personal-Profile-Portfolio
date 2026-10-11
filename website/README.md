@@ -26,9 +26,10 @@ All text lives in plain files. Change them and save; the build checks every fiel
 | Skill domains and levels (1–5) | `src/data/skills.yaml` |
 | Certificates | `src/data/certifications.yaml` |
 | Projects (one file each; the file name becomes the URL) | `src/content/projects/*.md` |
+| Project figures | `src/assets/projects/<project>/` (PNG; resized to AVIF/WebP automatically) |
 | Photos | `src/assets/photos/` (resized to AVIF/WebP automatically) |
 
-Dates are `YYYY-MM`. Use `end: present` for something ongoing.
+Dates are `YYYY-MM`. Use `end: present` for something ongoing. Projects may also use a bare year (`"2025"`) and may leave out `end`.
 
 ## Commands
 
@@ -41,11 +42,27 @@ Dates are `YYYY-MM`. Use `end: present` for something ongoing.
 | `npm run test:install` | One time: downloads the browser used by the tests |
 | `npm test` | Builds must exist first. Runs the browser tests (pages load, no errors, no sideways scroll, accessibility scan, interactions) on desktop and phone sizes |
 
-## Placeholders still to replace
+## Add a project
 
-- **Project figures:** each project page lists "Image to come" slots. Add real images to the project and swap the generated illustration.
-- **Skill levels** in `skills.yaml` are self-assessed placeholders.
-- **`src/content/projects/hybrid-ppc.md`:** replace with a non-confidential summary, or delete the file.
+1. Copy the figures into `src/assets/projects/<project>/`. Export diagrams as PNG on a white background; the site shows them on a white sheet in both themes, and the first figure becomes the card cover.
+2. Create `src/content/projects/<project>.md`. Copy the front matter from an existing file and fill it in:
+
+   | Field | Meaning |
+   |---|---|
+   | `kind` | `professional` (client work, listed first) or `academic` |
+   | `category`, `also` | Main filter chip, and any extra chips (`energy`, `ai`, `iot`) |
+   | `featured` | `true` puts it in "Selected work" on the home page (first four by `order`) |
+   | `facts` | Short label/value pairs shown under "Key facts" |
+   | `figures` | `src` (path to the image, relative to the `.md` file), `alt` (what the figure shows, for screen readers) and `caption` |
+
+3. Anything below the front matter is Markdown, shown after Problem / Approach / Result.
+   Keep client work general: no client, employer or project names and no locations, in the text or drawn into the figures.
+4. `npm run check && npm run build && npm test`. The build stops with a message if a field is missing or an image path is wrong.
+
+## Still to confirm
+
+- **Skill levels** in `skills.yaml` are self-assessed.
+- **Client project dates** show the start year only (from the project code). Replace with `YYYY-MM` start and end when known.
 
 ## Social preview image
 

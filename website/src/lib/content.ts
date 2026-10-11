@@ -31,3 +31,4 @@ export const TYPE_LABEL = { work: "Work", internship: "Internship", campus: "Cam
 export const KIND_LABEL = { degree: "Degree", exchange: "Exchange", courses: "Courses" } as const;
 export const CATEGORY_LABEL = { energy: "Energy & power", ai: "AI / ML", iot: "IoT & automation" } as const;
 export const LEVEL_LABEL = ["", "Aware", "Familiar", "Proficient", "Advanced", "Expert"] as const;
+export const KIND_LABEL_PROJECT = { professional: "Client work", academic: "Academic" } as const;

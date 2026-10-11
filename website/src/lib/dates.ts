@@ -3,22 +3,23 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 /** The moment the site was built. "present" entries end here. */
 export const BUILD_DATE = new Date();
 
-/** "2025-09" → Date (first of the month, UTC). "present" → build date. */
+/** "2025-09" → Date (first of the month, UTC); "2025" → January 2025. "present" → build date. */
 export function toDate(value: string): Date {
   if (value === "present") return BUILD_DATE;
-  const [y, m] = value.split("-").map(Number);
+  const [y, m = 1] = value.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, 1));
 }
 
-/** "2025-09" → "Sep 2025"; "present" → "Present". */
+/** "2025-09" → "Sep 2025"; "2025" → "2025"; "present" → "Present". */
 export function formatMonth(value: string): string {
   if (value === "present") return "Present";
   const [y, m] = value.split("-").map(Number);
-  return `${MONTHS[m - 1]} ${y}`;
+  return m ? `${MONTHS[m - 1]} ${y}` : `${y}`;
 }
 
-export function formatRange(start: string, end: string): string {
-  return start === end ? formatMonth(start) : `${formatMonth(start)} – ${formatMonth(end)}`;
+/** A missing end shows the start alone ("2025"). */
+export function formatRange(start: string, end?: string): string {
+  return !end || start === end ? formatMonth(start) : `${formatMonth(start)} – ${formatMonth(end)}`;
 }
 
 /** Inclusive length in months, the way CVs and LinkedIn count (Sep 2023 – Sep 2025 = 2 yr 1 mo). */

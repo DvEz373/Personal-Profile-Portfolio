@@ -26,7 +26,7 @@ const tone = (c: string) => `c-${c}`;
         ))
       }
     </ol>
-    <p class="caveat mono">Self-assessed. Levels are placeholders until confirmed.</p>
+    <p class="caveat mono">Levels are self-assessed.</p>
   </PageHead>
 
   <section class="wrap domains" aria-label="Skill domains">
@@ -60,10 +60,9 @@ const tone = (c: string) => `c-${c}`;
       <SectionHead index="04.5" title="Certificates" id="certificates" note={`${certs.length} completed specializations and professional certificates`} />
       <ol class="certs">
         {
-          certs.map((c, i) => (
+          certs.map((c) => (
             <li>
               <a href={c.url} rel="noopener">
-                
                 <span class="what">
                   <span class="t">{c.name}</span>
                   <span class="by">{c.issuer}</span>
@@ -196,7 +195,7 @@ const tone = (c: string) => `c-${c}`;
   }
   .certs a {
     display: grid;
-    grid-template-columns: 36px 1fr auto 20px;
+    grid-template-columns: minmax(0, 1fr) auto 20px;
     gap: 16px;
     align-items: center;
     padding: 16px 6px;
@@ -207,10 +206,6 @@ const tone = (c: string) => `c-${c}`;
   }
   .certs a:hover {
     background: var(--panel);
-  }
-  .certs .n {
-    font-size: 0.75rem;
-    color: var(--ink-2);
   }
   .what {
     display: flex;
@@ -241,10 +236,10 @@ const tone = (c: string) => `c-${c}`;
       grid-template-columns: 1fr;
     }
     .certs a {
-      grid-template-columns: 28px 1fr 20px;
+      grid-template-columns: minmax(0, 1fr) 20px;
     }
     .when {
-      grid-column: 2;
+      grid-column: 1;
       grid-row: 2;
     }
   }

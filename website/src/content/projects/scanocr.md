@@ -1,7 +1,8 @@
 ---
 title: SCANOCR
 category: ai
-order: 3
+kind: academic
+order: 22
 context: Control Laboratory assistant selection project
 start: "2023-08"
 end: "2023-09"
@@ -12,7 +13,4 @@ result: Over 90% recognition accuracy and about 25% fewer data-entry errors in t
 stack: [Python, OpenCV, Tesseract OCR, PyQt5]
 links:
   - { label: Source code, href: "https://github.com/alexandermaxim8/SCANOCR" }
-figures:
-  - App screen with detected page
-  - Recognition pipeline
 ---

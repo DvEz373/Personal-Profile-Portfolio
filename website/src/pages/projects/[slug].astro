@@ -1,10 +1,11 @@
 ---
 import { render } from "astro:content";
+import { Picture } from "astro:assets";
 import Base from "../../layouts/Base.astro";
-import ProjectArt from "../../components/ProjectArt.astro";
+import ProjectCover from "../../components/ProjectCover.astro";
 import Schematic from "../../components/Schematic.astro";
 import Icon from "../../components/Icon.astro";
-import { getProjects, CATEGORY_LABEL } from "../../lib/content";
+import { getProjects, CATEGORY_LABEL, KIND_LABEL_PROJECT } from "../../lib/content";
 import { formatDuration, formatRange } from "../../lib/dates";
 import { url } from "../../lib/url";
 
@@ -16,10 +17,10 @@ export async function getStaticPaths() {
   }));
 }
 
-const { entry, index, prev, next } = Astro.props;
+const { entry, prev, next } = Astro.props;
 const p = entry.data;
 const { Content } = await render(entry);
-const fig = "";
+const [cover, ...more] = p.figures;
 const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
 const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 ---
@@ -33,31 +34,41 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
           <span aria-hidden="true">/</span>
           <span aria-current="page">{p.title}</span>
         </nav>
-        <p class="label cat">{CATEGORY_LABEL[p.category]}</p>
-        <h1 class="serif" transition:name={`title-${entry.id}`}>{p.title}</h1>
+        <p class="label cat">{KIND_LABEL_PROJECT[p.kind]} · {CATEGORY_LABEL[p.category]}</p>
+        <h1 transition:name={`title-${entry.id}`}>{p.title}</h1>
         <p class="blurb">{p.blurb}</p>
-        {
-          p.placeholder && (
-            <p class="notice mono" role="note">
-              Placeholder entry: replace with a non-confidential write-up or delete <code>src/content/projects/{entry.id}.md</code>.
-            </p>
-          )
-        }
       </div>
-      <Schematic variant={art[p.category]} />
+      {!cover && <Schematic variant={art[p.category]} />}
     </header>
 
     <div class="wrap layout">
-      <div class="figure" transition:name={`fig-${entry.id}`}>
-        <ProjectArt id={entry.id} category={p.category} fig={fig} />
-      </div>
+      <figure class="lead">
+        <div class:list={["figure", { wide: cover && cover.src.width / cover.src.height > 2.2 }]} transition:name={`fig-${entry.id}`}>
+          <ProjectCover id={entry.id} category={p.category} figure={cover} sizes="(min-width: 960px) 760px, 100vw" eager />
+        </div>
+        {
+          cover && (
+            <figcaption>
+              {cover.caption}{" "}
+              <a href={cover.src.src} target="_blank" rel="noopener">
+                Full size<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </figcaption>
+          )
+        }
+      </figure>
 
       <aside class="spec" aria-label="Project details">
         <p class="label">Datasheet</p>
         <dl>
           <div><dt>Context</dt><dd>{p.context}</dd></div>
-          <div><dt>Period</dt><dd>{formatRange(p.start, p.end)} <span class="muted">· {formatDuration(p.start, p.end)}</span></dd></div>
-          <div><dt>Category</dt><dd>{CATEGORY_LABEL[p.category]}</dd></div>
+          <div>
+            <dt>Period</dt>
+            <dd>
+              {formatRange(p.start, p.end)}
+              {p.end && <span class="muted"> · {formatDuration(p.start, p.end)}</span>}
+            </dd>
+          </div>
           <div>
             <dt>Stack</dt>
             <dd class="stack">{p.stack.map((s) => <span class="tag">{s}</span>)}</dd>
@@ -77,42 +88,65 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
             )
           }
         </dl>
+        {
+          p.facts.length > 0 && (
+            <>
+              <p class="label facts-h">Key facts</p>
+              <dl class="facts">
+                {p.facts.map((f) => (
+                  <div>
+                    <dt>{f.label}</dt>
+                    <dd>{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          )
+        }
       </aside>
 
       <div class="story">
         <section aria-labelledby="h-problem">
-                    <h2 id="h-problem">Problem</h2>
+          <h2 id="h-problem">Problem</h2>
           <p>{p.problem}</p>
         </section>
         <section aria-labelledby="h-approach">
-                    <h2 id="h-approach">Approach</h2>
+          <h2 id="h-approach">Approach</h2>
           <p>{p.approach}</p>
         </section>
         <section aria-labelledby="h-result">
-                    <h2 id="h-result">Result</h2>
+          <h2 id="h-result">Result</h2>
           <p>{p.result}</p>
         </section>
         <div class="prose">
           <Content />
         </div>
-
-        <section aria-labelledby="h-figs" class="figs">
-          <h2 id="h-figs" class="label">Figures</h2>
-          <ol>
-            {
-              p.figures.map((caption, i) => (
-                <li class="ticks">
-                  <span class="slot mono" aria-hidden="true">
-                    Figure {i + 1}
-                  </span>
-                  <span class="cap">{caption}</span>
-                  <span class="todo mono">Image to come</span>
-                </li>
-              ))
-            }
-          </ol>
-        </section>
       </div>
+
+      {
+        more.length > 0 && (
+          <section aria-labelledby="h-figs" class="figs">
+            <h2 id="h-figs">Figures</h2>
+            {more.map((f) => (
+              <figure>
+                <a class="sheet" href={f.src.src} target="_blank" rel="noopener">
+                  <Picture
+                    src={f.src}
+                    alt={f.alt}
+                    formats={["avif", "webp"]}
+                    widths={[480, 800, 1200, 1600].filter((w) => w <= f.src.width)}
+                    sizes="(min-width: 1240px) 1160px, 100vw"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="visually-hidden"> (full size, opens in a new tab)</span>
+                </a>
+                <figcaption>{f.caption}</figcaption>
+              </figure>
+            ))}
+          </section>
+        )
+      }
     </div>
 
     <nav class="wrap pager" aria-label="More projects">
@@ -120,7 +154,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
         prev ? (
           <a href={url(`projects/${prev.id}/`)} class="prev">
             <span class="label">← Previous</span>
-            <span class="t serif">{prev.data.title}</span>
+            <span class="t">{prev.data.title}</span>
           </a>
         ) : (
           <span />
@@ -130,12 +164,12 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
         next ? (
           <a href={url(`projects/${next.id}/`)} class="next">
             <span class="label">Next →</span>
-            <span class="t serif">{next.data.title}</span>
+            <span class="t">{next.data.title}</span>
           </a>
         ) : (
           <a href={url("projects/")} class="next">
             <span class="label">All projects →</span>
-            <span class="t serif">Back to the list</span>
+            <span class="t">Back to the list</span>
           </a>
         )
       }
@@ -164,11 +198,12 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     color: var(--c-ink);
   }
   h1 {
-    font-size: clamp(2.6rem, 1.6rem + 4.4vw, 4.6rem);
-    line-height: 1;
+    max-width: 22ch;
+    font-size: clamp(2.2rem, 1.4rem + 3.2vw, 3.6rem);
+    line-height: 1.05;
     letter-spacing: -0.02em;
     margin: 10px 0 14px;
-    font-weight: 400;
+    text-wrap: balance;
   }
   .blurb {
     max-width: 56ch;
@@ -177,27 +212,31 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     color: var(--ink-2);
     margin: 0;
   }
-  .notice {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 8px 12px;
-    border: 1px dashed var(--sun);
-    border-radius: var(--radius-s);
-    background: var(--sun-soft);
-    font-size: 0.78rem;
-  }
   .layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 320px;
     gap: 28px 40px;
     align-items: start;
   }
-  .figure {
+  .lead {
     grid-column: 1;
+    margin: 0;
+  }
+  .figure {
     aspect-ratio: 16 / 9;
     border: 1px solid var(--line);
     border-radius: var(--radius-l);
     overflow: hidden;
+  }
+  /* Long pipeline diagrams would shrink to unreadable in a 16:9 box. */
+  .figure.wide {
+    aspect-ratio: auto;
+  }
+  .lead figcaption,
+  .figs figcaption {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
   }
   .spec {
     grid-column: 2;
@@ -227,6 +266,9 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   .spec dd {
     margin: 4px 0 0;
   }
+  .facts-h {
+    margin: 18px 0 0;
+  }
   .stack {
     display: flex;
     flex-wrap: wrap;
@@ -247,63 +289,72 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   }
   .story section {
     position: relative;
-    padding: 22px 0 6px 56px;
+    padding: 22px 0 6px;
     border-top: 1px solid var(--line);
-  }
-  .step {
-    position: absolute;
-    left: 0;
-    top: 26px;
-    margin: 0;
-    font-size: 0.8rem;
-    color: var(--c-ink);
   }
   .story h2 {
     font-size: var(--step-1);
     margin-bottom: 8px;
   }
   .prose {
-    padding-left: 56px;
     color: var(--ink-2);
   }
   .prose :global(p) {
     margin: 12px 0;
   }
+  .prose :global(h2) {
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    margin: 22px 0 8px;
+    font-size: var(--step-1);
+    color: var(--ink);
+  }
+  .prose :global(ol),
+  .prose :global(ul) {
+    margin: 12px 0;
+    padding-left: 1.3em;
+  }
+  .prose :global(li) {
+    margin: 8px 0;
+    padding-left: 4px;
+  }
+  .prose :global(li::marker) {
+    color: var(--c-ink);
+    font-weight: 600;
+  }
+  .prose :global(strong) {
+    color: var(--ink);
+  }
+  /* Figures run the full width of the page so wide diagrams stay legible. */
   .figs {
-    padding-left: 0 !important;
+    grid-column: 1 / -1;
+    display: grid;
+    gap: clamp(24px, 4vw, 40px);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
   }
   .figs h2 {
-    font-size: var(--step--1);
-    margin-bottom: 14px;
-  }
-  .figs ol {
-    list-style: none;
+    font-size: var(--step-1);
     margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
   }
-  .figs li {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-height: 150px;
-    padding: 16px;
-    border-radius: var(--radius-s);
-    background-color: var(--panel);
+  .figs figure {
+    margin: 0;
   }
-  .slot {
-    font-size: 0.72rem;
-    color: var(--ink-2);
+  .sheet {
+    display: block;
+    padding: clamp(10px, 2vw, 24px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: #fff;
+    transition: border-color var(--t-ui) var(--ease);
   }
-  .cap {
-    font-weight: 550;
+  .sheet:hover {
+    border-color: var(--signal);
   }
-  .todo {
-    margin-top: auto;
-    font-size: 0.7rem;
-    color: var(--sun-ink);
+  .sheet :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .pager {
     display: grid;
@@ -344,16 +395,6 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     }
   }
   @media (max-width: 559px) {
-    .story section {
-      padding-left: 0;
-    }
-    .step {
-      position: static;
-      margin-bottom: 4px;
-    }
-    .prose {
-      padding-left: 0;
-    }
     .pager {
       grid-template-columns: 1fr;
     }
