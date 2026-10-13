@@ -8,6 +8,7 @@ featured: true
 context: Client project for a power utility
 start: "2025"
 blurb: Travelling-wave physics and a deep neural network that turn one substation recording into a distance to the fault.
+role: Researched and developed the physics-informed machine learning model.
 problem: When a line faults, the utility has to find the fault fast to restore supply. The fault sends voltage wavefronts along the line at close to the speed of light, and the time between them gives the distance, but real recordings carry noise, reflections and fault resistance, so a time-based calculation alone can be inaccurate.
 approach: A hybrid locator. Travelling-wave features are extracted from the recording (Clarke transform, Teager energy operator, arrival times at 1 % of peak energy) and a deep neural network with four hidden layers turns them into a fault distance in kilometres.
 result: On faults the model never saw in training, R² of 96.7 %, mean absolute error of 8.3 km and RMS error of 15.1 km. Handed over with the trained model, the scripts, the PSCAD dataset and a user guide.

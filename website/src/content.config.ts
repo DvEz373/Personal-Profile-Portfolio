@@ -107,6 +107,8 @@ const projects = defineCollection({
       start: yearOrMonth,
       end: z.union([yearOrMonth, z.literal("present")]).optional(),
       blurb: z.string(),
+      /** Devin's own part in the project, in one line. Shown as "My part". */
+      role: z.string().optional(),
       problem: z.string(),
       approach: z.string(),
       result: z.string(),
@@ -115,6 +117,9 @@ const projects = defineCollection({
       links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),
       /** Real figures. The first one is the cover on cards and the page header. */
       figures: z.array(z.object({ src: image(), alt: z.string(), caption: z.string() })).default([]),
+      /** Card crop of the cover: a CSS object-position (e.g. "30% 40%") and a zoom factor. Page headers always show the whole figure. */
+      coverFocus: z.string().optional(),
+      coverZoom: z.number().min(1).max(3).optional(),
     }),
 });
 

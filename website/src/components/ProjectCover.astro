@@ -16,13 +16,18 @@ interface Props {
   decorative?: boolean;
   sizes: string;
   eager?: boolean;
+  /** Crop for card thumbnails: CSS object-position and zoom. Without either, the whole figure shows. */
+  focus?: string;
+  zoom?: number;
 }
-const { id, category, figure, decorative = false, sizes, eager = false } = Astro.props;
+const { id, category, figure, decorative = false, sizes, eager = false, focus, zoom } = Astro.props;
+const cropped = Boolean(focus || zoom);
+const crop = cropped ? `--focus: ${focus ?? "50% 50%"}; --zoom: ${zoom ?? 1}` : undefined;
 ---
 
 {
   figure ? (
-    <div class="cover">
+    <div class:list={["cover", { cropped }]} style={crop}>
       <Picture
         src={figure.src}
         alt={decorative ? "" : figure.alt}
@@ -56,5 +61,16 @@ const { id, category, figure, decorative = false, sizes, eager = false } = Astro
   }
   .cover :global(img) {
     object-fit: contain;
+  }
+  /* A cropped card shows one readable region of a dense diagram instead of the whole sheet. */
+  .cover.cropped {
+    padding: 0;
+    overflow: hidden;
+  }
+  .cover.cropped :global(img) {
+    object-fit: cover;
+    object-position: var(--focus);
+    transform: scale(var(--zoom));
+    transform-origin: var(--focus);
   }
 </style>

@@ -15,7 +15,7 @@ const p = entry.data;
 
 <a class="card" href={url(`projects/${entry.id}/`)}>
   <span class="fig" transition:name={`fig-${entry.id}`}>
-    <ProjectCover id={entry.id} category={p.category} figure={p.figures[0]} decorative sizes="(min-width: 1240px) 380px, (min-width: 760px) 50vw, 100vw" />
+    <ProjectCover id={entry.id} category={p.category} figure={p.figures[0]} focus={p.coverFocus} zoom={p.coverZoom} decorative sizes="(min-width: 1240px) 380px, (min-width: 760px) 50vw, 100vw" />
   </span>
   <span class="body">
     <span class="meta mono">

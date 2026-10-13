@@ -48,9 +48,9 @@ Tick each box in this file as you go and add a dated entry to [03-work-log.md](0
 - [x] Record the answers in the work log (roles may be quoted; they contain no client names, but check).
 
 ### Step 2. Schema and rendering (plan R1, R2)
-- [ ] `content.config.ts`: optional `role: z.string()`, `coverFocus: z.string()` (an `object-position` value), `coverZoom: z.number().min(1).max(3)`.
-- [ ] Project page: "My part" row at the top of the datasheet and one line under the blurb; `ProjectCover` honours focus and zoom on cards only (page headers always show the whole figure).
-- [ ] Tests: a project with `role` shows "My part".
+- [x] `content.config.ts`: optional `role: z.string()`, `coverFocus: z.string()` (an `object-position` value), `coverZoom: z.number().min(1).max(3)`.
+- [x] Project page: "My part" row at the top of the datasheet and one line under the blurb; `ProjectCover` honours focus and zoom on cards only (page headers always show the whole figure).
+- [x] Tests: a project with `role` shows "My part".
 
 ### Step 3. Data center update
 - [ ] Round the text per the private map (decision D2) and drop the voltage-levels fact.

@@ -217,3 +217,11 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Dates:** not needed; start years only.
 - **R3 and R4:** "proceed as you see fit"; both go ahead as recommended.
 - **Permission:** allowed on these terms: no names, no locations, no real ratings (approximate only, for every plant), no internal algorithms, as general as possible. Recorded as plan decisions D7 and D8; D7 replaces the D2 exception that kept exact ratings for common plants.
+
+## 2026-10-13 · v5 Step 2: "My part" and card crops (plan R1, R2)
+- Schema: optional `role`, `coverFocus` (CSS `object-position`) and `coverZoom` (1–3) on projects.
+- Project page: "My part" as the first datasheet row and as one line under the blurb.
+- `ProjectCover`: with a focus or zoom, card thumbnails crop to that region (`object-fit: cover`, scaled from the focus point); page headers still show the whole figure.
+- Fault locator: role added from Devin's answer.
+- Test: a project with `role` shows "My part" in the header and datasheet; one without does not.
+- **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.

@@ -37,6 +37,13 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
         <p class="label cat">{KIND_LABEL_PROJECT[p.kind]} · {CATEGORY_LABEL[p.category]}</p>
         <h1 transition:name={`title-${entry.id}`}>{p.title}</h1>
         <p class="blurb">{p.blurb}</p>
+        {
+          p.role && (
+            <p class="role">
+              <strong>My part:</strong> {p.role}
+            </p>
+          )
+        }
       </div>
       {!cover && <Schematic variant={art[p.category]} />}
     </header>
@@ -61,6 +68,14 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
       <aside class="spec" aria-label="Project details">
         <p class="label">Datasheet</p>
         <dl>
+          {
+            p.role && (
+              <div>
+                <dt>My part</dt>
+                <dd>{p.role}</dd>
+              </div>
+            )
+          }
           <div><dt>Context</dt><dd>{p.context}</dd></div>
           <div>
             <dt>Period</dt>
@@ -211,6 +226,15 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     line-height: 1.45;
     color: var(--ink-2);
     margin: 0;
+  }
+  .role {
+    max-width: 62ch;
+    margin: 14px 0 0;
+    color: var(--ink-2);
+  }
+  .role strong {
+    color: var(--ink);
+    font-weight: 600;
   }
   .layout {
     display: grid;

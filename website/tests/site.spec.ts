@@ -72,6 +72,14 @@ test("home shows selected work and project figures load", async ({ page }) => {
   }
 });
 
+test("case studies state the author's own part when it is known", async ({ page }) => {
+  await page.goto("projects/tw-fault-locator/");
+  await expect(page.locator(".head .role")).toContainText("My part:");
+  await expect(page.locator(".spec dt", { hasText: "My part" })).toHaveCount(1);
+  await page.goto("projects/sonodirect/");
+  await expect(page.locator(".head .role")).toHaveCount(0);
+});
+
 test("command palette opens with the keyboard and navigates", async ({ page, isMobile }) => {
   test.skip(isMobile, "keyboard shortcut is a desktop feature");
   await page.goto("");
