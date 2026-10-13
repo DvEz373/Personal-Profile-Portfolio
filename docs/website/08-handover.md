@@ -113,4 +113,24 @@ All must pass. If the scan reports a hit in history (an earlier commit on this b
 ## 6. Open questions to carry
 
 - Experience bullets and the CV name a market operator and a grid-code document. They describe the job, not a client, but Devin may want them generalised too (asked 2026-10-11, no answer yet).
-- Exact project months (only start years are shown).
+- ~~Exact project months~~ Settled 2026-10-13: start years only (D8).
+
+## 7. Prompt for the next session
+
+Paste this into a new Claude Code session opened in the repo folder.
+
+```text
+Continue v5 of Devin Ezekiel Purba's portfolio (Astro 7 + TypeScript in `website/`) in `D:\Documents\Projects\Personal-Profile-Portfolio`, branch `website-v5-audit-and-projects` (local, not pushed).
+
+1. `git switch website-v5-audit-and-projects`. `git status` must be clean (an untracked `.claude/` is fine). `git stash list` must show "v5 step 3 draft"; leave it until step 3.
+2. Read, in this order: `docs/website/08-handover.md` (your task list, rules and gate), `docs/website/07-v5-plan.md` (decisions D1–D8, content plan, backlog R1–R15), `docs/website/03-work-log.md` (the step 1 entry has Devin's role for each project), `docs/website/06-design-audit.md`, then the private `D:\Documents\Projects\Portfolio_Private\HANDOVER_PRIVATE.md`, including its section 6 update.
+3. Steps 0–2 are done. Next is **step 2b, the design audit**. Run it exactly as written, change no code, record the scores and findings in plan §2.4, and commit. Then do steps 3–12 in order, with one commit per step. Tick the boxes in 08-handover.md and add a dated work-log entry for each step.
+
+Rules that matter most:
+- The repo is public. Write no client, employer, plant, vendor, grid operator, market body or place names, no project codes and no internal model names in any committed file, commit message, figure pixels or figure metadata. Never copy anything from `Portfolio_Private` into the repo.
+- Devin's terms (D7): approximate ratings only, for every plant, and no internal algorithms (no thresholds, layer sizes, gains or controller logic). Start years only. Use his roles from the work log; never invent a role, date or number.
+- Sources in `D:\Documents\Work\Project_History\` are read-only. Edit `.drawio` copies in your scratchpad only. Export with `--scale 2`, because scale 3 crops the image. Check every figure from a scaled preview written to your scratchpad, then run `node website/scripts/figures.mjs --fix` and the private scan.
+- The gate after every step is in handover §5. A preview server may already be running on port 4321; reuse it.
+- Ask Devin before pushing, opening a PR, merging or changing the CV. Commit as DvEz373 <ezekiel.devin@gmail.com>. Run `gh auth status` before any push.
+- Keep token use low: read only what a step needs, batch commands, view only the screenshots the gate requires, and report briefly.
+```
