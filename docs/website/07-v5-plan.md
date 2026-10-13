@@ -56,6 +56,8 @@ Turn the site from "strong frame, weak proof" (audit score 4/10 for content) int
 | D4 | Devin gives a one-line role for each project; the agent asks before writing and never invents one |
 | D5 | The employer stays on Experience and the CV (job history), never in case studies |
 | D6 | The interactive demo stays at the bottom of Home |
+| D7 | (2026-10-13, answer to step 1) Publishing is allowed on these terms: no names, no locations, **no real ratings for any plant, only approximate or class figures** (this replaces the D2 exception for common plants), no internal algorithms, and everything kept as general as possible |
+| D8 | (2026-10-13) Start years only; no months. R3 and R4 approved ("proceed as you see fit") |
 
 ## 4. Content plan
 
@@ -84,8 +86,8 @@ Severity follows the audit. "Needs OK" items change what visitors see in a way D
 |---|---|---|:-:|
 | R1 | Readable covers | Cards show a cropped region of the cover diagram instead of the whole drawing: add optional `coverFocus` (CSS `object-position`) and `coverZoom` per project; default to the full figure | |
 | R2 | "My part" | New optional `role` field; shown in the datasheet as "My part" and as one line under the blurb on the project page | |
-| R3 | Filters that work for client work | Replace Energy / AI / IoT chips with themes: Plant controllers · Machine models · Grid studies · AI · IoT (client and academic projects share them) | ✓ |
-| R4 | Home rhythm | Hero → Selected work (4) → About teaser (2–3 lines + link) → Interactive demo → contact. Remove "Explore" (duplicates the header nav) and "Career direction" (its chips already appear on About) | ✓ |
+| R3 | Filters that work for client work | Replace Energy / AI / IoT chips with themes: Plant controllers · Machine models · Grid studies · AI · IoT (client and academic projects share them) | ✓ approved |
+| R4 | Home rhythm | Hero → Selected work (4) → About teaser (2–3 lines + link) → Interactive demo → contact. Remove "Explore" (duplicates the header nav) and "Career direction" (its chips already appear on About) | ✓ approved |
 | R5 | Eyebrow overload (audit #8) | Drop page-header eyebrows that repeat the H1; keep section notes only where they add information | |
 | R6 | Hero duplicate (audit #9) | Eyebrow becomes the location only ("Jakarta, Indonesia"); "Electrical Engineer" stays in the headline | |
 | R7 | About double contact (audit #10) | Hide the global contact band on About | |

@@ -41,11 +41,11 @@ Tick each box in this file as you go and add a dated entry to [03-work-log.md](0
 - [x] Run the gate (§5). Expect: check 0 errors and "figures: no metadata found"; 15 pages; 81 passed, 1 skipped; scan clean.
 
 ### Step 1. Questions for Devin (one message)
-- [ ] For each of the 8 client case studies (titles in plan §4): one line on **his own part**.
-- [ ] Start and end months, if he knows them (otherwise keep the start year only).
-- [ ] OK or not for plan items **R3** (theme filters) and **R4** (Home without Explore and Career direction).
-- [ ] Confirm that publishing anonymised summaries and figures is allowed by his employer and clients.
-- [ ] Record the answers in the work log (roles may be quoted; they contain no client names, but check).
+- [x] For each of the 8 client case studies (titles in plan §4): one line on **his own part**.
+- [x] Start and end months, if he knows them (otherwise keep the start year only).
+- [x] OK or not for plan items **R3** (theme filters) and **R4** (Home without Explore and Career direction).
+- [x] Confirm that publishing anonymised summaries and figures is allowed by his employer and clients.
+- [x] Record the answers in the work log (roles may be quoted; they contain no client names, but check).
 
 ### Step 2. Schema and rendering (plan R1, R2)
 - [ ] `content.config.ts`: optional `role: z.string()`, `coverFocus: z.string()` (an `object-position` value), `coverZoom: z.number().min(1).max(3)`.

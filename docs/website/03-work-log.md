@@ -203,3 +203,17 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
   - scanned every other instruction file for downloads, shell commands, settings or hook changes, credentials and injected instructions (none found).
 - Installed the instructions only into `~/.claude/skills/impeccable`. Left out the launcher, the engine binary it downloads on first run, and the Claude Code hooks it would add.
 - Ran its audit and critique by hand (no detector): audit 16/20, critique 23/32. Three new plan items, R13 (plain language), R14 (44 px phone targets) and R15 (colour tokens), are recorded in [07-v5-plan.md](07-v5-plan.md) §2.4; handover step 11 now uses impeccable.
+
+## 2026-10-13 · v5 Step 1: Answers from Devin
+- **His part per project** (his words, lightly edited; one named test set and market body generalised):
+  1. Data center: MATLAB and PSCAD model developer, benchmark measurement test bench developer, model validation.
+  2. Pumped storage: RMS model developer (PSS/E user-defined model) and a simplified PSCAD EMT model for early benchmarking.
+  3. Synchronous condenser: PSS/E RMS model developer (user-defined and generic), PSCAD vs PSS/E benchmarking for the grid operator's model acceptance tests, steady-state studies (short circuit, load flow, QV capability, component current ratings), generic limiter model benchmarking in PSS/E and PSCAD.
+  4. Fault locator: physics-informed machine learning model developer and research.
+  5. Combined-cycle limiters: RMS model developer (PSS/E user-defined model) and basic functional testing for the user guide.
+  6. PV plant controllers: same as 5.
+  7. Gas engine plant: same as 5, plus steady-state studies (load flow, short circuit, PQ capability).
+  8. Biogas CHP: same as 5, plus EMT model development in PSCAD.
+- **Dates:** not needed; start years only.
+- **R3 and R4:** "proceed as you see fit"; both go ahead as recommended.
+- **Permission:** allowed on these terms: no names, no locations, no real ratings (approximate only, for every plant), no internal algorithms, as general as possible. Recorded as plan decisions D7 and D8; D7 replaces the D2 exception that kept exact ratings for common plants.
