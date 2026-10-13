@@ -191,3 +191,8 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Decisions from Devin: round the ratings of unique plants, merge the two PV controller projects, and give his own role per project.
 - Wrote [07-v5-plan.md](07-v5-plan.md) and [08-handover.md](08-handover.md). The source map, removal lists, deny list and name scanner sit in a private folder outside the repo.
 - Tested the draw.io command-line export for re-exporting figures without exact ratings.
+
+## 2026-10-13 · v5 Step 0: Baseline
+- Branch `website-v5-audit-and-projects` clean, 3 commits on top of `main`, not pushed.
+- Read the audit (06), the v5 plan (07), the handover (08) and the private source map.
+- **Gate:** `npm run check` 0 errors, "figures: no metadata found"; build 15 pages; Playwright 81 passed, 1 skipped; private name scan clean; screenshots of Home, Projects and the data-center case study viewed (desktop light, desktop dark, phone), no horizontal overflow.

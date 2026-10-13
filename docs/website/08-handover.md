@@ -36,9 +36,9 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 Tick each box in this file as you go and add a dated entry to [03-work-log.md](03-work-log.md) per step. One commit per step.
 
 ### Step 0. Baseline
-- [ ] `git status` clean on `website-v5-audit-and-projects`; `git log --oneline -4` shows the audit, v5 and planning commits on top of `main`.
-- [ ] Read 06, 07, this file, and the private handover.
-- [ ] Run the gate (§5). Expect: check 0 errors and "figures: no metadata found"; 15 pages; 81 passed, 1 skipped; scan clean.
+- [x] `git status` clean on `website-v5-audit-and-projects`; `git log --oneline -4` shows the audit, v5 and planning commits on top of `main`.
+- [x] Read 06, 07, this file, and the private handover.
+- [x] Run the gate (§5). Expect: check 0 errors and "figures: no metadata found"; 15 pages; 81 passed, 1 skipped; scan clean.
 
 ### Step 1. Questions for Devin (one message)
 - [ ] For each of the 8 client case studies (titles in plan §4): one line on **his own part**.
