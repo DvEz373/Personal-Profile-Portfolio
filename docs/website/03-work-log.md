@@ -246,3 +246,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Fault locator: approach describes the textbook steps only (Clarke transform, Teager energy, arrival times); the arrival threshold and the layer count are gone from text and figure. No other published text names an internal parameter.
 - Card crops (R1): `coverFocus` and `coverZoom` for the data center, `coverFocus` for the fault locator; both cards now show a readable region.
 - **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (lead figure still clipped, R16).
+
+## 2026-10-14 · v5 Step 4: Pumped storage case study
+- New `pumped-storage-dfim-model`: blurb, Problem / Approach / Result, four facts, role from Devin's answer, "What we did" and "How we checked it". Ratings as classes only ("gigawatt-class, several units", "extra-high-voltage grid"); control described at block level (D7). Start year 2025 from the source.
+- Figures re-exported from scratch copies of the three `.drawio` files, with every unit rating, bus voltage, the model code and the manufacturer's document name removed: plant overview (cover), PSS/E model against the WT3 chain, development workflow. Metadata stripped; each viewed.
+- **Found:** draw.io crops this overview even at `--scale 2` (scale 1 is complete). Exported it as SVG and rendered it in Chromium at 2× instead; noted in the handover §3.
+- Card crop on the reservoir and machine (`coverFocus`, `coverZoom`).
+- **Gate:** check 0 errors, figures clean; 16 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop light and dark, phone).

@@ -14,7 +14,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
 | Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
 | Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
-| Next | **Steps 4–12** |
+| Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4) |
+| Next | **Steps 5–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -32,7 +33,7 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 - **Git Bash rewrites `/` arguments** into `C:/Program Files/Git/`. Use `home` for the home page in `scripts/shots.mjs`, or prefix `MSYS_NO_PATHCONV=1`.
 - Preview: `cd website && npm run build && npx astro preview --port 4321` (run in the background), site at `http://localhost:4321/Personal-Profile-Portfolio/`. Playwright tests reuse a running preview server; after a rebuild the static server picks up new files without a restart.
 - Screenshots: `node scripts/shots.mjs <scratch-dir> "home,projects/,projects/<slug>/"`, then view the PNGs. Desktop light, desktop dark and phone are produced together.
-- draw.io desktop: `C:\Program Files\draw.io\draw.io.exe`; command-line export is described in the private handover. **Use `--scale 2`**: on this machine `--scale 3` sizes the canvas for 3× but draws larger (display scaling), so the PNG is silently cropped to the top-left. Scale 2 gives the full diagram at the size of the published figures.
+- draw.io desktop: `C:\Program Files\draw.io\draw.io.exe`; **large diagrams are cropped even at `--scale 2`** (the pumped-storage overview, about 1250 × 700 px): check every export at full extent, and if it is cropped export `--format svg` and render that SVG in Chromium at device scale 2 (Playwright from `website/node_modules`, screenshot of the `svg` element). The draw.io SVG export carries no embedded diagram; command-line export is described in the private handover. **Use `--scale 2`**: on this machine `--scale 3` sizes the canvas for 3× but draws larger (display scaling), so the PNG is silently cropped to the top-left. Scale 2 gives the full diagram at the size of the published figures.
 - Viewing figures: the Read tool shows only part of very large PNGs. Make a scaled copy first, in the scratchpad and never next to the source: Python has no Pillow here, so use `sharp` from `website/node_modules` (`sharp(in).resize({ width: 1800, fit: "inside" }).jpeg().toFile(out)`).
 - Relabelling a `.drawio` copy: labels are `value="..."` attributes holding HTML-escaped text. Unescape each value, replace whole labels from a map, re-escape (`html.escape(v, quote=True)`), and fail if a label in the map was not found. Also look at `name=` attributes (page names) for leftovers.
 - OneDrive paths can be cloud-only and fail to read from a sandboxed shell; the sources now sit in a local folder, so this should not recur.
