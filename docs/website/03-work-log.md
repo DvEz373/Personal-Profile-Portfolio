@@ -265,3 +265,8 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Skipped** the excitation reference chain figure: it draws the limiter logic with its settings (internal algorithm, D7).
 - Synchronous condenser card crop moved to the machine and its excitation system.
 - **Gate:** check 0 errors, figures clean; 18 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. The lead figure on this page is clipped too (R16, step 11).
+
+## 2026-10-14 · v5 Step 7: PV power plant controller case study (two projects merged, D3)
+- New `pv-plant-controller-models`: the port from PSCAD to PSS/E and the later release update as one story. Ratings approximate ("about 20 and 25 MVA", "high-voltage transmission grid"); controller functions listed by name only, no settings, and the import limit value left out (D7). Role from Devin's answer. Start year 2026.
+- Figures: both network overviews re-exported without plant ratings, transformer ratings or voltages (approximate plant size kept as "about 20 / 25 MVA"); rendered via SVG at 2×; metadata stripped; viewed. The manufacturer's controller-logic figures were not used.
+- **Gate:** check 0 errors, figures clean; 19 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
