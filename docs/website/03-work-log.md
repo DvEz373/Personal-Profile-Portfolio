@@ -231,3 +231,11 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - The step 3 draft (rounded data-center text and role, re-exported overview without voltages, fault-locator approach and figure generalised per D7) is kept in `git stash`, not committed and not gated.
 - Found while drafting: draw.io `--scale 3` exports are cropped on this machine, so `--scale 2` is used; the Read tool shows only part of large PNGs, so preview a scaled copy.
 - [08-handover.md](08-handover.md): new step 2b (design audit before continuing: what to run and how, no code changes), Devin's publishing terms as rule 7, D7 notes in steps 3–9, export and relabel notes in §3.
+
+## 2026-10-14 · v5 Step 2b: Design audit before the case studies
+- Screenshots of Home, Projects and the data-center case study (desktop light and dark, phone) and `scripts/measure.mjs`; no code changed.
+- impeccable audit and critique by hand (single context, no detector): audit 16/20 and critique 23/32, both unchanged from the 2026-10-13 baseline. taste-skill §14 and ui-ux-pro-max §1–§3 on the same pages.
+- **New finding (P1):** the project-page lead figure is clipped. The image is taller than its 16:9 box, so the bottom of the data-center diagram is cut off. Plan item R16.
+- Also new: R17 (em dashes in the demo's empty readouts, Astro version in the footer). Every other finding maps to R1, R4–R6, R9, R10, R13–R15, step 3 or step 10. Results in [07-v5-plan.md](07-v5-plan.md) §2.4.
+- Open question added to the handover: the Home hero names the current employer.
+- **Gate:** check 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; name scan clean.

@@ -46,6 +46,30 @@ Turn the site from "strong frame, weak proof" (audit score 4/10 for content) int
 | P2 | Eyebrow overload | R5 |
 | P3 | Hard-coded colours outside tokens (Home `#e9eef3`, figure sheets, instrument background) | **R15** (new) |
 
+#### Step 2b re-run (2026-10-14, after step 2)
+
+Method: ⚠️ degraded, single context (no sub-agents spawned in this session; detector not installed, "launcher unavailable" path, no snapshot persisted). Evidence: screenshots of Home, Projects and the data-center case study (desktop light and dark, phone), `scripts/measure.mjs`, computed styles in the browser. No code changed.
+
+**Audit: 16/20 (Good), unchanged.** Accessibility 3 (axe clean, skip link, contrast ≥ 7.7:1 for body text in dark mode; 9 labels under 12 px on Home, 17 on Skills, 10 on About; phone targets under 44 px). Performance 4 (AVIF/WebP with `srcset`, covers lazy, width and height set). Theming 3 (`Instrument` `#080b0f`; card and print pages keep literal colours on purpose). Responsive 3 (no overflow on any of the three pages; same tap targets). Implementation integrity 3 (one new verified bug, below).
+
+**Critique: 23/32 (72 %, Good), unchanged.** Status 3, real-world match 2 (jargon, unreadable covers), control 3, consistency 3, recognition 3, efficiency 3 (Ctrl K palette), aesthetic 2 (Home stacks Explore and Career direction after Selected work), error recovery 4; 5 and 10 n/a. Personas: a recruiter (first-timer) meets PSU, EMT, RMS and TSO before any plain sentence and sees only two client projects; a phone visitor hits 32–36 px header buttons and chips. Questions skipped: the findings go straight into this backlog.
+
+**taste-skill §14:** fails eyebrow count (Home 17 uppercase labels for 6 sections), zero em dashes (2 on Home: the demo's empty readouts "— Hz", "— s"), version footer ("Built with Astro 7.3.5"). Kept on purpose: Jakarta clock (audit §3), drawn covers on academic projects until real figures exist. **ui-ux-pro-max §1–§3:** §1 and §3 pass; §2 `touch-target-size` fails on phones.
+
+| Priority | Finding (2026-10-14) | Fixed by |
+|---|---|---|
+| P1 | **Case-study lead figure is clipped.** In the 16:9 `.figure` box the image is 554 px tall inside a 471 px box (`height: 100%` does not resolve), so the bottom of a tall diagram is cut off; only "Full size" shows it. Step 2 assumed headers show the whole figure | **R16** (new) |
+| P1 | Home shows two client projects and "All 5 projects"; Explore and Career direction still follow | Step 10, R4 |
+| P1 | Card covers are whole diagrams; no project sets `coverFocus` yet | R1 (set per project in steps 3–9) |
+| P1 | Data-center text and figure still show exact ratings and voltages | Step 3 (D7) |
+| P2 | Jargon before plain language (blurb, Problem, datasheet) | R13 |
+| P2 | Phone targets under 44 px (header tools, filter chips, footer links) | R14 |
+| P2 | Eyebrow and label count (Home 17, case study eyebrow repeats the card label) | R5, R6 |
+| P2 | Labels under 12 px (career chips, demo readout labels, Skills levels, About keys) | R9 |
+| P2 | Empty band above the contact section on every page; gap under the hero | R10 |
+| P3 | Em dashes in the demo's empty readouts; version number in the footer | **R17** (new) |
+| P3 | Hard-coded instrument background | R15 |
+
 ## 3. Decisions (Devin, 2026-10-11 and 2026-10-13)
 
 | # | Decision |
@@ -99,6 +123,8 @@ Severity follows the audit. "Needs OK" items change what visitors see in a way D
 | R13 | Plain language (impeccable critique) | First sentence of every blurb readable by a non-engineer; expand each acronym on first use per page with `<abbr title>` (RoCoF, EMT, RMS, PPC, PoC, DFIM, LVRT…) | |
 | R14 | 44 px phone targets (impeccable audit) | Under `(pointer: coarse)`: header tool buttons, filter chips and footer links get a 44 px minimum hit area (padding or `::before` pad, as on the career chart) | |
 | R15 | Colour tokens (impeccable audit) | Move the remaining hard-coded colours into tokens (`--figure-sheet`, `--instrument-bg`, the Home light-text value) | |
+| R16 | Whole lead figure (step 2b) | Project-page lead figure always shows the whole image: the box takes the image's own aspect ratio (capped height, `object-fit: contain`), no clipping; add a test that the lead `img` fits inside its box | |
+| R17 | Leftover tells (step 2b) | Demo readouts show "–" (en dash, as in ranges) or a neutral value before the first trip, never an em dash; footer drops the Astro version and keeps "Updated <date>" | |
 
 ## 6. Build plan
 

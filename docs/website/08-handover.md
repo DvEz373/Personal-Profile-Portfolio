@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13, updated 2026-10-13 (steps 0–2 done) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–2b done) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -12,7 +12,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Done on the branch | Audit; certificates fix; public placeholders removed; project schema with real figures (`kind`, `featured`, `also`, `facts`, `figures`); `ProjectCover` / `ProjectCard`; Selected work on Home (demo at the bottom); 2 anonymised client case studies; 24 px chart targets; squeezed-text, placeholder and figure-loading tests; figure-metadata guard (`scripts/figures.mjs` in `npm run check`); screenshot script (`scripts/shots.mjs`); measurement script (`scripts/measure.mjs`) |
 | Last gate | After step 2: `npm run check` 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; private name scan clean |
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
-| Next | **Step 2b (design audit, below), then steps 3–12** |
+| Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
+| Next | **Steps 3–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -58,11 +59,11 @@ Tick each box in this file as you go and add a dated entry to [03-work-log.md](0
 
 ### Step 2b. Design audit before continuing (do this first in the next session)
 Purpose: confirm the baseline and settle which design items (R1–R15) change before more content goes in, so the case studies are written into the final layout. Do not edit code in this step; write the results into plan §2.4 and adjust the backlog.
-- [ ] Build and start the preview (§3). Take screenshots of Home, Projects and one case study (`scripts/shots.mjs`) and run `node scripts/measure.mjs` for the numbers.
-- [ ] **impeccable** (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` (scores five dimensions out of 20) and `reference/critique.md` (heuristics out of 32) on those three pages. Its engine is not installed: when it says to run `scripts/impeccable`, take its "launcher unavailable" path; never download or run the engine.
-- [ ] **taste-skill** §14 pre-flight and **ui-ux-pro-max** Quick Reference §1–§3 on the same pages.
-- [ ] Compare with the baseline (audit 16/20, critique 23/32, plan §2.4; measure baseline in step 11). Record the scores, then for each finding name the R item that fixes it or add a new R item. Targets for step 11: audit ≥ 18/20, critique ≥ 26/32.
-- [ ] Keep it short: one pass, findings as a table, no code changes. Commit the plan update as its own step.
+- [x] Build and start the preview (§3). Take screenshots of Home, Projects and one case study (`scripts/shots.mjs`) and run `node scripts/measure.mjs` for the numbers.
+- [x] **impeccable** (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` (scores five dimensions out of 20) and `reference/critique.md` (heuristics out of 32) on those three pages. Its engine is not installed: when it says to run `scripts/impeccable`, take its "launcher unavailable" path; never download or run the engine.
+- [x] **taste-skill** §14 pre-flight and **ui-ux-pro-max** Quick Reference §1–§3 on the same pages.
+- [x] Compare with the baseline (audit 16/20, critique 23/32, plan §2.4; measure baseline in step 11). Record the scores, then for each finding name the R item that fixes it or add a new R item. Targets for step 11: audit ≥ 18/20, critique ≥ 26/32.
+- [x] Keep it short: one pass, findings as a table, no code changes. Commit the plan update as its own step.
 
 ### Step 3. Data center update
 - [ ] Start from the stash (`git stash pop`). Round the text per the private map (decisions D2, D7) and drop the voltage-levels fact.
@@ -85,7 +86,7 @@ Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitat
 - [ ] Gate; screenshots of Home and Projects.
 
 ### Step 11. Design revision
-- [ ] R4 only if approved; R5–R15 as written in the plan.
+- [ ] R4 only if approved; R5–R17 as written in the plan (R16: lead figure clipped, found in step 2b).
 - [ ] Review with the **impeccable** skill (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` and `reference/critique.md` for Home, Projects and one case study, and `reference/polish.md` + `reference/craft-floor.md` before UI edits. Its engine and hooks are deliberately not installed: when it asks to run `scripts/impeccable`, take its "launcher unavailable" path and do **not** download or run the engine. Targets: audit ≥ 18/20, critique ≥ 26/32 (baseline 16/20 and 23/32, plan §2.4).
 - [ ] Then `taste-skill` §14 pre-flight and ui-ux-pro-max Quick Reference §1–§3. Use the `frontend-design` plugin too if Devin has installed it.
 - [ ] `node scripts/measure.mjs`: no text under 12 px, no target under 24 × 24 px on phones, fewer uppercase labels than the audit baseline (Home 17, Experience 7 on 2026-10-13), no em dashes.
@@ -113,6 +114,7 @@ All must pass. If the scan reports a hit in history (an earlier commit on this b
 ## 6. Open questions to carry
 
 - Experience bullets and the CV name a market operator and a grid-code document. They describe the job, not a client, but Devin may want them generalised too (asked 2026-10-11, no answer yet).
+- The Home hero status line names the current employer. Rule 1 allows the employer in job history; ask Devin whether the hero line counts as that or should say "Power System Engineer" only.
 - ~~Exact project months~~ Settled 2026-10-13: start years only (D8).
 
 ## 7. Prompt for the next session
