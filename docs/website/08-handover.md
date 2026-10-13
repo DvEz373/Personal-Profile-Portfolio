@@ -72,8 +72,9 @@ Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitat
 - [ ] Gate; screenshots of Home and Projects.
 
 ### Step 11. Design revision
-- [ ] R4 only if approved; R5–R12 as written in the plan.
-- [ ] If the `frontend-design` plugin is installed, run it as a review on Home, Projects and one case study; otherwise run `taste-skill` §14 pre-flight and the ui-ux-pro-max Quick Reference §1–§3 again.
+- [ ] R4 only if approved; R5–R15 as written in the plan.
+- [ ] Review with the **impeccable** skill (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` and `reference/critique.md` for Home, Projects and one case study, and `reference/polish.md` + `reference/craft-floor.md` before UI edits. Its engine and hooks are deliberately not installed: when it asks to run `scripts/impeccable`, take its "launcher unavailable" path and do **not** download or run the engine. Targets: audit ≥ 18/20, critique ≥ 26/32 (baseline 16/20 and 23/32, plan §2.4).
+- [ ] Then `taste-skill` §14 pre-flight and ui-ux-pro-max Quick Reference §1–§3. Use the `frontend-design` plugin too if Devin has installed it.
 - [ ] `node scripts/measure.mjs`: no text under 12 px, no target under 24 × 24 px on phones, fewer uppercase labels than the audit baseline (Home 17, Experience 7 on 2026-10-13), no em dashes.
 - [ ] Gate; full screenshot set.
 

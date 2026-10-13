@@ -196,3 +196,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Branch `website-v5-audit-and-projects` clean, 3 commits on top of `main`, not pushed.
 - Read the audit (06), the v5 plan (07), the handover (08) and the private source map.
 - **Gate:** `npm run check` 0 errors, "figures: no metadata found"; build 15 pages; Playwright 81 passed, 1 skipped; private name scan clean; screenshots of Home, Projects and the data-center case study viewed (desktop light, desktop dark, phone), no horizontal overflow.
+
+## 2026-10-13 · Step 16: impeccable installed and run
+- Devin approved installing impeccable. Cloned the repository to a scratch folder and reviewed it before installing:
+  - read `SKILL.md`, `audit.md`, `critique.md` and `polish.md` in full;
+  - scanned every other instruction file for downloads, shell commands, settings or hook changes, credentials and injected instructions (none found).
+- Installed the instructions only into `~/.claude/skills/impeccable`. Left out the launcher, the engine binary it downloads on first run, and the Claude Code hooks it would add.
+- Ran its audit and critique by hand (no detector): audit 16/20, critique 23/32. Three new plan items, R13 (plain language), R14 (44 px phone targets) and R15 (colour tokens), are recorded in [07-v5-plan.md](07-v5-plan.md) §2.4; handover step 11 now uses impeccable.

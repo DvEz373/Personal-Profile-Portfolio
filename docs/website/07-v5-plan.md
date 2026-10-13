@@ -16,7 +16,7 @@ Turn the site from "strong frame, weak proof" (audit score 4/10 for content) int
 | **ui-ux-pro-max** | Pattern `portfolio-grid`: *Hero → Project grid → About → Contact*, visuals first, filter by category. Design system query for this brief returned "Minimalism & Swiss style, monochrome + blue accent", which the current palette already matches. It suggested Archivo + Space Grotesk; keep Geist, which taste-skill lists as a preferred sans and which v4.1 settled on. Direction: **targeted evolution, not a redesign** (taste-skill §11.E) |
 | **design:design-critique** (Design plugin) | First impression correct (name and portrait, then work). Issues: diagram covers are dense and unreadable at card size; Home has three navigation-like sections in a row (Selected work link, Explore, Career direction); client cards all read "Energy & power", so the filter does nothing for client work; case studies say "we" and never state Devin's part |
 | **frontend-design** (Anthropic plugin) | Available in the plugin catalog but not installed; offered to the user on 2026-10-13. Run it on step 11 if installed |
-| **impeccable** | Not installed and not in the plugin catalog. Its checks are covered by the three lenses above |
+| **impeccable** (v4.5.2, Apache 2.0) | Installed 2026-10-13 into `~/.claude/skills/impeccable`: instructions only (`SKILL.md`, `reference/`). Its engine binary, launcher and edit hooks were **not** installed (they download and run an unverified binary), so its deterministic detector is unavailable and the skill runs in its documented "launcher unavailable" mode. Results in §2.4 |
 
 ### 2.2 What reviewers look for in case studies
 
@@ -30,6 +30,21 @@ Turn the site from "strong frame, weak proof" (audit score 4/10 for content) int
 - **Found on this project:** draw.io PNG exports embed the whole editable diagram in a `zTXt` chunk. Several figures that look clean carry client and plant names in that hidden source. The site's "Full size" link serves the original PNG, so this would publish it. Guarded since 2026-10-13 by `website/scripts/figures.mjs`, which runs in `npm run check`.
 - Ratings can identify unique plants even without names. Decision below.
 - Permission is the owner's responsibility: Devin confirms that publishing anonymised summaries and figures is allowed under his employment and client agreements before the branch is pushed.
+
+### 2.4 impeccable audit and critique (2026-10-13, single-context, no detector)
+
+**Audit: 16/20 (Good).** Accessibility 3 (axe clean, focus, reduced motion; labels at 11–11.8 px; tap targets under 44 px on phones). Performance 4. Theming 3 (full tokens and designed dark mode; a few hard-coded colours). Responsive 3 (no overflow; same tap targets). Implementation integrity 3 (person-specific system; v4.1 leftovers).
+
+**Critique: 23/32 (72 %, Good)**, heuristics 5 and 10 n/a for a portfolio. Lowest: aesthetic and minimalist design (2), because Home stacks three navigation-like blocks. Design specificity passes; the template-like parts are the career chip cards and eyebrow-over-H1 headers.
+
+| Priority | Issue | Plan item |
+|---|---|---|
+| P1 | Home: Explore and Career direction after Selected work dilute the page | R4 |
+| P1 | Card covers are whole diagrams, unreadable at card size | R1 |
+| P2 | Jargon (RoCoF, EMT/RMS, PSS/E) with no plain explanation for non-engineer recruiters | **R13** (new) |
+| P2 | Phone tap targets under 44 × 44 px: header search/theme/menu buttons, filter chips, footer links | **R14** (new) |
+| P2 | Eyebrow overload | R5 |
+| P3 | Hard-coded colours outside tokens (Home `#e9eef3`, figure sheets, instrument background) | **R15** (new) |
 
 ## 3. Decisions (Devin, 2026-10-11 and 2026-10-13)
 
@@ -79,6 +94,9 @@ Severity follows the audit. "Needs OK" items change what visitors see in a way D
 | R10 | Dead space (audit #13) | Trim the empty band above the contact section and the hero bottom padding | |
 | R11 | Leftover `SectionHead` index (audit #14) | Remove the hidden `§ index` span and the `index` props | |
 | R12 | Dark mode figure glare | In dark mode, figure sheets use an off-white (`#eef1f4`) instead of pure white | |
+| R13 | Plain language (impeccable critique) | First sentence of every blurb readable by a non-engineer; expand each acronym on first use per page with `<abbr title>` (RoCoF, EMT, RMS, PPC, PoC, DFIM, LVRT…) | |
+| R14 | 44 px phone targets (impeccable audit) | Under `(pointer: coarse)`: header tool buttons, filter chips and footer links get a 44 px minimum hit area (padding or `::before` pad, as on the career chart) | |
+| R15 | Colour tokens (impeccable audit) | Move the remaining hard-coded colours into tokens (`--figure-sheet`, `--instrument-bg`, the Home light-text value) | |
 
 ## 6. Build plan
 
@@ -92,7 +110,7 @@ Each step ends with the gate in §7 and its own commit. The handover has the exa
 | 3 | Data center: round the text (D2), re-export the overview figure without voltages, add role | Gate passes; private scan clean |
 | 4–9 | One case study per step, in the table order (skip the two already published): copy figures, re-export where the private map says so, strip metadata, look at every figure, write the Markdown, add role | Gate passes per project |
 | 10 | Featured, order, Selected-work copy; R3 if approved | Home shows the four featured projects |
-| 11 | Design revision R4–R12 (R3/R4 only if approved); run frontend-design if installed, then taste-skill and ui-ux-pro-max pre-flight checks again | Screenshots reviewed in light, dark and phone |
+| 11 | Design revision R4–R15 (R3/R4 only if approved); then re-run impeccable `audit` and `critique` (target: audit ≥ 18/20, critique ≥ 26/32), taste-skill §14 pre-flight and ui-ux-pro-max Quick Reference §1–§3 | Screenshots reviewed in light, dark and phone |
 | 12 | Final QA and docs: audit §6 progress, README, work log, this plan's status | Gate passes; Devin reviews screenshots; push and PR only after Devin says so |
 
 ## 7. Gate (every step)
