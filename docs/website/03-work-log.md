@@ -225,3 +225,9 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Fault locator: role added from Devin's answer.
 - Test: a project with `role` shows "My part" in the header and datasheet; one without does not.
 - **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-13 · Handover update (building paused after step 2)
+- Devin: this session only prepares the handover; no further code changes or audit runs here.
+- The step 3 draft (rounded data-center text and role, re-exported overview without voltages, fault-locator approach and figure generalised per D7) is kept in `git stash`, not committed and not gated.
+- Found while drafting: draw.io `--scale 3` exports are cropped on this machine, so `--scale 2` is used; the Read tool shows only part of large PNGs, so preview a scaled copy.
+- [08-handover.md](08-handover.md): new step 2b (design audit before continuing: what to run and how, no code changes), Devin's publishing terms as rule 7, D7 notes in steps 3–9, export and relabel notes in §3.

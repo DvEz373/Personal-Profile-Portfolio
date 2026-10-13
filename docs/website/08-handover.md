@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13 · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-13 (steps 0–2 done) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -8,10 +8,11 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Item | State |
 |---|---|
 | Repo | `D:\Documents\Projects\Personal-Profile-Portfolio`, GitHub `DvEz373/Personal-Profile-Portfolio`, **public**, deployed to GitHub Pages from `main` |
-| Branch | `website-v5-audit-and-projects`, 3 commits on top of `main` (audit, v5, plan + handover), **not pushed** |
+| Branch | `website-v5-audit-and-projects`, **not pushed**. On top of `main`: audit, v5, plan + handover, step 0, impeccable plan update, step 1, step 2 |
 | Done on the branch | Audit; certificates fix; public placeholders removed; project schema with real figures (`kind`, `featured`, `also`, `facts`, `figures`); `ProjectCover` / `ProjectCard`; Selected work on Home (demo at the bottom); 2 anonymised client case studies; 24 px chart targets; squeezed-text, placeholder and figure-loading tests; figure-metadata guard (`scripts/figures.mjs` in `npm run check`); screenshot script (`scripts/shots.mjs`); measurement script (`scripts/measure.mjs`) |
-| Last gate | `npm run check` 0 errors, figures clean; build 15 pages; Playwright 81 passed, 1 skipped; private name scan clean |
-| Next | Steps 0–12 below |
+| Last gate | After step 2: `npm run check` 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; private name scan clean |
+| Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
+| Next | **Step 2b (design audit, below), then steps 3–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -21,6 +22,7 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 4. **Every figure** goes through: copy (or re-export) → `node scripts/figures.mjs --fix` → look at it → private scan.
 5. **Ask before:** pushing, opening a PR, merging, changing the CV, and anything marked "Needs OK" in the plan. Commit as `DvEz373 <ezekiel.devin@gmail.com>`; `gh` also has a second account, so run `gh auth status` before any push.
 6. **Do not invent facts.** Roles, dates and numbers come from the source summaries or from Devin.
+7. **Devin's publishing terms (plan D7, 2026-10-13):** no names, no locations, **approximate ratings only for every plant** (this overrides the D2 and private-map notes that keep exact ratings for PV, gas engine and biogas), **no internal algorithms** (describe methods at block level: no thresholds, layer sizes, gains or controller logic), as general as possible. Start years only (D8). His roles are in the work log, step 1 entry.
 
 ## 3. Environment notes (Windows)
 
@@ -28,7 +30,9 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 - **Git Bash rewrites `/` arguments** into `C:/Program Files/Git/`. Use `home` for the home page in `scripts/shots.mjs`, or prefix `MSYS_NO_PATHCONV=1`.
 - Preview: `cd website && npm run build && npx astro preview --port 4321` (run in the background), site at `http://localhost:4321/Personal-Profile-Portfolio/`. Playwright tests reuse a running preview server; after a rebuild the static server picks up new files without a restart.
 - Screenshots: `node scripts/shots.mjs <scratch-dir> "home,projects/,projects/<slug>/"`, then view the PNGs. Desktop light, desktop dark and phone are produced together.
-- draw.io desktop: `C:\Program Files\draw.io\draw.io.exe`; command-line export is tested and described in the private handover.
+- draw.io desktop: `C:\Program Files\draw.io\draw.io.exe`; command-line export is described in the private handover. **Use `--scale 2`**: on this machine `--scale 3` sizes the canvas for 3× but draws larger (display scaling), so the PNG is silently cropped to the top-left. Scale 2 gives the full diagram at the size of the published figures.
+- Viewing figures: the Read tool shows only part of very large PNGs. Make a scaled copy first, in the scratchpad and never next to the source: Python has no Pillow here, so use `sharp` from `website/node_modules` (`sharp(in).resize({ width: 1800, fit: "inside" }).jpeg().toFile(out)`).
+- Relabelling a `.drawio` copy: labels are `value="..."` attributes holding HTML-escaped text. Unescape each value, replace whole labels from a map, re-escape (`html.escape(v, quote=True)`), and fail if a label in the map was not found. Also look at `name=` attributes (page names) for leftovers.
 - OneDrive paths can be cloud-only and fail to read from a sandboxed shell; the sources now sit in a local folder, so this should not recur.
 
 ## 4. Steps
@@ -52,15 +56,24 @@ Tick each box in this file as you go and add a dated entry to [03-work-log.md](0
 - [x] Project page: "My part" row at the top of the datasheet and one line under the blurb; `ProjectCover` honours focus and zoom on cards only (page headers always show the whole figure).
 - [x] Tests: a project with `role` shows "My part".
 
+### Step 2b. Design audit before continuing (do this first in the next session)
+Purpose: confirm the baseline and settle which design items (R1–R15) change before more content goes in, so the case studies are written into the final layout. Do not edit code in this step; write the results into plan §2.4 and adjust the backlog.
+- [ ] Build and start the preview (§3). Take screenshots of Home, Projects and one case study (`scripts/shots.mjs`) and run `node scripts/measure.mjs` for the numbers.
+- [ ] **impeccable** (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` (scores five dimensions out of 20) and `reference/critique.md` (heuristics out of 32) on those three pages. Its engine is not installed: when it says to run `scripts/impeccable`, take its "launcher unavailable" path; never download or run the engine.
+- [ ] **taste-skill** §14 pre-flight and **ui-ux-pro-max** Quick Reference §1–§3 on the same pages.
+- [ ] Compare with the baseline (audit 16/20, critique 23/32, plan §2.4; measure baseline in step 11). Record the scores, then for each finding name the R item that fixes it or add a new R item. Targets for step 11: audit ≥ 18/20, critique ≥ 26/32.
+- [ ] Keep it short: one pass, findings as a table, no code changes. Commit the plan update as its own step.
+
 ### Step 3. Data center update
-- [ ] Round the text per the private map (decision D2) and drop the voltage-levels fact.
+- [ ] Start from the stash (`git stash pop`). Round the text per the private map (decisions D2, D7) and drop the voltage-levels fact.
 - [ ] Re-export the overview figure without exact voltages; replace `src/assets/projects/datacenter-grid-compliance/facility-overview.png`; `figures.mjs --fix`; view it.
 - [ ] Add `role`.
+- [ ] Fault locator (D7, also in the stash): drop the 1 % arrival threshold and the layer sizes from the text and from the hybrid-method figure; keep the textbook steps (Clarke transform, Teager energy, arrival times). Check that no other published text names an internal parameter.
 
 ### Steps 4–9. One case study each
 Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitation-limiters`, `pv-plant-controller-models`, `gas-engine-plant-model`, `biogas-chp-plant-controller`. For each:
-- [ ] Read the source summary (path in the private handover) and the private removal list for that slug.
-- [ ] Figures: copy the ones marked "use"; re-export the ones marked "re-export" from a scratch copy of the `.drawio`; skip the rest. Save as `src/assets/projects/<slug>/<short-name>.png`.
+- [ ] Read the source summary (path in the private handover) and the private removal list for that slug. Apply D7 on top of it: approximate ratings for every plant, no internal algorithms.
+- [ ] Figures: copy the ones marked "use" only if they show no exact rating (D7), otherwise re-export; re-export the ones marked "re-export" from a scratch copy of the `.drawio` (`--scale 2`); skip the rest. Save as `src/assets/projects/<slug>/<short-name>.png`.
 - [ ] `node scripts/figures.mjs --fix`, then view every PNG.
 - [ ] Write `src/content/projects/<slug>.md`, modelled on `datacenter-grid-compliance.md`: `kind: professional`, `category: energy` (or the theme set from R3), `start` (year, or months if Devin gave them), blurb ≤ 25 words, Problem / Approach / Result of 1–3 sentences each, 3–5 `facts`, `role`, figures with real `alt` text (what the figure shows) and a one-sentence `caption`, then a short Markdown body ("What we did" / "How we checked it").
 - [ ] Writing style: plain English, short sentences, numbers with units, no marketing words, no em dashes; run the `stop-slop` skill on the text if available.
