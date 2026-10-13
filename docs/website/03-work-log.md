@@ -253,3 +253,8 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Found:** draw.io crops this overview even at `--scale 2` (scale 1 is complete). Exported it as SVG and rendered it in Chromium at 2× instead; noted in the handover §3.
 - Card crop on the reservoir and machine (`coverFocus`, `coverZoom`).
 - **Gate:** check 0 errors, figures clean; 16 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop light and dark, phone).
+
+## 2026-10-14 · v5 Step 5: Synchronous condenser case study
+- New `synchronous-condenser-model`: "about 160 MVA" on the "high-voltage transmission grid"; the acceptance tests and the market body are not named; the limiter and controller model is described at block level (D7). Role from Devin's answer, shortened without changing its content. Start year 2026 from the source.
+- Network overview re-exported from a scratch copy (rating rounded, three voltages replaced by "Machine terminal", "Step-up transformer", "HV bus"), rendered via SVG at 2×; metadata stripped; viewed.
+- **Gate:** check 0 errors, figures clean; 17 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop dark, phone, Projects cards).
