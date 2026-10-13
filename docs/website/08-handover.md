@@ -14,8 +14,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
 | Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
 | Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
-| Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8) |
-| Next | **Steps 9–12** |
+| Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8), `biogas-chp-plant-controller` (step 9). Skipped for D7: figures that draw controller internals or settings |
+| Next | **Steps 10–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -75,12 +75,12 @@ Purpose: confirm the baseline and settle which design items (R1–R15) change be
 
 ### Steps 4–9. One case study each
 Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitation-limiters`, `pv-plant-controller-models`, `gas-engine-plant-model`, `biogas-chp-plant-controller`. For each:
-- [ ] Read the source summary (path in the private handover) and the private removal list for that slug. Apply D7 on top of it: approximate ratings for every plant, no internal algorithms.
-- [ ] Figures: copy the ones marked "use" only if they show no exact rating (D7), otherwise re-export; re-export the ones marked "re-export" from a scratch copy of the `.drawio` (`--scale 2`); skip the rest. Save as `src/assets/projects/<slug>/<short-name>.png`.
-- [ ] `node scripts/figures.mjs --fix`, then view every PNG.
-- [ ] Write `src/content/projects/<slug>.md`, modelled on `datacenter-grid-compliance.md`: `kind: professional`, `category: energy` (or the theme set from R3), `start` (year, or months if Devin gave them), blurb ≤ 25 words, Problem / Approach / Result of 1–3 sentences each, 3–5 `facts`, `role`, figures with real `alt` text (what the figure shows) and a one-sentence `caption`, then a short Markdown body ("What we did" / "How we checked it").
-- [ ] Writing style: plain English, short sentences, numbers with units, no marketing words, no em dashes; run the `stop-slop` skill on the text if available.
-- [ ] Gate.
+- [x] Read the source summary (path in the private handover) and the private removal list for that slug. Apply D7 on top of it: approximate ratings for every plant, no internal algorithms.
+- [x] Figures: copy the ones marked "use" only if they show no exact rating (D7), otherwise re-export; re-export the ones marked "re-export" from a scratch copy of the `.drawio` (`--scale 2`); skip the rest. Save as `src/assets/projects/<slug>/<short-name>.png`.
+- [x] `node scripts/figures.mjs --fix`, then view every PNG.
+- [x] Write `src/content/projects/<slug>.md`, modelled on `datacenter-grid-compliance.md`: `kind: professional`, `category: energy` (or the theme set from R3), `start` (year, or months if Devin gave them), blurb ≤ 25 words, Problem / Approach / Result of 1–3 sentences each, 3–5 `facts`, `role`, figures with real `alt` text (what the figure shows) and a one-sentence `caption`, then a short Markdown body ("What we did" / "How we checked it").
+- [x] Writing style: plain English, short sentences, numbers with units, no marketing words, no em dashes; run the `stop-slop` skill on the text if available.
+- [x] Gate.
 
 ### Step 10. Selection and order
 - [ ] `featured: true` on the four in plan §4; `order` as in plan §4 (academic projects keep 20–22).

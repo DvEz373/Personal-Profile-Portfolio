@@ -3,7 +3,7 @@ title: Gas Engine Power Plant Model
 category: energy
 kind: professional
 order: 7
-coverFocus: "18% 12%"
+coverFocus: "0% 8%"
 coverZoom: 1.5
 context: Client project, plant model for grid connection
 start: "2026"

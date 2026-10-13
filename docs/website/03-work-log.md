@@ -276,3 +276,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Plant overview re-exported without unit, transformer and grid ratings or voltages; rendered via SVG at 2×; metadata stripped; viewed.
 - **Skipped** the model structure figure: it draws the controller internals (controller types, a fault threshold, mode flags) and carries the model code name.
 - **Gate:** check 0 errors, figures clean; 20 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-14 · v5 Step 9: Biogas CHP case study
+- New `biogas-chp-plant-controller`: "about 5 MW, three gensets", "medium-voltage distribution network"; no client, farm, state or country, no network company or market operator names, no model code; controller functions by name only (D7). Role from Devin's answer, including the PSCAD EMT model. Start year 2025.
+- Figures: network overview (cover) and the aggregated version, both re-exported without genset, plant, transformer and bus ratings and with the plant name removed from the page title; rendered via SVG at 2×; metadata stripped; viewed.
+- **Skipped:** the control architecture figure (controller internals and the model code) and the project workflow (names drawn in).
+- Gas engine card crop moved to the left edge of the figure.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. All eight client case studies are now in.
