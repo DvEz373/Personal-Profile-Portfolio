@@ -4,22 +4,24 @@ category: energy
 kind: professional
 order: 1
 featured: true
+coverFocus: "50% 6%"
+coverZoom: 1.4
 context: Client project, grid connection study
 start: "2025"
-blurb: A validated dynamic model of how a 140 MW data center behaves on the transmission grid, built up from one 3 kW power supply.
-problem: The facility connects to the 150 kV network with about 140 MW of IT load, so under the grid code for demand connection it counts as a large demand facility and must prove in simulation how it rides through grid disturbances. Almost all of that load is more than 45,000 single-phase 3 kW power supply units (PSUs), each a small converter with its own control and protection.
+blurb: How a data center with over 100 MW of IT load behaves on the transmission grid, modelled up from one validated 3 kW power supply.
+role: Built the MATLAB and PSCAD models, developed the benchmark measurement test bench and validated the model against it.
+problem: The facility connects to the high-voltage transmission network with over 100 MW of IT load, so under the grid code for demand connection it counts as a large demand facility and must prove in simulation how it rides through grid disturbances. Almost all of that load is tens of thousands of single-phase 3 kW power supply units (PSUs), each a small converter with its own control and protection.
 approach: Model one PSU in detail and validate it against laboratory measurements, then place it, aggregated, in an EMT model of the whole facility network and derive an equivalent RMS model for the transmission system operator.
 result: A compliance case built on a measured converter model instead of a generic load, with fault ride-through, voltage, frequency, phase-jump, RoCoF and harmonic results at the point of connection, plus a black-box RMS model and user manual the TSO can use in its own studies.
 stack: [MATLAB/Simulink, PSCAD/EMTDC, PowerFactory]
 facts:
-  - { label: Facility, value: "About 140 MW of IT load, two buildings" }
-  - { label: Grid connection, value: "150 kV transmission network" }
-  - { label: Main load, value: "More than 45,000 single-phase 3 kW PSUs" }
-  - { label: Voltage levels, value: "150 / 22 kV and 13.8 / 0.416 kV, 240 V L–N" }
+  - { label: Facility, value: "Over 100 MW of IT load, two buildings" }
+  - { label: Grid connection, value: "High-voltage transmission network" }
+  - { label: Main load, value: "Tens of thousands of single-phase 3 kW PSUs" }
   - { label: Framework, value: "Grid code for demand connection" }
 figures:
   - src: ../../assets/projects/datacenter-grid-compliance/facility-overview.png
-    alt: Single-line diagram from the 150 kV grid connection through HV/MV and MV/LV transformers to banks of power supply units, with one representative PSU expanded into rectifier, DC link and DC/DC converter.
+    alt: Single-line diagram from the high-voltage grid connection through HV/MV and MV/LV transformers to banks of power supply units, with one representative PSU expanded into rectifier, DC link and DC/DC converter.
     caption: From the grid connection down to the representative power supply unit.
   - src: ../../assets/projects/datacenter-grid-compliance/psu-topology.png
     alt: Power supply unit topology, an AC/DC rectifier with power factor correction feeding a DC link capacitor and a DC/DC converter.

@@ -13,7 +13,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Last gate | After step 2: `npm run check` 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; private name scan clean |
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
 | Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
-| Next | **Steps 3–12** |
+| Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
+| Next | **Steps 4–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -66,10 +67,10 @@ Purpose: confirm the baseline and settle which design items (R1–R15) change be
 - [x] Keep it short: one pass, findings as a table, no code changes. Commit the plan update as its own step.
 
 ### Step 3. Data center update
-- [ ] Start from the stash (`git stash pop`). Round the text per the private map (decisions D2, D7) and drop the voltage-levels fact.
-- [ ] Re-export the overview figure without exact voltages; replace `src/assets/projects/datacenter-grid-compliance/facility-overview.png`; `figures.mjs --fix`; view it.
-- [ ] Add `role`.
-- [ ] Fault locator (D7, also in the stash): drop the 1 % arrival threshold and the layer sizes from the text and from the hybrid-method figure; keep the textbook steps (Clarke transform, Teager energy, arrival times). Check that no other published text names an internal parameter.
+- [x] Start from the stash (`git stash pop`). Round the text per the private map (decisions D2, D7) and drop the voltage-levels fact.
+- [x] Re-export the overview figure without exact voltages; replace `src/assets/projects/datacenter-grid-compliance/facility-overview.png`; `figures.mjs --fix`; view it.
+- [x] Add `role`.
+- [x] Fault locator (D7, also in the stash): drop the 1 % arrival threshold and the layer sizes from the text and from the hybrid-method figure; keep the textbook steps (Clarke transform, Teager energy, arrival times). Check that no other published text names an internal parameter.
 
 ### Steps 4–9. One case study each
 Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitation-limiters`, `pv-plant-controller-models`, `gas-engine-plant-model`, `biogas-chp-plant-controller`. For each:

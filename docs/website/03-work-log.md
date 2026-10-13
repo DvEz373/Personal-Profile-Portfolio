@@ -239,3 +239,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Also new: R17 (em dashes in the demo's empty readouts, Astro version in the footer). Every other finding maps to R1, R4–R6, R9, R10, R13–R15, step 3 or step 10. Results in [07-v5-plan.md](07-v5-plan.md) §2.4.
 - Open question added to the handover: the Home hero names the current employer.
 - **Gate:** check 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; name scan clean.
+
+## 2026-10-14 · v5 Step 3: Data center rounded, fault locator generalised (D7)
+- Applied the stashed draft. Data center: "over 100 MW of IT load", "high-voltage transmission network", "tens of thousands of 3 kW PSUs"; voltage-levels fact dropped; role added from Devin's answer.
+- Overview figure re-exported without voltages (HV / MV / LV bands only) and replaced; metadata clean; viewed.
+- Fault locator: approach describes the textbook steps only (Clarke transform, Teager energy, arrival times); the arrival threshold and the layer count are gone from text and figure. No other published text names an internal parameter.
+- Card crops (R1): `coverFocus` and `coverZoom` for the data center, `coverFocus` for the fault locator; both cards now show a readable region.
+- **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (lead figure still clipped, R16).
