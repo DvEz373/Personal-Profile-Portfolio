@@ -16,7 +16,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
 | Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8), `biogas-chp-plant-controller` (step 9). Skipped for D7: figures that draw controller internals or settings |
 | Step 10 | Done: four featured, order 1–8, theme filters (R3); fixed the phone menu blocking taps |
-| Next | **Steps 11–12** |
+| Step 11 | Done: R4–R17; audit 19/20, critique 25/32 (target 26 not met, reasons in plan §2.4) |
+| Next | **Step 12** |
 
 ## 2. Rules that are not negotiable
 
@@ -89,11 +90,11 @@ Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitat
 - [x] Gate; screenshots of Home and Projects.
 
 ### Step 11. Design revision
-- [ ] R4 only if approved; R5–R17 as written in the plan (R16: lead figure clipped, found in step 2b).
-- [ ] Review with the **impeccable** skill (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` and `reference/critique.md` for Home, Projects and one case study, and `reference/polish.md` + `reference/craft-floor.md` before UI edits. Its engine and hooks are deliberately not installed: when it asks to run `scripts/impeccable`, take its "launcher unavailable" path and do **not** download or run the engine. Targets: audit ≥ 18/20, critique ≥ 26/32 (baseline 16/20 and 23/32, plan §2.4).
-- [ ] Then `taste-skill` §14 pre-flight and ui-ux-pro-max Quick Reference §1–§3. Use the `frontend-design` plugin too if Devin has installed it.
-- [ ] `node scripts/measure.mjs`: no text under 12 px, no target under 24 × 24 px on phones, fewer uppercase labels than the audit baseline (Home 17, Experience 7 on 2026-10-13), no em dashes.
-- [ ] Gate; full screenshot set.
+- [x] R4 only if approved; R5–R17 as written in the plan (R16: lead figure clipped, found in step 2b).
+- [x] Review with the **impeccable** skill (`~/.claude/skills/impeccable`, instructions only): follow `reference/audit.md` and `reference/critique.md` for Home, Projects and one case study, and `reference/polish.md` + `reference/craft-floor.md` before UI edits. Its engine and hooks are deliberately not installed: when it asks to run `scripts/impeccable`, take its "launcher unavailable" path and do **not** download or run the engine. Targets: audit ≥ 18/20, critique ≥ 26/32 (baseline 16/20 and 23/32, plan §2.4).
+- [x] Then `taste-skill` §14 pre-flight and ui-ux-pro-max Quick Reference §1–§3. Use the `frontend-design` plugin too if Devin has installed it (not installed on 2026-10-14; skipped).
+- [x] `node scripts/measure.mjs`: no text under 12 px, no target under 24 × 24 px on phones, fewer uppercase labels than the audit baseline (Home 17, Experience 7 on 2026-10-13), no em dashes.
+- [x] Gate; full screenshot set.
 
 ### Step 12. Wrap-up
 - [ ] Update: audit §6 progress table, plan status line, `website/README.md` (add-a-project section: `role`, cover focus, the no-names rule, the figure-metadata check), work log.

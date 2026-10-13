@@ -11,7 +11,7 @@ const tone = (c: string) => `c-${c}`;
 ---
 
 <Base title="Skills" description="Devin Ezekiel Purba's skills across renewable energy and power systems, AI and intelligent control, automation and digitalization, plus seven certificates in deep learning, reinforcement learning and AI engineering.">
-  <PageHead index="04" eyebrow="Skills" title="Skills" intro="Four domains, measured like a VU meter: five segments, honest bands instead of fake percentages." art="neural">
+  <PageHead title="Skills" intro="Four domains, measured like a VU meter: five segments, honest bands instead of fake percentages." art="neural">
     <ol class="scale mono" aria-label="Level scale">
       {
         [1, 2, 3, 4, 5].map((n) => (
@@ -57,7 +57,7 @@ const tone = (c: string) => `c-${c}`;
 
   <section class="section" aria-labelledby="certificates">
     <div class="wrap">
-      <SectionHead index="04.5" title="Certificates" id="certificates" note={`${certs.length} completed specializations and professional certificates`} />
+      <SectionHead title="Certificates" id="certificates" note={`${certs.length} completed specializations and professional certificates`} />
       <ol class="certs">
         {
           certs.map((c) => (
@@ -108,7 +108,7 @@ const tone = (c: string) => `c-${c}`;
     background: var(--ink-2);
   }
   .caveat {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--sun-ink);
     margin: 0;
   }
@@ -158,7 +158,7 @@ const tone = (c: string) => `c-${c}`;
   }
   .lvl {
     grid-area: lvl;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--ink-2);
   }
   .meter {

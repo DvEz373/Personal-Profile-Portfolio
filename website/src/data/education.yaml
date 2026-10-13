@@ -6,7 +6,6 @@
   start: "2021-08"
   end: "2025-07"
   summary: Control Systems and Automation · GPA 3.84 / 4.00 · Cum Laude
-  photo: true
   callout:
     label: Thesis
     text: Computation utility optimization with multi-agent deep reinforcement learning in a digital twin of I-IoT edge networks.

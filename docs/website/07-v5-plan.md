@@ -1,6 +1,6 @@
 # v5 plan: client case studies and design revision
 
-Status: **Planned 2026-10-13, ready to build** · Branch: `website-v5-audit-and-projects` (local, not pushed) · Follows [06-design-audit.md](06-design-audit.md) · Execution guide: [08-handover.md](08-handover.md)
+Status: **Built 2026-10-14 (steps 0–11), wrap-up pending** · Branch: `website-v5-audit-and-projects` (local, not pushed) · Follows [06-design-audit.md](06-design-audit.md) · Execution guide: [08-handover.md](08-handover.md)
 
 ## 1. Goal
 
@@ -69,6 +69,18 @@ Method: ⚠️ degraded, single context (no sub-agents spawned in this session; 
 | P2 | Empty band above the contact section on every page; gap under the hero | R10 |
 | P3 | Em dashes in the demo's empty readouts; version number in the footer | **R17** (new) |
 | P3 | Hard-coded instrument background | R15 |
+
+#### Step 11 review (2026-10-14, after R4–R17)
+
+Method as in step 2b (⚠️ degraded, single context, no detector). Evidence: full screenshot set, `scripts/measure.mjs`, a Playwright check of 44 px targets on a Pixel 5 profile, the Playwright suite (92 passed).
+
+**Audit: 19/20 (Excellent), target ≥ 18 met.** Accessibility 4 (no text under 12 px, 44 px touch targets with 8 px gaps, acronyms in `<abbr title>`, the closed phone menu no longer blocks taps, axe clean). Performance 4. Theming 4 (`--figure-sheet`, `--screen`; only the print and name-card pages keep literal colours, on purpose). Responsive 4. Implementation integrity 3 (two unused variables reported as hints by `astro check`; the project-page eyebrow is the one page-level label left).
+
+**Critique: 25/32 (78 %), target ≥ 26 not met.** Status 3, real-world match 3 (+1: plain first sentences, expanded acronyms), control 3, consistency 3, recognition 3, efficiency 3, aesthetic 3 (+1: Home is hero, four case studies, about, demo), error recovery 4; 5 and 10 n/a. What still holds it back: case-study bodies stay dense for a non-engineer, the Home hero carries five text elements (the status line names the employer and waits on Devin's answer), and project pages keep a kind and theme label above the title.
+
+**taste-skill §14:** em dashes 0; eyebrows above section headings 1 for 4 Home sections; no version footer; kept on purpose: the Jakarta clock and the drawn covers of the academic projects. **ui-ux-pro-max §1–§3:** pass, including `touch-target-size`.
+
+**Measurements (Home / Experience):** uppercase labels 17 → 9 and 7 → 5; text under 12 px 0 on every page; targets under 24 px 0; em dashes 0.
 
 ## 3. Decisions (Devin, 2026-10-11 and 2026-10-13)
 

@@ -116,7 +116,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
   }
   .nav-links .idx {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--ink-2);
     transition: color var(--t-ui) var(--ease);
   }
@@ -169,6 +169,16 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     color: var(--ink);
     cursor: pointer;
     transition: border-color var(--t-ui) var(--ease);
+  }
+  /* Touch screens: 44 px targets with 8 px between them. */
+  @media (pointer: coarse) {
+    .tools {
+      gap: 8px;
+    }
+    .tool {
+      min-width: 44px;
+      height: 44px;
+    }
   }
   .tool:hover {
     border-color: var(--signal);

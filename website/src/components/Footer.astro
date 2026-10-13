@@ -6,17 +6,17 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   profile: CollectionEntry<"profile">["data"];
+  contact?: boolean;
 }
-const { profile } = Astro.props;
+const { profile, contact = true } = Astro.props;
 const tel = profile.phone.replace(/\s/g, "");
 const updated = BUILD_DATE.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: profile.timezone });
-const version = Astro.generator.replace(/^Astro v/, "");
 ---
 
 <footer class="site-footer" transition:name="footer" transition:animate="none">
   <div class="wrap">
-    <div class="cta">
-      <p class="label">Contact</p>
+    {contact && (
+      <div class="cta">
       <h2 class="serif">Let's build <em>cleaner, smarter</em> energy systems.</h2>
       <div class="actions">
         <a class="btn primary" href={`mailto:${profile.email}`}><Icon name="mail" />Email me</a>
@@ -24,6 +24,7 @@ const version = Astro.generator.replace(/^Astro v/, "");
         <a class="btn" href={url("devin-ezekiel-purba.vcf")} download><Icon name="vcard" />Save contact</a>
       </div>
     </div>
+    )}
 
     <div class="cols">
       <nav aria-label="Footer">
@@ -57,7 +58,7 @@ const version = Astro.generator.replace(/^Astro v/, "");
 
     <div class="bottom mono">
       <span class="clock"><span class="live-dot" aria-hidden="true"></span>{profile.city} <time data-clock data-tz={profile.timezone}>--:--</time> WIB · UTC+7</span>
-      <span>Built with Astro {version} · Updated {updated}</span>
+      <span>Updated {updated}</span>
       <span>© {BUILD_DATE.getFullYear()} {profile.name}</span>
     </div>
   </div>
@@ -107,6 +108,15 @@ const version = Astro.generator.replace(/^Astro v/, "");
     display: inline-flex;
     align-items: center;
     gap: 4px;
+  }
+  @media (pointer: coarse) {
+    .cols ul {
+      gap: 0;
+    }
+    .cols a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
   .cols a:hover {
     color: var(--signal);

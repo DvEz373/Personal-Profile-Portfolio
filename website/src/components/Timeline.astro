@@ -1,7 +1,5 @@
 ---
-import Photo from "./Photo.astro";
 import { url } from "../lib/url";
-import type { ImageMetadata } from "astro";
 
 export interface TimelineItem {
   id: string;
@@ -17,7 +15,6 @@ export interface TimelineItem {
   tags: string[];
   callout?: { label: string; text: string };
   link?: { href: string; label: string };
-  photo?: { src: ImageMetadata; alt: string };
 }
 interface Props {
   items: TimelineItem[];
@@ -77,11 +74,6 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
                     <li>{p}</li>
                   ))}
                 </ul>
-              )}
-              {it.photo && (
-                <div class="photo">
-                  <Photo src={it.photo.src} alt={it.photo.alt} widths={[320, 480, 640]} sizes="(min-width: 640px) 320px, 80vw" ratio="4 / 5"  />
-                </div>
               )}
               {it.tags.length > 0 && (
                 <ul class="tags">
@@ -277,9 +269,6 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 1.2rem;
     line-height: 1.35;
-  }
-  .photo {
-    max-width: 300px;
   }
   .more {
     font-weight: 550;

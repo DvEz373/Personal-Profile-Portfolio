@@ -135,6 +135,27 @@ test("the closed phone menu does not block taps on the page", async ({ page }, i
   expect(hit).toBe(true);
 });
 
+test("project lead figures show the whole image", async ({ page }) => {
+  for (const slug of ["ccgt-excitation-limiters", "datacenter-grid-compliance", "tw-fault-locator"]) {
+    await page.goto(`projects/${slug}/`);
+    const img = page.locator(".lead img");
+    await expect(img).toBeVisible();
+    await img.evaluate((el: HTMLImageElement) => el.decode());
+    const [box, frame] = await Promise.all([img.boundingBox(), page.locator(".lead .figure").boundingBox()]);
+    expect(box && frame).toBeTruthy();
+    expect(box!.y + box!.height).toBeLessThanOrEqual(frame!.y + frame!.height + 1);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(frame!.x + frame!.width + 1);
+  }
+});
+
+test("acronyms are expanded once, at first use", async ({ page }) => {
+  await page.goto("projects/pumped-storage-dfim-model/");
+  await expect(page.locator('abbr:text-is("DFIM")')).toHaveCount(1);
+  await expect(page.locator('abbr:text-is("DFIM")')).toHaveAttribute("title", "doubly fed induction machine");
+  expect(await page.locator("main").innerText()).toContain("PSS/E");
+  await expect(page.locator('abbr:text-is("PSS")')).toHaveCount(0);
+});
+
 test("home features four client case studies", async ({ page }) => {
   await page.goto("");
   await expect(page.locator(".work > li")).toHaveCount(4);

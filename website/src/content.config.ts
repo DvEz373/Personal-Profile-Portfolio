@@ -62,7 +62,6 @@ const education = defineCollection({
     points: z.array(z.string()).default([]),
     callout: z.object({ label: z.string(), text: z.string() }).optional(),
     link: z.object({ href: z.string(), label: z.string() }).optional(),
-    photo: z.boolean().default(false),
   }),
 });
 

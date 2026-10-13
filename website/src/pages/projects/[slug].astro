@@ -1,5 +1,5 @@
 ---
-import { render } from "astro:content";
+import { abbrHtml, abbrRenderedHtml } from "../../lib/glossary";
 import { Picture } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import ProjectCover from "../../components/ProjectCover.astro";
@@ -19,7 +19,10 @@ export async function getStaticPaths() {
 
 const { entry, prev, next } = Astro.props;
 const p = entry.data;
-const { Content } = await render(entry);
+
+// Header and summary fields share one "seen" set, so each acronym is expanded once, at its first use.
+const seen = new Set<string>();
+const ab = (text: string) => abbrHtml(text, seen);
 const [cover, ...more] = p.figures;
 const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 ---
@@ -35,11 +38,11 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
         </nav>
         <p class="label cat">{KIND_LABEL_PROJECT[p.kind]} · {CATEGORY_LABEL[p.category]}</p>
         <h1 transition:name={`title-${entry.id}`}>{p.title}</h1>
-        <p class="blurb">{p.blurb}</p>
+        <p class="blurb" set:html={ab(p.blurb)} />
         {
           p.role && (
             <p class="role">
-              <strong>My part:</strong> {p.role}
+              <strong>My part:</strong> <Fragment set:html={ab(p.role)} />
             </p>
           )
         }
@@ -49,7 +52,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 
     <div class="wrap layout">
       <figure class="lead">
-        <div class:list={["figure", { wide: cover && cover.src.width / cover.src.height > 2.2 }]} transition:name={`fig-${entry.id}`}>
+        <div class:list={["figure", { fit: cover }]} transition:name={`fig-${entry.id}`}>
           <ProjectCover id={entry.id} category={p.category} figure={cover} sizes="(min-width: 960px) 760px, 100vw" eager />
         </div>
         {
@@ -122,18 +125,18 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
       <div class="story">
         <section aria-labelledby="h-problem">
           <h2 id="h-problem">Problem</h2>
-          <p>{p.problem}</p>
+          <p set:html={ab(p.problem)} />
         </section>
         <section aria-labelledby="h-approach">
           <h2 id="h-approach">Approach</h2>
-          <p>{p.approach}</p>
+          <p set:html={ab(p.approach)} />
         </section>
         <section aria-labelledby="h-result">
           <h2 id="h-result">Result</h2>
-          <p>{p.result}</p>
+          <p set:html={ab(p.result)} />
         </section>
         <div class="prose">
-          <Content />
+          <Fragment set:html={abbrRenderedHtml(entry.rendered?.html ?? "", seen)} />
         </div>
       </div>
 
@@ -251,9 +254,20 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     border-radius: var(--radius-l);
     overflow: hidden;
   }
-  /* Long pipeline diagrams would shrink to unreadable in a 16:9 box. */
-  .figure.wide {
+  /* A real figure keeps its own shape: tall diagrams are capped in height and shown whole, never cropped. */
+  .figure.fit {
     aspect-ratio: auto;
+  }
+  .figure.fit :global(.cover),
+  .figure.fit :global(picture) {
+    height: auto;
+  }
+  .figure.fit :global(img) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: min(72vh, 640px);
+    margin-inline: auto;
   }
   .lead figcaption,
   .figs figcaption {
@@ -281,7 +295,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   }
   .spec dt {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -368,7 +382,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     padding: clamp(10px, 2vw, 24px);
     border: 1px solid var(--line);
     border-radius: var(--radius-l);
-    background: #fff;
+    background: var(--figure-sheet);
     transition: border-color var(--t-ui) var(--ease);
   }
   .sheet:hover {

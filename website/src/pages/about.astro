@@ -14,8 +14,8 @@ const degree = (await getEducation()).find((e) => e.kind === "degree");
 const tel = profile.phone.replace(/\s/g, "");
 ---
 
-<Base title="About" description={`About ${profile.name}: ${profile.headline} in ${profile.city} working on renewable energy, power systems, AI and intelligent control. Contact details, CV and contact card.`}>
-  <PageHead index="05" eyebrow="About" title="About" intro="An electrical engineer between power grids and intelligent software." art="solar" />
+<Base title="About" contact={false} description={`About ${profile.name}: ${profile.headline} in ${profile.city} working on renewable energy, power systems, AI and intelligent control. Contact details, CV and contact card.`}>
+  <PageHead title="About" intro="An electrical engineer between power grids and intelligent software." art="solar" />
 
   <div class="wrap layout">
     <div class="photos">
@@ -148,7 +148,7 @@ const tel = profile.phone.replace(/\s/g, "");
   }
   .spec dt {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.74rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -206,7 +206,7 @@ const tel = profile.phone.replace(/\s/g, "");
     overflow-wrap: anywhere;
   }
   .hint {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--ink-2);
   }
   .row:hover .hint {

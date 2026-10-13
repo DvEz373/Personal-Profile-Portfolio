@@ -52,7 +52,7 @@ const crop = cropped ? `--focus: ${focus ?? "50% 50%"}; --zoom: ${zoom ?? 1}` : 
     display: grid;
     place-items: center;
     padding: clamp(10px, 3%, 20px);
-    background: #fff;
+    background: var(--figure-sheet);
   }
   .cover :global(picture),
   .cover :global(img) {

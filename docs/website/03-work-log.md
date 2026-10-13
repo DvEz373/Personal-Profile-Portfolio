@@ -290,3 +290,15 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Found and fixed (live since v4):** on phones the closed menu keeps its 326 px box under the header, and that empty box swallowed every tap on the page below it. `.nav` now has `pointer-events: none`, the open menu `auto`. Checked: menu links and chips both work on a phone.
 - Tests: theme filters (3 machine models, 3 AI, back to all), Home shows four case studies, the closed phone menu does not block taps.
 - **Gate:** check 0 errors, figures clean; 21 pages; Playwright 88 passed, 2 skipped; name scan clean; Home and Projects screenshots viewed (desktop light and dark, phone).
+
+## 2026-10-14 · v5 Step 11: Design revision (R4–R17)
+- **R4** Home: hero, Selected work (4), About (one paragraph and a link), Interactive demo, contact. Explore and Career direction removed; their components (`FeederNav`, `SignalChain`) deleted.
+- **R5/R11** Page headers lose the eyebrow that repeated the H1; `PageHead` and `SectionHead` lose their `index` props and the hidden `§` span. Section notes are now sentence-case text, not uppercase labels. The footer "Contact" label is gone.
+- **R6** Hero eyebrow shows the location only. **R7** About has no second contact band (`Base contact={false}`). **R8** No photo inside the degree entry (photo field removed from the schema, data and `Timeline`).
+- **R9** Every label at least 12 px. **R10** Less space under the hero and above the footer. **R12/R15** `--figure-sheet` (off-white in dark mode) and `--screen` tokens; dead annotation CSS removed from Home.
+- **R13** `src/lib/glossary.ts`: acronyms in project pages get `<abbr title>` at first use (summary fields and Markdown body; "PSS" inside "PSS/E" is left alone). Astro 7's default Markdown processor no longer takes rehype plugins without an extra package, so the body is processed from its rendered HTML instead.
+- **R14** 44 px targets with 8 px gaps under `(pointer: coarse)`: header tools, filter chips, footer links (checked on a Pixel 5 profile).
+- **R16** Project-page lead figures keep their own shape (height capped, never cropped). **R17** Demo readouts start at "–"; footer shows "Updated <date>" without the Astro version.
+- Tests: lead figures fit their box (three pages), acronyms expanded once, plus the step 10 tests.
+- Review: audit 19/20, critique 25/32, measurements in [07-v5-plan.md](07-v5-plan.md) §2.4. The critique target (26) is not met; the reasons are listed there.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; name scan clean; screenshots of every page viewed, no horizontal overflow.
