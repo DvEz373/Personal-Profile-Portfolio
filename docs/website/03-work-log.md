@@ -258,3 +258,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - New `synchronous-condenser-model`: "about 160 MVA" on the "high-voltage transmission grid"; the acceptance tests and the market body are not named; the limiter and controller model is described at block level (D7). Role from Devin's answer, shortened without changing its content. Start year 2026 from the source.
 - Network overview re-exported from a scratch copy (rating rounded, three voltages replaced by "Machine terminal", "Step-up transformer", "HV bus"), rendered via SVG at 2×; metadata stripped; viewed.
 - **Gate:** check 0 errors, figures clean; 17 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop dark, phone, Projects cards).
+
+## 2026-10-14 · v5 Step 6: Combined-cycle excitation limiter case study
+- New `ccgt-excitation-limiters`: "gigawatt-class combined cycle, three gas and one steam turbine unit" on the "extra-high-voltage grid"; limiters named by function only, no settings (D7). Role from Devin's answer. Start year 2026 (start years only, D8).
+- Figures: plant and unit control overview re-exported without unit ratings, voltages and the plant name in the page title; unit model chain re-exported with the employer abbreviation replaced by "user-defined model". Both rendered via SVG at 2×, metadata stripped, viewed.
+- **Skipped** the excitation reference chain figure: it draws the limiter logic with its settings (internal algorithm, D7).
+- Synchronous condenser card crop moved to the machine and its excitation system.
+- **Gate:** check 0 errors, figures clean; 18 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. The lead figure on this page is clipped too (R16, step 11).
