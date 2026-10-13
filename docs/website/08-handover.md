@@ -14,8 +14,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
 | Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
 | Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
-| Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7) |
-| Next | **Steps 8–12** |
+| Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8) |
+| Next | **Steps 9–12** |
 
 ## 2. Rules that are not negotiable
 

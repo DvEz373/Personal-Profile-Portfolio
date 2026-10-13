@@ -270,3 +270,9 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - New `pv-plant-controller-models`: the port from PSCAD to PSS/E and the later release update as one story. Ratings approximate ("about 20 and 25 MVA", "high-voltage transmission grid"); controller functions listed by name only, no settings, and the import limit value left out (D7). Role from Devin's answer. Start year 2026.
 - Figures: both network overviews re-exported without plant ratings, transformer ratings or voltages (approximate plant size kept as "about 20 / 25 MVA"); rendered via SVG at 2×; metadata stripped; viewed. The manufacturer's controller-logic figures were not used.
 - **Gate:** check 0 errors, figures clean; 19 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-14 · v5 Step 8: Gas engine plant case study
+- New `gas-engine-plant-model`: "five units of about 12 MVA", "about 50 MW", "high-voltage transmission grid"; no grid short-circuit data, no country, no vendors; the user model described at block level (D7). Role from Devin's answer, including the steady-state studies. Start year 2026.
+- Plant overview re-exported without unit, transformer and grid ratings or voltages; rendered via SVG at 2×; metadata stripped; viewed.
+- **Skipped** the model structure figure: it draws the controller internals (controller types, a fault threshold, mode flags) and carries the model code name.
+- **Gate:** check 0 errors, figures clean; 20 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
