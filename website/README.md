@@ -40,6 +40,9 @@ Dates are `YYYY-MM`. Use `end: present` for something ongoing. Projects may also
 | `npm run build` | Builds the site into `dist/` |
 | `npm run preview` | Serves `dist/` the way GitHub Pages will |
 | `npm run test:install` | One time: downloads the browser used by the tests |
+| `node scripts/shots.mjs <dir> [pages]` | Full-page screenshots (desktop light and dark, phone) of a running preview |
+| `node scripts/measure.mjs [pages]` | Phone-width checks: text under 12 px, targets under 24 px, uppercase labels, em dashes |
+| `node scripts/figures.mjs [--fix]` | Fails if a project figure carries metadata (draw.io embeds its editable source); `--fix` strips it. Part of `npm run check` |
 | `npm test` | Builds must exist first. Runs the browser tests (pages load, no errors, no sideways scroll, accessibility scan, interactions) on desktop and phone sizes |
 
 ## Add a project

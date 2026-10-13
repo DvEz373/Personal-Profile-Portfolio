@@ -180,3 +180,14 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Data center: "European Network Code on Demand Connection" is now "the grid code for demand connection".
 - Removed the `client` field from the project schema and page, so a name cannot slip back in; the README states the rule.
 - Every new figure is checked for drawn-in names before it is added.
+
+## 2026-10-13 · Step 15: Research, plan and handover for the remaining case studies
+- All client project sources are now in a local folder (read-only). Read the summaries and screened every figure: SVG text for drawn-in names, PNG metadata, and a visual check of the candidate covers.
+- **Found:** draw.io PNG exports embed the whole editable diagram (`zTXt`), and several figures that look clean carry client or plant names there. The "Full size" link serves the original PNG.
+  - Added `scripts/figures.mjs` (check, `--fix` strips everything but image chunks) and made it part of `npm run check`.
+  - Stripped the two published fault-locator figures and rewrote the unpushed commit, so no embedded source is in the branch history.
+- Added `scripts/shots.mjs` (screenshots) and `scripts/measure.mjs` (12 px text, 24 px targets, labels, em dashes).
+- Research: taste-skill, ui-ux-pro-max design-system query, the Design plugin's critique framework, and web sources on case-study structure and NDA work. `frontend-design` is in the plugin catalog but not installed; `impeccable` is not available.
+- Decisions from Devin: round the ratings of unique plants, merge the two PV controller projects, and give his own role per project.
+- Wrote [07-v5-plan.md](07-v5-plan.md) and [08-handover.md](08-handover.md). The source map, removal lists, deny list and name scanner sit in a private folder outside the repo.
+- Tested the draw.io command-line export for re-exporting figures without exact ratings.
