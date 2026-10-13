@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–2b done) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–11 done, paused before step 12) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -128,9 +128,9 @@ Paste this into a new Claude Code session opened in the repo folder.
 ```text
 Continue v5 of Devin Ezekiel Purba's portfolio (Astro 7 + TypeScript in `website/`) in `D:\Documents\Projects\Personal-Profile-Portfolio`, branch `website-v5-audit-and-projects` (local, not pushed).
 
-1. `git switch website-v5-audit-and-projects`. `git status` must be clean (an untracked `.claude/` is fine). `git stash list` must show "v5 step 3 draft"; leave it until step 3.
+1. `git switch website-v5-audit-and-projects`. `git status` must be clean (an untracked `.claude/` is fine). `git stash list` should be empty.
 2. Read, in this order: `docs/website/08-handover.md` (your task list, rules and gate), `docs/website/07-v5-plan.md` (decisions D1–D8, content plan, backlog R1–R15), `docs/website/03-work-log.md` (the step 1 entry has Devin's role for each project), `docs/website/06-design-audit.md`, then the private `D:\Documents\Projects\Portfolio_Private\HANDOVER_PRIVATE.md`, including its section 6 update.
-3. Steps 0–2 are done. Next is **step 2b, the design audit**. Run it exactly as written, change no code, record the scores and findings in plan §2.4, and commit. Then do steps 3–12 in order, with one commit per step. Tick the boxes in 08-handover.md and add a dated work-log entry for each step.
+3. Steps 0–11 are done (the stash is used up). Next is **step 12, the wrap-up**: README add-a-project section (`role`, `coverFocus`/`coverZoom`, the theme values from `src/lib/themes.ts`, the glossary in `src/lib/glossary.ts`, the no-names rule, the figure-metadata check, the SVG render path for large draw.io figures), audit §6 progress table, final gate on a clean build, screenshots for Devin, then ask before pushing. Tick the boxes in 08-handover.md and add a dated work-log entry.
 
 Rules that matter most:
 - The repo is public. Write no client, employer, plant, vendor, grid operator, market body or place names, no project codes and no internal model names in any committed file, commit message, figure pixels or figure metadata. Never copy anything from `Portfolio_Private` into the repo.

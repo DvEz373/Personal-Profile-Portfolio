@@ -302,3 +302,6 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Tests: lead figures fit their box (three pages), acronyms expanded once, plus the step 10 tests.
 - Review: audit 19/20, critique 25/32, measurements in [07-v5-plan.md](07-v5-plan.md) §2.4. The critique target (26) is not met; the reasons are listed there.
 - **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; name scan clean; screenshots of every page viewed, no horizontal overflow.
+
+## 2026-10-14 · Paused before step 12
+- Devin asked to pause. Steps 2b–11 are committed; step 12 (README, audit §6, clean-build gate, screenshots, push question) is next. The handover prompt (§7) now starts there.
