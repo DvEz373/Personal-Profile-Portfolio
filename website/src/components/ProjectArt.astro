@@ -5,11 +5,13 @@
  */
 interface Props {
   id: string;
-  category: "energy" | "ai" | "iot";
+  category: Theme;
   fig: string;
   class?: string;
 }
-const { id, category, fig, class: cls } = Astro.props;
+import { DOMAIN, type Theme } from "../lib/themes";
+const { id, fig, class: cls } = Astro.props;
+const category = DOMAIN[Astro.props.category];
 
 function rng(seedText: string) {
   let h = 2166136261;

@@ -1,8 +1,9 @@
 ---
 title: Adjustable Speed Pumped Storage Model
-category: energy
+category: machines
 kind: professional
 order: 2
+featured: true
 coverFocus: "20% 35%"
 coverZoom: 1.7
 context: Client project, plant model for grid studies

@@ -1,9 +1,8 @@
 ---
 title: AI Fault Locator for Power Lines
-category: energy
-also: [ai]
+category: ai
 kind: professional
-order: 2
+order: 4
 featured: true
 coverFocus: "35% 50%"
 context: Client project for a power utility

@@ -2,12 +2,11 @@
 import Base from "../../layouts/Base.astro";
 import PageHead from "../../components/PageHead.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import { getProjects, CATEGORY_LABEL } from "../../lib/content";
+import { getProjects, CATEGORY_LABEL, THEMES, TONE } from "../../lib/content";
 
 const projects = await getProjects();
-const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
 const keysOf = (p: (typeof projects)[number]) => [p.data.category, ...p.data.also];
-const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CATEGORY_LABEL[k], tone: TONE[k], n: projects.filter((p) => keysOf(p).includes(k)).length }));
+const cats = THEMES.map((k) => ({ key: k, label: CATEGORY_LABEL[k], tone: TONE[k], n: projects.filter((p) => keysOf(p).includes(k)).length }));
 const groups = [
   { id: "client-work", title: "Client work", note: "Power system models and studies delivered for utilities, plant owners and manufacturers.", items: projects.filter((p) => p.data.kind === "professional") },
   { id: "academic", title: "Academic and personal", note: "Thesis, capstone and lab projects from Universitas Indonesia.", items: projects.filter((p) => p.data.kind === "academic") },
@@ -19,7 +18,7 @@ const groups = [
 
   <section class="wrap" data-filterable>
     <div class="bar">
-      <div class="chips" role="group" aria-label="Filter projects by category">
+      <div class="chips" role="group" aria-label="Filter projects by theme">
         <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">{projects.length}</span></button>
         {
           cats.map((c) => (

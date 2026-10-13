@@ -1,6 +1,6 @@
 ---
 title: Power Plant Controller Models for PV Plants
-category: energy
+category: controllers
 kind: professional
 order: 6
 coverFocus: "0% 30%"

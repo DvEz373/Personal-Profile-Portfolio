@@ -1,6 +1,6 @@
 ---
 title: Excitation Limiter Models for a Combined-Cycle Plant
-category: energy
+category: machines
 kind: professional
 order: 5
 coverFocus: "35% 12%"

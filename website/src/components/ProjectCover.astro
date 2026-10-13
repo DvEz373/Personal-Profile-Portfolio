@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import ProjectArt from "./ProjectArt.astro";
+import type { Theme } from "../lib/themes";
 
 /**
  * A project's cover: its first real figure, shown whole on a white sheet (engineering
@@ -10,7 +11,7 @@ import ProjectArt from "./ProjectArt.astro";
  */
 interface Props {
   id: string;
-  category: "energy" | "ai" | "iot";
+  category: Theme;
   figure?: { src: ImageMetadata; alt: string };
   /** Card thumbnails are decorative (the card's title names the link); headers describe the figure. */
   decorative?: boolean;

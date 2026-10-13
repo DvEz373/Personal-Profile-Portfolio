@@ -215,6 +215,8 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       position: absolute;
       inset: var(--header-h) 0 auto 0;
       margin: 0;
+      /* The closed menu keeps its height; without this its empty box swallows taps on the page below. */
+      pointer-events: none;
     }
     .nav-links {
       display: flex;
@@ -235,6 +237,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       box-shadow: var(--shadow);
     }
     .nav-links[data-open] {
+      pointer-events: auto;
       visibility: visible;
       opacity: 1;
       transform: none;

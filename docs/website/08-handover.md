@@ -15,7 +15,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 2b | Done 2026-10-14: audit 16/20, critique 23/32 (unchanged); new R16 (lead figure clipped) and R17 (em-dash readouts, footer version) |
 | Step 3 | Done 2026-10-14 (data center rounded, fault locator generalised, card crops for both) |
 | Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8), `biogas-chp-plant-controller` (step 9). Skipped for D7: figures that draw controller internals or settings |
-| Next | **Steps 10–12** |
+| Step 10 | Done: four featured, order 1–8, theme filters (R3); fixed the phone menu blocking taps |
+| Next | **Steps 11–12** |
 
 ## 2. Rules that are not negotiable
 
@@ -83,9 +84,9 @@ Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitat
 - [x] Gate.
 
 ### Step 10. Selection and order
-- [ ] `featured: true` on the four in plan §4; `order` as in plan §4 (academic projects keep 20–22).
-- [ ] If R3 is approved: replace the category enum and chips with themes; update `CATEGORY_LABEL`, `TONE`, the filters and tests.
-- [ ] Gate; screenshots of Home and Projects.
+- [x] `featured: true` on the four in plan §4; `order` as in plan §4 (academic projects keep 20–22).
+- [x] If R3 is approved: replace the category enum and chips with themes; update `CATEGORY_LABEL`, `TONE`, the filters and tests.
+- [x] Gate; screenshots of Home and Projects.
 
 ### Step 11. Design revision
 - [ ] R4 only if approved; R5–R17 as written in the plan (R16: lead figure clipped, found in step 2b).

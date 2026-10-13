@@ -117,6 +117,29 @@ test("experience filters and the career chart work", async ({ page }) => {
   await expect(page.locator("#teep-ntust details")).toHaveAttribute("open", "");
 });
 
+test("project theme filters show client and academic work together", async ({ page }) => {
+  await page.goto("projects/");
+  const total = await page.locator("[data-kind]").count();
+  await page.locator('[data-filter="machines"]').click();
+  await expect(page.locator("[data-shown]")).toHaveText(`Showing 3 of ${total}`);
+  await page.locator('[data-filter="ai"]').click();
+  await expect(page.locator("[data-kind~='ai']:visible")).toHaveCount(3);
+  await page.locator('[data-filter="all"]').click();
+  await expect(page.locator("[data-shown]")).toHaveText(`Showing ${total} of ${total}`);
+});
+
+test("the closed phone menu does not block taps on the page", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "phone layout only");
+  await page.goto("projects/");
+  const hit = await page.evaluate(() => document.elementFromPoint(150, 150)?.closest(".site-header") === null);
+  expect(hit).toBe(true);
+});
+
+test("home features four client case studies", async ({ page }) => {
+  await page.goto("");
+  await expect(page.locator(".work > li")).toHaveCount(4);
+});
+
 test("instrument trips, reports a nadir and settles with the controller on", async ({ page }) => {
   await page.goto("");
   await page.locator('[data-ctl="on"]').click();

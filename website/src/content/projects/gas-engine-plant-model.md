@@ -1,6 +1,6 @@
 ---
 title: Gas Engine Power Plant Model
-category: energy
+category: controllers
 kind: professional
 order: 7
 coverFocus: "0% 8%"

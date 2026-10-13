@@ -5,7 +5,7 @@ import Base from "../../layouts/Base.astro";
 import ProjectCover from "../../components/ProjectCover.astro";
 import Schematic from "../../components/Schematic.astro";
 import Icon from "../../components/Icon.astro";
-import { getProjects, CATEGORY_LABEL, KIND_LABEL_PROJECT } from "../../lib/content";
+import { getProjects, CATEGORY_LABEL, KIND_LABEL_PROJECT, TONE, DOMAIN } from "../../lib/content";
 import { formatDuration, formatRange } from "../../lib/dates";
 import { url } from "../../lib/url";
 
@@ -21,7 +21,6 @@ const { entry, prev, next } = Astro.props;
 const p = entry.data;
 const { Content } = await render(entry);
 const [cover, ...more] = p.figures;
-const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
 const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 ---
 
@@ -45,7 +44,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
           )
         }
       </div>
-      {!cover && <Schematic variant={art[p.category]} />}
+      {!cover && <Schematic variant={art[DOMAIN[p.category]]} />}
     </header>
 
     <div class="wrap layout">

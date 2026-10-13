@@ -9,19 +9,18 @@ import SignalChain from "../components/SignalChain.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import Schematic from "../components/Schematic.astro";
 import portrait from "../assets/photos/portrait.jpg";
-import { getProfile, getExperience, getEducation, getProjects, getSkills } from "../lib/content";
+import { getProfile, getExperience, getEducation, getProjects, getSkills, TONE } from "../lib/content";
 import { url } from "../lib/url";
 
 const profile = await getProfile();
 const [experience, education, projects, skills] = await Promise.all([getExperience(), getEducation(), getProjects(), getSkills()]);
-const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
 const selected = projects.filter((p) => p.data.featured).slice(0, 4);
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 const feeders = [
   { href: url("experience/"), idx: "01", title: "Experience", line: "Jobs, internships and campus roles", meta: plural(experience.length, "role", "roles") },
   { href: url("education/"), idx: "02", title: "Education", line: "Degree, exchange and courses", meta: plural(education.length, "entry", "entries") },
-  { href: url("projects/"), idx: "03", title: "Projects", line: "Energy, AI and IoT builds", meta: plural(projects.length, "build", "builds") },
+  { href: url("projects/"), idx: "03", title: "Projects", line: "Client studies, AI and IoT builds", meta: plural(projects.length, "build", "builds") },
   { href: url("skills/"), idx: "04", title: "Skills", line: "Domains, tools and certificates", meta: plural(skills.length, "domain", "domains") },
   { href: url("about/"), idx: "05", title: "About", line: "Who I am, how to reach me", meta: "bio & contact" },
 ];

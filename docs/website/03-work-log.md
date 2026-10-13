@@ -283,3 +283,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Skipped:** the control architecture figure (controller internals and the model code) and the project workflow (names drawn in).
 - Gas engine card crop moved to the left edge of the figure.
 - **Gate:** check 0 errors, figures clean; 21 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. All eight client case studies are now in.
+
+## 2026-10-14 · v5 Step 10: Selection, order and theme filters (R3)
+- Featured on Home: data center, pumped storage, synchronous condenser, fault locator. Client work ordered 1–8 as in plan §4; academic projects keep 20–22.
+- **R3:** themes replace Energy / AI / IoT: Plant controllers (3), Machine models (3), Grid studies (1), AI (3), IoT (1). One source in `src/lib/themes.ts` (labels, tones, and the domain that picks the drawn illustration); schema, Projects, project pages, Home and the illustrations use it. The three energy themes share the sun colour, so colour still means domain. Palette and Explore hint now read "Client studies, AI and IoT builds".
+- **Found and fixed (live since v4):** on phones the closed menu keeps its 326 px box under the header, and that empty box swallowed every tap on the page below it. `.nav` now has `pointer-events: none`, the open menu `auto`. Checked: menu links and chips both work on a phone.
+- Tests: theme filters (3 machine models, 3 AI, back to all), Home shows four case studies, the closed phone menu does not block taps.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 88 passed, 2 skipped; name scan clean; Home and Projects screenshots viewed (desktop light and dark, phone).

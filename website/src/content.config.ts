@@ -4,6 +4,7 @@
 import { defineCollection } from "astro:content";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { THEMES } from "./lib/themes";
 
 /** Year and month, written as "2025-09". Use "present" for an ongoing entry. */
 const month = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'Use "YYYY-MM", for example "2025-09"');
@@ -95,9 +96,9 @@ const projects = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      category: z.enum(["energy", "ai", "iot"]),
+      category: z.enum(THEMES),
       /** Extra filter chips the project also appears under. */
-      also: z.array(z.enum(["energy", "ai", "iot"])).default([]),
+      also: z.array(z.enum(THEMES)).default([]),
       /** professional = client work at an employer; academic = thesis, coursework, side projects. */
       kind: z.enum(["professional", "academic"]),
       order: z.number().int(),

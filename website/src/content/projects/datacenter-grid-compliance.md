@@ -1,6 +1,6 @@
 ---
 title: Grid Compliance Model for a Hyperscale Data Center
-category: energy
+category: grid
 kind: professional
 order: 1
 featured: true

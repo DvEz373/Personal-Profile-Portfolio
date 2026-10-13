@@ -1,8 +1,9 @@
 ---
 title: Synchronous Condenser Model and Automated Test Bench
-category: energy
+category: machines
 kind: professional
 order: 3
+featured: true
 coverFocus: "8% 62%"
 coverZoom: 1.15
 context: Client project, model for grid connection

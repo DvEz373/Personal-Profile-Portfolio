@@ -1,6 +1,6 @@
 ---
 title: Biogas CHP Plant Controller Model
-category: energy
+category: controllers
 kind: professional
 order: 8
 coverFocus: "10% 40%"
