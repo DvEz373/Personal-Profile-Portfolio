@@ -9,6 +9,10 @@
 //                                           or a covers/curated path does not exist (CI)
 //   node scripts/graph.mjs query <path|id>  neighbours, covering docs, rules, sync partners
 //   node scripts/graph.mjs impact <path>    pages and outputs affected by changing a file
+//
+// The repository root is also an Obsidian vault (docs/project/obsidian.md): links may be
+// relative Markdown links or [[wikilinks]] (resolved by file name or alias), and the
+// script also writes docs/graph/modules.md and the Obsidian canvas docs/graph/portfolio.canvas.
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, relative, resolve, basename, extname, posix } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -16,16 +20,19 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_JSON = "docs/graph/graph.json";
 const OUT_MD = "docs/graph/README.md";
+const OUT_MODULES = "docs/graph/modules.md";
+const OUT_CANVAS = "docs/graph/portfolio.canvas";
+const GENERATED = new Set([OUT_JSON, OUT_MD, OUT_MODULES, OUT_CANVAS]);
 const curated = await import(pathToFileURL(join(ROOT, "docs/graph/curated.mjs")).href);
 
 // ---------- File discovery ----------
 
 const SCAN = ["website/src", "website/scripts", "website/tests", "cv", ".github/workflows", "docs", "scripts"];
 const TOP_FILES = ["README.md", "CLAUDE.md", "AGENTS.md", ".gitignore", "website/README.md", "website/package.json", "website/astro.config.mjs", "website/playwright.config.ts", "website/tsconfig.json"];
-const SKIP_DIRS = new Set(["node_modules", "dist", ".astro", "test-results", "playwright-report"]);
-const SKIP_PATHS = [OUT_JSON, OUT_MD, "docs/website/research/framework-benchmark/"];
+const SKIP_DIRS = new Set(["node_modules", "dist", ".astro", "test-results", "playwright-report", ".obsidian", ".trash", ".git"]);
+const SKIP_PATHS = [...GENERATED, "docs/website/research/framework-benchmark/"];
 const KEEP_IN_SKIPPED = new Set(["docs/website/research/framework-benchmark/README.md"]);
-const EXT = new Set([".astro", ".ts", ".mjs", ".js", ".css", ".yaml", ".yml", ".md", ".tex", ".sty", ".json", ".png", ".jpg", ".svg"]);
+const EXT = new Set([".base", ".astro", ".ts", ".mjs", ".js", ".css", ".yaml", ".yml", ".md", ".tex", ".sty", ".json", ".png", ".jpg", ".svg"]);
 
 const rel = (abs) => relative(ROOT, abs).split("\\").join("/");
 const read = (p) => readFileSync(join(ROOT, p), "utf8");
@@ -240,11 +247,25 @@ const LINK_RE = /\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)|^\[[^\]]+\]:\s*(\S+)/gm;
 // The generated README is an output, never an input: describe it here instead of parsing it.
 addNode(OUT_MD, { type: "doc", label: "README.md", product: productOf(OUT_MD), docType: "index", summary: "Knowledge graph (generated)" });
 for (const c of ["scripts/graph.mjs", "docs/graph/curated.mjs"]) addEdge(OUT_MD, c, "documents");
+addNode(OUT_MODULES, { type: "doc", label: "modules.md", product: productOf(OUT_MODULES), docType: "index", summary: "Website file-level import diagram (generated)" });
+addEdge(OUT_MD, OUT_MODULES, "links");
+
+// Obsidian wikilinks resolve by file name (without .md), by vault path, or by alias.
+const notes = [...texts.keys()].filter((p) => extname(p) === ".md").concat([OUT_MD, OUT_MODULES]);
+const byName = new Map();
+const addName = (k, p) => byName.set(k.toLowerCase(), [...new Set([...(byName.get(k.toLowerCase()) ?? []), p])]);
+for (const p of notes) {
+  addName(basename(p, ".md"), p);
+  addName(p.replace(/\.md$/, ""), p);
+  for (const a of [].concat(texts.has(p) ? frontMatter(texts.get(p)).aliases ?? [] : [])) addName(a, p);
+}
+addName("Knowledge graph", OUT_MD);
 for (const [p, text] of texts) {
   if (extname(p) !== ".md" || p === OUT_MD) continue;
   const fm = frontMatter(text);
   if (p.startsWith("docs/")) {
     if (!fm.type) problems.push(`${p}: front matter needs "type"`);
+    if (!fm.title) problems.push(`${p}: front matter needs "title"`);
     addNode(p, { docType: fm.type });
   }
   for (const c of [].concat(fm.covers ?? [])) {
@@ -261,12 +282,18 @@ for (const [p, text] of texts) {
     const href = m[1] ?? m[2];
     if (/^(https?:|mailto:|tel:|#)/.test(href)) continue;
     const target = posix.normalize(posix.join(posix.dirname(p), decodeURI(href.split("#")[0])));
-    if (!exists(target) && target !== OUT_MD) {
+    if (!exists(target) && !GENERATED.has(target)) {
       problems.push(`${p}: broken link ${href}`);
       continue;
     }
     if (nodes.has(target)) addEdge(p, target, "links");
     else if (isDir(target)) addEdge(p, pathNode(target, p), "links");
+  }
+  for (const m of body.matchAll(/!?\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]*)?\]\]/g)) {
+    const hits = byName.get(m[1].trim().replace(/\.md$/, "").toLowerCase()) ?? [];
+    if (hits.length === 1) addEdge(p, hits[0], "links");
+    else if (hits.length > 1) problems.push(`${p}: ambiguous wikilink [[${m[1]}]] matches ${hits.join(", ")}; use the path, e.g. [[${hits[0].replace(/\.md$/, "")}]]`);
+    else if (!exists(m[1]) && !exists(posix.join(posix.dirname(p), m[1]))) problems.push(`${p}: broken wikilink [[${m[1]}]]`);
   }
 }
 
@@ -487,6 +514,7 @@ function readme() {
   const relLink = (p) => posix.relative("docs/graph", p);
   return `---
 title: Knowledge graph
+aliases: [Knowledge graph]
 type: index
 covers: [scripts/graph.mjs, docs/graph/curated.mjs]
 ---
@@ -532,16 +560,7 @@ By folder. Numbers count the edges (imports, collection reads and loads, image u
 ${folderDiagram()}
 \`\`\`
 
-<details>
-<summary>File-level imports (large)</summary>
-
-Solid arrows are imports; dotted arrows show files reading content collections and the data files behind them.
-
-\`\`\`mermaid
-${moduleDiagram()}
-\`\`\`
-
-</details>
+File by file: [modules.md](modules.md) (large). In Obsidian, [portfolio.canvas](portfolio.canvas) shows the documentation map on a canvas.
 
 ## Which doc explains what
 
@@ -555,6 +574,55 @@ ${table(EDGE_LIST.filter((e) => e.type === "syncs_with").map((e) => [`\`${e.from
 
 ${table(curated.rules.map((r) => [r.label, r.summary, r.governs.map((g) => `\`${g}\``).join(", ")]), ["Rule", "Says", "Governs"])}
 `;
+}
+
+function modulesMd() {
+  return `---
+title: Website module diagram
+aliases: [Website module diagram]
+type: index
+---
+
+# Website module diagram
+
+<!-- Generated by scripts/graph.mjs. Do not edit by hand. -->
+
+Every file in \`website/src\` and its imports. Solid arrows are imports; dotted arrows show files reading content collections and the data files behind them. The folder-level view is in [the knowledge graph](README.md#website-modules).
+
+\`\`\`mermaid
+${moduleDiagram()}
+\`\`\`
+`;
+}
+
+/** Obsidian canvas (JSON Canvas 1.0) of the documentation: one column per layer, file cards open the notes. */
+function canvasJson() {
+  const docs = NODE_LIST.filter((n) => n.type === "doc" && (n.id === "CLAUDE.md" || n.id === "README.md" || n.id.startsWith("docs/") || n.id === "website/README.md"));
+  const column = (id) => {
+    const t = nodes.get(id).docType;
+    if (["CLAUDE.md", "README.md", "docs/README.md", OUT_MD, OUT_MODULES].includes(id)) return 0;
+    if (t === "history" || t === "log") return 4;
+    if (id.startsWith("docs/project/")) return 1;
+    if (id.startsWith("docs/website/") || id === "website/README.md") return 2;
+    return 3;
+  };
+  const titles = ["Start here", "Project reference", "Website reference", "CV and name card", "History (why)"];
+  const colors = ["3", "4", "5", "6", "2"];
+  const W = 340, H = 70, GAP = 24, COL = W + 120, PAD = 30;
+  const cards = [];
+  const groups = [];
+  const safe = (x) => x.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "");
+  titles.forEach((title, c) => {
+    const inCol = docs.filter((d) => column(d.id) === c).sort((a, b) => a.id.localeCompare(b.id));
+    inCol.forEach((d, i) => cards.push({ id: `doc-${safe(d.id)}`, type: "file", file: d.id, x: c * COL + PAD, y: 60 + i * (H + GAP) + PAD, width: W, height: H, color: colors[c] }));
+    groups.push({ id: `group-${c}`, type: "group", label: title, x: c * COL, y: 0, width: W + 2 * PAD, height: 60 + Math.max(1, inCol.length) * (H + GAP) + 2 * PAD - GAP, color: colors[c] });
+  });
+  const cardOf = new Map(cards.map((c) => [c.file, c.id]));
+  const links = EDGE_LIST.filter((e) => ["superseded_by", "links"].includes(e.type) && cardOf.has(e.from) && cardOf.has(e.to) && e.from !== e.to)
+    .filter((e) => e.type === "superseded_by" || (column(e.from) === 0 && column(e.to) !== 0 && column(e.to) !== 4))
+    .map((e) => ({ id: `edge-${safe(e.from)}-${safe(e.to)}`, fromNode: cardOf.get(e.from), toNode: cardOf.get(e.to), ...(e.type === "superseded_by" ? { label: "now in", fromSide: "left", toSide: "right" } : { fromSide: "right", toSide: "left" }) }));
+  const uniq = [...new Map(links.map((l) => [l.id, l])).values()];
+  return `${JSON.stringify({ nodes: [...groups, ...cards], edges: uniq }, null, "\t")}\n`;
 }
 
 const EDGE_MEANING = {
@@ -584,12 +652,12 @@ const [cmd, arg] = process.argv.slice(2);
 if (cmd === "query") process.exit(query(arg));
 if (cmd === "impact") process.exit(impact(arg));
 
-const outputs = { [OUT_JSON]: graphJson(), [OUT_MD]: readme() };
+const outputs = { [OUT_JSON]: graphJson(), [OUT_MD]: readme(), [OUT_MODULES]: modulesMd(), [OUT_CANVAS]: canvasJson() };
 if (cmd === "--check") {
   for (const [p, text] of Object.entries(outputs)) if (!exists(p) || read(p) !== text) problems.push(`${p} is stale: run node scripts/graph.mjs and commit the result`);
 } else {
   for (const [p, text] of Object.entries(outputs)) writeFileSync(join(ROOT, p), text);
-  console.log(`graph: ${NODE_LIST.length} nodes, ${EDGE_LIST.length} edges -> ${OUT_JSON}, ${OUT_MD}`);
+  console.log(`graph: ${NODE_LIST.length} nodes, ${EDGE_LIST.length} edges -> ${Object.keys(outputs).join(", ")}`);
 }
 if (problems.length) {
   console.error(`graph: ${problems.length} problem(s)\n${problems.map((x) => `  ${x}`).join("\n")}`);

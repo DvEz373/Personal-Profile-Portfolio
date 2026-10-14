@@ -1,5 +1,6 @@
 ---
 title: Website design system
+aliases: [Website design system]
 type: reference
 covers: [website/src/styles/global.css, website/src/lib/themes.ts, website/src/lib/transitions.ts, website/astro.config.mjs]
 ---

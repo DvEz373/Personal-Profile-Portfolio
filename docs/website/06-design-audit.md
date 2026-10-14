@@ -1,5 +1,6 @@
 ---
 title: Design audit of v4.1
+aliases: [Design audit of v4.1]
 type: history
 current: quality.md
 ---

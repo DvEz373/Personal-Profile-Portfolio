@@ -1,5 +1,6 @@
 ---
 title: Framework benchmark
+aliases: [Framework benchmark]
 type: history
 ---
 

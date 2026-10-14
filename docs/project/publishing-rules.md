@@ -1,5 +1,6 @@
 ---
 title: Publishing rules
+aliases: [Publishing rules]
 type: reference
 covers: [website/src/content/projects/, website/src/assets/projects/, website/scripts/figures.mjs, cv/professional_experience.tex]
 ---

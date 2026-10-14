@@ -1,5 +1,6 @@
 ---
 title: Name card reference
+aliases: [Name card reference]
 type: reference
 covers: [website/src/pages/card/, website/src/pages/card-qr.svg.ts, website/src/pages/devin-ezekiel-purba.vcf.ts, website/src/lib/qr.ts, website/src/layouts/Bare.astro]
 ---

@@ -1,5 +1,6 @@
 ---
 title: v3 prototype guide
+aliases: [v3 prototype guide]
 type: history
 current: architecture.md
 ---

@@ -1,5 +1,6 @@
 ---
 title: Visual direction v4
+aliases: [Visual direction v4]
 type: history
 current: design-system.md
 ---

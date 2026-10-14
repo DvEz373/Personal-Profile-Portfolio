@@ -1,5 +1,6 @@
 ---
 title: Sources of truth and sync map
+aliases: [Sources of truth and sync map]
 type: reference
 covers: [website/src/data/, website/src/content/projects/, cv/title.tex, cv/config.sty, cv/professional_experience.tex, cv/education.tex, cv/certification.tex, cv/skills.tex, cv/projects.tex, website/public/og.jpg]
 ---

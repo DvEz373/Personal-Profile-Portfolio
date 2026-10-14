@@ -1,5 +1,6 @@
 ---
 title: Website quality, tests and scripts
+aliases: [Website quality tests and scripts]
 type: reference
 covers: [website/tests/site.spec.ts, website/playwright.config.ts, website/scripts/figures.mjs, website/scripts/shots.mjs, website/scripts/measure.mjs, website/scripts/make-og.mjs, .github/workflows/website.yml]
 ---

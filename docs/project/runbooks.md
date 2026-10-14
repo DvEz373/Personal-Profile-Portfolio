@@ -1,5 +1,6 @@
 ---
 title: Runbooks
+aliases: [Runbooks]
 type: runbook
 covers: [website/README.md, website/scripts/, website/src/data/, website/src/content/projects/, cv/, scripts/graph.mjs]
 ---
@@ -96,6 +97,7 @@ Build with `SITE_URL=https://<domain> SITE_BASE=/` (set in `website.yml`), confi
 
 ## R-12 Update docs and the knowledge graph
 
+0. In Obsidian, rename or move notes inside Obsidian so links update ([obsidian](obsidian.md)).
 1. Edit the reference doc that covers the file you changed (the graph tells you which: `node scripts/graph.mjs query <path>`).
 2. New concept, rule or decision: add it to `docs/project/decisions.md` and, if it links files, to `docs/graph/curated.mjs`.
 3. `node scripts/graph.mjs` regenerates `docs/graph/graph.json` and `docs/graph/README.md`.

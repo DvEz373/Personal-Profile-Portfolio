@@ -1,0 +1,539 @@
+{
+	"nodes": [
+		{
+			"id": "group-0",
+			"type": "group",
+			"label": "Start here",
+			"x": 0,
+			"y": 0,
+			"width": 400,
+			"height": 566,
+			"color": "3"
+		},
+		{
+			"id": "group-1",
+			"type": "group",
+			"label": "Project reference",
+			"x": 460,
+			"y": 0,
+			"width": 400,
+			"height": 848,
+			"color": "4"
+		},
+		{
+			"id": "group-2",
+			"type": "group",
+			"label": "Website reference",
+			"x": 920,
+			"y": 0,
+			"width": 400,
+			"height": 566,
+			"color": "5"
+		},
+		{
+			"id": "group-3",
+			"type": "group",
+			"label": "CV and name card",
+			"x": 1380,
+			"y": 0,
+			"width": 400,
+			"height": 284,
+			"color": "6"
+		},
+		{
+			"id": "group-4",
+			"type": "group",
+			"label": "History (why)",
+			"x": 1840,
+			"y": 0,
+			"width": 400,
+			"height": 1036,
+			"color": "2"
+		},
+		{
+			"id": "doc-CLAUDE-md",
+			"type": "file",
+			"file": "CLAUDE.md",
+			"x": 30,
+			"y": 90,
+			"width": 340,
+			"height": 70,
+			"color": "3"
+		},
+		{
+			"id": "doc-docs-graph-modules-md",
+			"type": "file",
+			"file": "docs/graph/modules.md",
+			"x": 30,
+			"y": 184,
+			"width": 340,
+			"height": 70,
+			"color": "3"
+		},
+		{
+			"id": "doc-docs-graph-README-md",
+			"type": "file",
+			"file": "docs/graph/README.md",
+			"x": 30,
+			"y": 278,
+			"width": 340,
+			"height": 70,
+			"color": "3"
+		},
+		{
+			"id": "doc-docs-README-md",
+			"type": "file",
+			"file": "docs/README.md",
+			"x": 30,
+			"y": 372,
+			"width": 340,
+			"height": 70,
+			"color": "3"
+		},
+		{
+			"id": "doc-README-md",
+			"type": "file",
+			"file": "README.md",
+			"x": 30,
+			"y": 466,
+			"width": 340,
+			"height": 70,
+			"color": "3"
+		},
+		{
+			"id": "doc-docs-project-architecture-md",
+			"type": "file",
+			"file": "docs/project/architecture.md",
+			"x": 490,
+			"y": 90,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-decisions-md",
+			"type": "file",
+			"file": "docs/project/decisions.md",
+			"x": 490,
+			"y": 184,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-environments-md",
+			"type": "file",
+			"file": "docs/project/environments.md",
+			"x": 490,
+			"y": 278,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-obsidian-md",
+			"type": "file",
+			"file": "docs/project/obsidian.md",
+			"x": 490,
+			"y": 372,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-overview-md",
+			"type": "file",
+			"file": "docs/project/overview.md",
+			"x": 490,
+			"y": 466,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-publishing-rules-md",
+			"type": "file",
+			"file": "docs/project/publishing-rules.md",
+			"x": 490,
+			"y": 560,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-runbooks-md",
+			"type": "file",
+			"file": "docs/project/runbooks.md",
+			"x": 490,
+			"y": 654,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-project-sources-of-truth-md",
+			"type": "file",
+			"file": "docs/project/sources-of-truth.md",
+			"x": 490,
+			"y": 748,
+			"width": 340,
+			"height": 70,
+			"color": "4"
+		},
+		{
+			"id": "doc-docs-website-architecture-md",
+			"type": "file",
+			"file": "docs/website/architecture.md",
+			"x": 950,
+			"y": 90,
+			"width": 340,
+			"height": 70,
+			"color": "5"
+		},
+		{
+			"id": "doc-docs-website-content-model-md",
+			"type": "file",
+			"file": "docs/website/content-model.md",
+			"x": 950,
+			"y": 184,
+			"width": 340,
+			"height": 70,
+			"color": "5"
+		},
+		{
+			"id": "doc-docs-website-design-system-md",
+			"type": "file",
+			"file": "docs/website/design-system.md",
+			"x": 950,
+			"y": 278,
+			"width": 340,
+			"height": 70,
+			"color": "5"
+		},
+		{
+			"id": "doc-docs-website-quality-md",
+			"type": "file",
+			"file": "docs/website/quality.md",
+			"x": 950,
+			"y": 372,
+			"width": 340,
+			"height": 70,
+			"color": "5"
+		},
+		{
+			"id": "doc-website-README-md",
+			"type": "file",
+			"file": "website/README.md",
+			"x": 950,
+			"y": 466,
+			"width": 340,
+			"height": 70,
+			"color": "5"
+		},
+		{
+			"id": "doc-docs-card-reference-md",
+			"type": "file",
+			"file": "docs/card/reference.md",
+			"x": 1410,
+			"y": 90,
+			"width": 340,
+			"height": 70,
+			"color": "6"
+		},
+		{
+			"id": "doc-docs-cv-reference-md",
+			"type": "file",
+			"file": "docs/cv/reference.md",
+			"x": 1410,
+			"y": 184,
+			"width": 340,
+			"height": 70,
+			"color": "6"
+		},
+		{
+			"id": "doc-docs-card-01-research-md",
+			"type": "file",
+			"file": "docs/card/01-research.md",
+			"x": 1870,
+			"y": 90,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-01-design-plan-md",
+			"type": "file",
+			"file": "docs/website/01-design-plan.md",
+			"x": 1870,
+			"y": 184,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-02-prototype-guide-md",
+			"type": "file",
+			"file": "docs/website/02-prototype-guide.md",
+			"x": 1870,
+			"y": 278,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-03-work-log-md",
+			"type": "file",
+			"file": "docs/website/03-work-log.md",
+			"x": 1870,
+			"y": 372,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-04-framework-research-md",
+			"type": "file",
+			"file": "docs/website/04-framework-research.md",
+			"x": 1870,
+			"y": 466,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-05-visual-direction-md",
+			"type": "file",
+			"file": "docs/website/05-visual-direction.md",
+			"x": 1870,
+			"y": 560,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-06-design-audit-md",
+			"type": "file",
+			"file": "docs/website/06-design-audit.md",
+			"x": 1870,
+			"y": 654,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-07-v5-plan-md",
+			"type": "file",
+			"file": "docs/website/07-v5-plan.md",
+			"x": 1870,
+			"y": 748,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-08-handover-md",
+			"type": "file",
+			"file": "docs/website/08-handover.md",
+			"x": 1870,
+			"y": 842,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		},
+		{
+			"id": "doc-docs-website-research-framework-benchmark-README-md",
+			"type": "file",
+			"file": "docs/website/research/framework-benchmark/README.md",
+			"x": 1870,
+			"y": 936,
+			"width": 340,
+			"height": 70,
+			"color": "2"
+		}
+	],
+	"edges": [
+		{
+			"id": "edge-docs-README-md-docs-card-reference-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-card-reference-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-cv-reference-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-cv-reference-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-architecture-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-architecture-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-decisions-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-decisions-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-environments-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-environments-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-obsidian-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-obsidian-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-overview-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-overview-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-publishing-rules-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-publishing-rules-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-runbooks-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-runbooks-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-project-sources-of-truth-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-project-sources-of-truth-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-website-architecture-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-website-architecture-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-website-content-model-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-website-content-model-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-website-design-system-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-website-design-system-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-docs-website-quality-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-docs-website-quality-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-README-md-website-README-md",
+			"fromNode": "doc-docs-README-md",
+			"toNode": "doc-website-README-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-README-md-docs-project-overview-md",
+			"fromNode": "doc-README-md",
+			"toNode": "doc-docs-project-overview-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-README-md-website-README-md",
+			"fromNode": "doc-README-md",
+			"toNode": "doc-website-README-md",
+			"fromSide": "right",
+			"toSide": "left"
+		},
+		{
+			"id": "edge-docs-card-01-research-md-docs-card-reference-md",
+			"fromNode": "doc-docs-card-01-research-md",
+			"toNode": "doc-docs-card-reference-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-01-design-plan-md-docs-website-design-system-md",
+			"fromNode": "doc-docs-website-01-design-plan-md",
+			"toNode": "doc-docs-website-design-system-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-02-prototype-guide-md-docs-website-architecture-md",
+			"fromNode": "doc-docs-website-02-prototype-guide-md",
+			"toNode": "doc-docs-website-architecture-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-04-framework-research-md-docs-project-decisions-md",
+			"fromNode": "doc-docs-website-04-framework-research-md",
+			"toNode": "doc-docs-project-decisions-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-05-visual-direction-md-docs-website-design-system-md",
+			"fromNode": "doc-docs-website-05-visual-direction-md",
+			"toNode": "doc-docs-website-design-system-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-06-design-audit-md-docs-website-quality-md",
+			"fromNode": "doc-docs-website-06-design-audit-md",
+			"toNode": "doc-docs-website-quality-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-07-v5-plan-md-docs-project-decisions-md",
+			"fromNode": "doc-docs-website-07-v5-plan-md",
+			"toNode": "doc-docs-project-decisions-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		},
+		{
+			"id": "edge-docs-website-08-handover-md-docs-project-runbooks-md",
+			"fromNode": "doc-docs-website-08-handover-md",
+			"toNode": "doc-docs-project-runbooks-md",
+			"label": "now in",
+			"fromSide": "left",
+			"toSide": "right"
+		}
+	]
+}

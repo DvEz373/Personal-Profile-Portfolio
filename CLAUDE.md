@@ -15,6 +15,7 @@ Devin Ezekiel Purba's professional profile: a **website** (Astro 7, `website/`),
 - `node scripts/graph.mjs query <path-or-id>`: what a file imports, what uses it, which docs explain it, which rules govern it.
 - `node scripts/graph.mjs impact <path>`: every page and output affected by changing a file.
 - `docs/README.md`: index and reading paths per task. Reference docs are current; numbered `docs/website/0x-*.md` files are history.
+- The repo root is also Devin's **Obsidian vault** (`docs/project/obsidian.md`). In docs, use relative Markdown links; every doc needs front matter `title`, `aliases`, `type` (reference docs also `covers`). Never edit the generated files in `docs/graph/` (only `curated.mjs` there is hand-written).
 
 | Task | Start here |
 |---|---|

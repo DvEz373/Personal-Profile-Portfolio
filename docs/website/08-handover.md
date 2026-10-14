@@ -1,5 +1,6 @@
 ---
 title: v5 handover
+aliases: [v5 handover]
 type: history
 current: ../project/runbooks.md
 ---

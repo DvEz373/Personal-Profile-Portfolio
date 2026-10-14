@@ -1,5 +1,6 @@
 ---
 title: v5 plan
+aliases: [v5 plan]
 type: history
 current: ../project/decisions.md
 ---

@@ -54,6 +54,7 @@ export const decisions = [
   { id: "decision:D10", label: "CV in STAR form, no locations", affects: ["cv/professional_experience.tex", "cv/title.tex", "cv/skills.tex"] },
   { id: "decision:K1", label: "Layered docs, CLAUDE.md first", affects: ["CLAUDE.md", "docs/README.md"] },
   { id: "decision:K2", label: "Generated, CI-checked knowledge graph", affects: ["scripts/graph.mjs", "docs/graph/"] },
+  { id: "decision:K4", label: "Repository root is also an Obsidian vault", affects: ["scripts/obsidian-setup.mjs", "docs/Docs.base", "docs/project/obsidian.md"] },
 ];
 
 /** Facts that live in two files that do not read each other. Update both in one change. */

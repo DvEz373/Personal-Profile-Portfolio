@@ -1,5 +1,6 @@
 ---
 title: Project overview
+aliases: [Project overview]
 type: reference
 covers: [README.md]
 ---

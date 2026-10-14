@@ -1,5 +1,6 @@
 ---
 title: Website content model
+aliases: [Website content model]
 type: reference
 covers: [website/src/content.config.ts, website/src/data/, website/src/content/projects/, website/src/lib/content.ts, website/src/lib/themes.ts, website/src/lib/glossary.ts]
 ---

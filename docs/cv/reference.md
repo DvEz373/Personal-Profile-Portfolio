@@ -1,5 +1,6 @@
 ---
 title: CV reference
+aliases: [CV reference]
 type: reference
 covers: [cv/, .github/workflows/build-cv.yml]
 ---

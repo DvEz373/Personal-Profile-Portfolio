@@ -1,5 +1,6 @@
 ---
 title: Decision register
+aliases: [Decision register]
 type: reference
 covers: [docs/website/04-framework-research.md, docs/website/05-visual-direction.md, docs/website/07-v5-plan.md, docs/card/01-research.md]
 ---
@@ -55,3 +56,4 @@ R1 card crops (`coverFocus`, `coverZoom`) · R2 "My part" (`role`) · R3 theme f
 | K1 | 2026-10-14 | Layered docs: `CLAUDE.md` (always loaded, short) → `docs/README.md` index → reference docs → history docs | Agents load only what the task needs |
 | K2 | 2026-10-14 | Knowledge graph generated from the repository by `scripts/graph.mjs`, checked in CI | A hand-written graph goes stale; a checked one cannot |
 | K3 | 2026-10-14 | History docs (website 01 to 08, card 01) are kept unchanged apart from front matter; current facts live in reference docs | History explains why; reference says what is true now |
+| K4 | 2026-10-14 | The repository root is also an Obsidian vault: relative Markdown links (wikilinks allowed and checked), `aliases` on every doc, `.obsidian/` not committed, settings merged by `scripts/obsidian-setup.mjs` | Devin works with Claude Code and Obsidian on the same files; links must work on GitHub too |

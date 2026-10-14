@@ -1,5 +1,6 @@
 ---
 title: Website architecture
+aliases: [Website architecture]
 type: reference
 covers: [website/src/pages/, website/src/layouts/, website/src/components/, website/src/lib/, website/src/scripts/, website/src/styles/global.css, website/astro.config.mjs, website/tsconfig.json]
 ---

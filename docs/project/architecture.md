@@ -1,5 +1,6 @@
 ---
 title: System architecture
+aliases: [System architecture]
 type: reference
 covers: [website/astro.config.mjs, website/package.json, cv/main.tex, .github/workflows/website.yml, .github/workflows/build-cv.yml, .github/workflows/docs.yml, .gitignore]
 ---

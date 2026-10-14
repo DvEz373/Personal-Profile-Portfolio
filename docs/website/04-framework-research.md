@@ -1,5 +1,6 @@
 ---
 title: Framework research and decision
+aliases: [Framework research and decision]
 type: history
 current: ../project/decisions.md
 ---

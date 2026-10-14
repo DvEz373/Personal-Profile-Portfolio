@@ -1,5 +1,6 @@
 ---
 title: Working environments
+aliases: [Working environments]
 type: reference
 covers: [website/package.json, website/playwright.config.ts, website/scripts/shots.mjs]
 ---
@@ -18,6 +19,7 @@ Two places do the work: Devin's Windows PC and Claude Code cloud sessions (Linux
 | Client source folders, draw.io desktop | Available, read-only | Not available: no new figures or case-study facts |
 | Live site | Reachable | Usually blocked by the network policy; check deploys through the Actions API or a local build |
 | Pushing | Ask Devin first | Push only to the session's branch; force-push is blocked |
+| Obsidian | The repository root is the vault; run `node scripts/obsidian-setup.mjs` once ([obsidian](obsidian.md)) | Not available; edit the same Markdown files |
 
 ## Gotchas
 

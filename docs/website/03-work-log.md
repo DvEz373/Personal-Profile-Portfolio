@@ -1,5 +1,6 @@
 ---
 title: Work log
+aliases: [Work log]
 type: log
 ---
 
@@ -345,3 +346,11 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - **Guard**: `node scripts/graph.mjs --check` fails on a stale graph, a broken relative link, a missing `covers` or curated path, or a code file no reference doc covers (82 of 82 covered). New `.github/workflows/docs.yml` runs it.
 - Also: `profile.yaml` comment on `chain` corrected (it feeds About, not Home).
 - **Checks**: graph check passes (215 nodes, about 540 edges); all Mermaid diagrams render (mermaid 11 in Chromium); website gate: check 0 errors, 21 pages, Playwright 92 passed, 2 skipped.
+
+## 2026-10-14 · Obsidian vault
+- Devin works with Claude Code and Obsidian. The repository root is now also an Obsidian vault ([obsidian](../project/obsidian.md)).
+- `scripts/obsidian-setup.mjs` merges the needed settings into `.obsidian/app.json` (relative Markdown links, wikilinks off by default, auto-update links, `node_modules` and build output excluded) without touching other settings. `.obsidian/` and `.trash/` are ignored by git, so a pull never clashes with a local vault.
+- Every doc has `aliases` (its title), so "CV reference" and "Name card reference" are distinct in the quick switcher. `docs/README.md` has the alias "Home".
+- New: `docs/Docs.base` (Bases dashboard: all docs by type, reference, history), generated `docs/graph/portfolio.canvas` (documentation map), generated `docs/graph/modules.md` (the large diagram moved out of `<details>`, which Obsidian does not render).
+- `scripts/graph.mjs` now also validates `[[wikilinks]]` (by file name, path or alias; ambiguous and broken ones fail) and requires `title` in front matter.
+- **Checks**: graph check passes; wikilink cases tested (alias, path with display text, heading, ambiguous, broken); setup script tested on an empty and an existing `app.json` (merges, idempotent); canvas JSON and Base YAML parse; Mermaid renders. Not tested in the Obsidian app itself (not available in the cloud session).

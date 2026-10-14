@@ -1,5 +1,6 @@
 ---
 title: Name card research
+aliases: [Name card research]
 type: history
 current: reference.md
 ---

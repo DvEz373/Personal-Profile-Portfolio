@@ -1,5 +1,6 @@
 ---
 title: Website design plan (v1 to v3)
+aliases: [Website design plan (v1 to v3)]
 type: history
 current: design-system.md
 ---

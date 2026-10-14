@@ -1,5 +1,6 @@
 ---
 title: Documentation index
+aliases: [Documentation index, Home]
 type: index
 covers: [docs/]
 ---
@@ -13,12 +14,13 @@ Devin Ezekiel Purba's professional profile: **website**, **CV** and **name card*
 | Layer | Read when | Files |
 |---|---|---|
 | 0. Agent brief | Always (loaded automatically by Claude Code) | [`../CLAUDE.md`](../CLAUDE.md) |
+| Obsidian | The repository root is a vault; this note is its home | [project/obsidian.md](project/obsidian.md), [Docs.base](Docs.base) dashboard, [graph/portfolio.canvas](graph/portfolio.canvas) map |
 | 1. Index and graph | To find the right doc or see what a file touches | this file, [graph/README.md](graph/README.md) |
 | 2. Reference (current truth) | Before changing something | `project/`, `website/{architecture,content-model,design-system,quality}.md`, `cv/reference.md`, `card/reference.md` |
 | 3. Runbooks | To do a known task | [project/runbooks.md](project/runbooks.md) |
 | 4. History (why) | Only when the reason behind something matters | `website/01` to `08`, `card/01-research.md`, `website/research/` |
 
-Every doc starts with front matter: `type` (`index`, `reference`, `runbook`, `history`, `log`), and `covers` (the files it explains) or `current` (for history docs, the reference doc that replaced it). `scripts/graph.mjs` reads it.
+Every doc starts with front matter: `title`, `aliases` (for Obsidian's quick switcher and wikilinks), `type` (`index`, `reference`, `runbook`, `history`, `log`), and `covers` (the files it explains) or `current` (for history docs, the reference doc that replaced it). `scripts/graph.mjs` reads it.
 
 ## Reading paths
 
@@ -31,6 +33,7 @@ Every doc starts with front matter: `type` (`index`, `reference`, `runbook`, `hi
 | CV | [CV reference](cv/reference.md) → [runbook R-08](project/runbooks.md#r-08-build-and-check-the-cv) |
 | Name card | [card reference](card/reference.md) |
 | CI, deploy, environments | [architecture](project/architecture.md#build-and-deploy) → [environments](project/environments.md) |
+| Set up Obsidian | [obsidian](project/obsidian.md) → `node scripts/obsidian-setup.mjs` |
 | Why a decision was made | [decision register](project/decisions.md) → linked history doc |
 
 ## All documents
@@ -46,6 +49,7 @@ Every doc starts with front matter: `type` (`index`, `reference`, `runbook`, `hi
 | [project/decisions.md](project/decisions.md) | Decision register: platform, card, content (D1 to D11), design (R1 to R17), docs |
 | [project/runbooks.md](project/runbooks.md) | Task recipes R-01 to R-13 |
 | [project/environments.md](project/environments.md) | Windows PC versus cloud session, gotchas |
+| [project/obsidian.md](project/obsidian.md) | Using the repository as an Obsidian vault with Claude Code |
 
 ### Website
 
@@ -81,6 +85,9 @@ Every doc starts with front matter: `type` (`index`, `reference`, `runbook`, `hi
 | [graph/README.md](graph/README.md) | Generated overview: diagrams, counts, how to query |
 | `graph/graph.json` | Generated graph: nodes and edges, one per line |
 | `graph/curated.mjs` | Hand-written layer: products, outputs, rules, decisions, sync links |
+| [graph/modules.md](graph/modules.md) | Generated file-level import diagram of the website |
+| `graph/portfolio.canvas` | Generated Obsidian canvas of the documentation |
+| [Docs.base](Docs.base) | Obsidian Bases dashboard of all docs |
 
 ## Keeping docs true
 
