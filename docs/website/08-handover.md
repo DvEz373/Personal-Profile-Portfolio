@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–12 done; step 12 in a Claude Code cloud session, §7–§8; waiting on Devin's name scan and his OK for a PR) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–12 done; step 12 in a Claude Code cloud session, §7–§8; merged into `main` at Devin's request; he runs the name scan after pulling) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -18,7 +18,7 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Step 10 | Done: four featured, order 1–8, theme filters (R3); fixed the phone menu blocking taps |
 | Step 11 | Done: R4–R17; audit 19/20, critique 25/32 (target 26 not met, reasons in plan §2.4) |
 | Step 12 | Done 2026-10-14 in the cloud: README, audit §6, plan status; clean-build gate (check 0 errors, 21 pages, Playwright 92 passed, 2 skipped); screenshots viewed |
-| Next | Devin: pull the branch, run the private name scan on his PC, then say whether to open the PR (§8) |
+| Next | Devin: pull `main`, run the private name scan on his PC (§8), fix anything it finds in a new branch |
 
 ## 2. Rules that are not negotiable
 
@@ -118,11 +118,11 @@ All must pass. If the scan reports a hit in history (an earlier commit on this b
 
 ## 6. Open questions to carry
 
-- Start years of the six new case studies (2025 or 2026) come from the year digits of the source project numbers. Devin to confirm.
-- The synchronous condenser role was shortened slightly (no content removed). Devin to confirm the wording.
+- ~~Start years of the six new case studies~~ Settled 2026-10-14: keep them; all client work falls between 2025 and now. Devin will say if one needs to change.
+- ~~Synchronous condenser role wording~~ Settled 2026-10-14: control engineer for the model, power system engineer for the dynamic and steady-state studies (Devin's words).
 
 - Experience bullets and the CV name a market operator and a grid-code document. They describe the job, not a client, but Devin may want them generalised too (asked 2026-10-11, no answer yet).
-- The Home hero status line names the current employer. Rule 1 allows the employer in job history; ask Devin whether the hero line counts as that or should say "Power System Engineer" only.
+- ~~Home hero status line~~ Settled 2026-10-14: it lists the fields Devin keeps learning across (`focus` in `profile.yaml`) instead of the job title and employer. Job title and employer stay on About, Experience, the name card and the contact card.
 - ~~Exact project months~~ Settled 2026-10-13: start years only (D8).
 
 ## 7. Prompt for the next session (Claude Code cloud, GitHub)

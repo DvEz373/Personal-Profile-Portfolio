@@ -1,6 +1,6 @@
 # v5 plan: client case studies and design revision
 
-Status: **Built 2026-10-14 (steps 0–12)**; waiting on Devin's name scan and his OK for a PR · Branch: `website-v5-audit-and-projects` (pushed, no PR) · Follows [06-design-audit.md](06-design-audit.md) · Execution guide: [08-handover.md](08-handover.md)
+Status: **Built 2026-10-14 (steps 0–12)**; merged into `main` at Devin's request · Branch: `website-v5-audit-and-projects` · Follows [06-design-audit.md](06-design-audit.md) · Execution guide: [08-handover.md](08-handover.md)
 
 ## 1. Goal
 

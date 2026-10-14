@@ -13,9 +13,10 @@ import { url } from "../lib/url";
 const profile = await getProfile();
 const projects = await getProjects();
 const selected = projects.filter((p) => p.data.featured).slice(0, 4);
+const focus = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(profile.focus);
 ---
 
-<Base description={`${profile.name}: ${profile.headline} working on ${profile.tagline.toLowerCase()}. ${profile.role} at ${profile.org}, ${profile.city}.`}>
+<Base description={`${profile.name}: ${profile.headline} in ${profile.city}, learning across ${focus}.`}>
   <section class="hero" aria-labelledby="hero-name">
     <div class="wrap grid">
       <div class="intro">
@@ -27,7 +28,7 @@ const selected = projects.filter((p) => p.data.featured).slice(0, 4);
         </p>
         <p class="now">
           <span class="live-dot" aria-hidden="true"></span>
-          <span>{profile.role} at {profile.org}</span>
+          <span>Learning across {focus}</span>
         </p>
         <div class="actions">
           <a class="btn primary" href={url("cv.pdf")} download="CV_Devin_Ezekiel_Purba.pdf"><Icon name="download" />Download CV</a>
@@ -166,7 +167,7 @@ const selected = projects.filter((p) => p.data.featured).slice(0, 4);
     gap: 10px;
     padding: 6px 12px;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 14px;
     background: var(--panel);
     font-size: 0.9rem;
     color: var(--ink-2);
@@ -194,9 +195,6 @@ const selected = projects.filter((p) => p.data.featured).slice(0, 4);
     opacity: 0.12;
   }
   @media (max-width: 959px) {
-    .now {
-      border-radius: 14px;
-    }
     .grid {
       grid-template-columns: 1fr;
     }

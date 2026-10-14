@@ -9,7 +9,7 @@ coverZoom: 1.15
 context: Client project, model for grid connection
 start: "2026"
 blurb: A grid model of a spinning machine that steadies voltage without making power, checked against the manufacturer's model in 163 automated test cases.
-role: Built the PSS/E RMS model (user-defined and generic), benchmarked it and the generic limiter models against PSCAD for the grid operator's acceptance tests, and ran the steady-state studies (short circuit, load flow, QV capability, component current ratings).
+role: Control engineer for the model development, building the PSS/E RMS model (user-defined and generic) and benchmarking it against PSCAD. Power system engineer for the dynamic and steady-state studies (short circuit, load flow, QV capability, component current ratings).
 problem: A synchronous condenser supports the grid with voltage control, system strength and inertia without producing active power. Before it can connect, the owner must give the grid operator a dynamic model that behaves like the real plant in every case of the operator's model acceptance tests.
 approach: We built the PSS/E model from standard IEEE machine, exciter and stabiliser models plus a user-written model of the plant controller and the protective limiters. A Python test bench runs every acceptance case in PSS/E and in PSCAD under the same conditions and compares them signal by signal.
 result: A PSS/E model that tracks the manufacturer's PSCAD model across the full test set, a test bench that re-runs, re-checks and re-reports all 163 cases with one command, and standalone case scripts the client and the grid operator can run on their own.

@@ -20,7 +20,7 @@ All text lives in plain files. Change them and save; the build checks every fiel
 
 | What | File |
 |---|---|
-| Name, headline, contact, bio, the home page "signal chain" | `src/data/profile.yaml` |
+| Name, headline, contact, bio, the fields in the home page status line (`focus`) | `src/data/profile.yaml` |
 | Jobs, internships, campus roles | `src/data/experience.yaml` |
 | Education timeline | `src/data/education.yaml` |
 | Skill domains and levels (1–5) | `src/data/skills.yaml` |
@@ -70,7 +70,7 @@ Dates are `YYYY-MM`. Use `end: present` for something ongoing. Projects may also
 ## Still to confirm
 
 - **Skill levels** in `skills.yaml` are self-assessed.
-- **Client project dates** show the start year only, by choice. The six newest start years still wait on Devin's confirmation.
+- **Client project dates** show the start year only, by choice. All client work falls between 2025 and now; Devin will say if a year needs to change.
 
 ## Social preview image
 

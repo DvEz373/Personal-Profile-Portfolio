@@ -22,6 +22,8 @@ const profile = defineCollection({
     tagline: z.string(),
     role: z.string(),
     org: z.string(),
+    /** Fields listed in the Home status line. */
+    focus: z.array(z.string()).min(1),
     city: z.string(),
     country: z.string(),
     timezone: z.string(),

@@ -317,3 +317,11 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - **Gate on a clean build** (`rm -rf dist`, Linux cloud container): check 0 errors, 2 hints, figures clean; 21 pages; Playwright 92 passed, 2 skipped. `measure.mjs`: no text under 12 px, no target under 24 px, no em dashes on any page; uppercase labels Home 9, Experience 5.
 - Screenshots of Home, Projects, the data-center and the pumped-storage case studies (desktop light, desktop dark, phone) viewed and shared in the chat; not committed. No horizontal overflow; lead figures whole; dark-mode figure sheets off-white; acronyms underlined.
 - **Not run here:** the private name scan (Devin's PC only). No case-study facts, ratings, dates or figures changed in this step.
+
+## 2026-10-14 · Devin's answers, then merge to main
+- **Home status line:** no longer shows the job title and employer. It lists the fields Devin keeps learning across, from a new `focus` list in `profile.yaml` (power systems, control, power electronics, AI/ML and intelligent systems, cyber-physical energy systems, digitalization, digital twins). The Home meta description follows. Job title and employer stay on About, Experience, the name card and the contact card. The status pill now has 14 px corners at every width, so a two-line status looks right.
+- **Synchronous condenser role** in Devin's words: control engineer for the model development, power system engineer for the dynamic and steady-state studies. The model and study details from his first answer are kept.
+- **Start years:** kept as they are. All client work falls between 2025 and now; Devin will say if one needs to change.
+- Handover §6: these three questions are settled. Still open: Experience bullets and the CV name a market operator and a grid-code document.
+- Devin asked to merge into `main` now. He will run the private name scan on his PC after pulling.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; Home and the synchronous condenser page viewed in desktop light, desktop dark and phone, no horizontal overflow.
