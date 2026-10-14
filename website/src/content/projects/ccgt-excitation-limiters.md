@@ -1,10 +1,10 @@
 ---
 title: Excitation Limiter Models for a Combined-Cycle Plant
 category: machines
+coverFocus: "38.4% 6.7%"
+coverZoom: 2.42
 kind: professional
 order: 5
-coverFocus: "35% 12%"
-coverZoom: 1.6
 context: Client project, plant model for grid studies
 start: "2026"
 blurb: Grid models of the limits that keep a large power plant's generators inside safe operation, written where the standard simulation library has none.

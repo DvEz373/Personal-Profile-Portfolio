@@ -63,5 +63,6 @@ Page transitions: `lib/transitions.ts` (200 ms out, 360 ms in). Every animation 
 - Readouts and empty values use "–" (en dash), never an em dash (R17).
 - Inline meta rows ("dates · duration · type") never start a line with a separator dot: the Timeline clips line-start dots.
 - Uppercase labels must not change meaning: write "Frequency", not the symbol f, which would show as F.
-- Project figures always show whole on the project page (R16). Cards may crop (R1).
+- Project figures always show whole on the project page (R16). Cards may crop (R1), but a crop never cuts text: its edges fall in white space ([content model](content-model.md#projects)). Lines may run off the edge.
+- Card labels name the theme, not the kind: the section heading already says "Client work".
 - Uppercase labels kept low (Home 9, Experience 5 on 2026-10-14).

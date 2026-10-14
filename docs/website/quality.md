@@ -46,6 +46,7 @@ Two projects: `desktop` (1280 × 900) and `mobile` (Pixel 7). CI retries once.
 | Lead figures show the whole image | R16 |
 | The datasheet never covers the figures or the story (desktop) | Scrolls a project page at 1280 × 900 and 1920 × 1200 and fails on any overlap of the datasheet with other content (bug found 2026-10-14) |
 | Pages fit a 320 px phone (phone only) | No sideways scroll on Home, Experience, a project page and the name card at 320 px; compares with 320, because a phone browser widens its layout viewport to fit wide content (bug found 2026-10-14) |
+| Zoomed card covers stay sharp (desktop) | Each cropped card cover loads a file at least as wide as it is drawn after `cover` and zoom (blur found 2026-10-14) |
 | Acronyms expanded once, at first use | R13 |
 | Home features four client case studies | `featured` and `order` |
 | Instrument trips, reports a nadir, settles | Demo behaviour; reduced-motion variant |
@@ -53,7 +54,7 @@ Two projects: `desktop` (1280 × 900) and `mobile` (Pixel 7). CI retries once.
 | Unknown pages show the 404 page | |
 | Name card links and scannable QR | Contact links, WhatsApp URL, QR dialog, SVG download |
 
-Last result: 94 passed, 4 skipped (the skips are the device-specific tests on the other project).
+Last result: 95 passed, 5 skipped (the skips are the device-specific tests on the other project).
 
 ## Scripts (`website/scripts/`)
 

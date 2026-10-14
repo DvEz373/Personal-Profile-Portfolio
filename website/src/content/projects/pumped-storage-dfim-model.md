@@ -1,11 +1,11 @@
 ---
 title: Adjustable Speed Pumped Storage Model
 category: machines
+coverFocus: "0% 24.9%"
+coverZoom: 1.57
 kind: professional
 order: 2
 featured: true
-coverFocus: "20% 35%"
-coverZoom: 1.7
 context: Client project, plant model for grid studies
 start: "2025"
 blurb: Simulation models of a pumped storage plant whose units change speed to control power fast, built for the grid operator's study tools.

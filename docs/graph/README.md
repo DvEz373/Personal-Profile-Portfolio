@@ -57,7 +57,7 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 | Edge type | Count | Meaning |
 |---|---|---|
 | `imports` | 127 | Code import (file or npm package) |
-| `links` | 121 | Doc links to a file or folder |
+| `links` | 123 | Doc links to a file or folder |
 | `documents` | 75 | Doc explains a file or folder (front matter covers) |
 | `built_from` | 31 | Output made from a source |
 | `affects` | 26 | Decision shaped a path |

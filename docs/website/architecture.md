@@ -46,8 +46,8 @@ Astro 7 static site with TypeScript. Every page is pre-rendered at build time; t
 | `PageHead` | Page H1, intro and a `Schematic` ornament |
 | `SectionHead` | Section H2 with an optional note |
 | `Photo` | Responsive `<Picture>` (AVIF/WebP) with optional caption |
-| `ProjectCard` | Card on Home and Projects: cover, kind label, year, title, blurb, stack |
-| `ProjectCover` | First figure cropped by `coverFocus` / `coverZoom` on cards, else `ProjectArt` |
+| `ProjectCard` | Card on Home and Projects: cover, theme label (in the theme tone), year, title, blurb, stack |
+| `ProjectCover` | First figure cropped by `coverFocus` / `coverZoom` on cards, else `ProjectArt`. Scales `sizes` by how much wider than the card a crop draws the image, so the browser loads a sharp file |
 | `ProjectArt` | Seeded SVG illustration by domain (energy, AI, IoT) for projects without figures |
 | `Schematic` | Decorative SVG ornaments (grid, turbine, solar, neural, circuit) |
 | `Timeline` | Filterable, expandable entries for Experience and Education |

@@ -175,6 +175,25 @@ test("project lead figures show the whole image", async ({ page }) => {
   }
 });
 
+test("zoomed card covers load an image wide enough to stay sharp", async ({ page }, info) => {
+  test.skip(info.project.name !== "desktop", "desktop cards at device scale 1");
+  await page.goto("projects/");
+  const covers = page.locator(".card .cover.cropped img");
+  expect(await covers.count()).toBeGreaterThanOrEqual(1);
+  for (const img of await covers.all()) {
+    await img.scrollIntoViewIfNeeded();
+    await img.evaluate((el: HTMLImageElement) => el.decode());
+    // object-fit: cover widens figures wider than the card, then --zoom enlarges them; the file must cover that width.
+    const [natural, drawn] = await img.evaluate((el: HTMLImageElement) => {
+      const zoom = Number(getComputedStyle(el.closest(".cover")!).getPropertyValue("--zoom"));
+      const cover = Math.max(el.offsetWidth, (el.offsetHeight * el.naturalWidth) / el.naturalHeight);
+      return [el.naturalWidth, cover * zoom];
+    });
+    const href = await img.evaluate((el) => el.closest("a")?.getAttribute("href") ?? "");
+    expect(natural, href).toBeGreaterThanOrEqual(drawn * 0.95);
+  }
+});
+
 test("acronyms are expanded once, at first use", async ({ page }) => {
   await page.goto("projects/pumped-storage-dfim-model/");
   await expect(page.locator('abbr:text-is("DFIM")')).toHaveCount(1);

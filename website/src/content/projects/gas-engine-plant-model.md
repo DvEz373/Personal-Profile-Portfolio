@@ -1,10 +1,10 @@
 ---
 title: Gas Engine Power Plant Model
 category: controllers
+coverFocus: "0% 0%"
+coverZoom: 1.72
 kind: professional
 order: 7
-coverFocus: "0% 8%"
-coverZoom: 1.5
 context: Client project, plant model for grid connection
 start: "2026"
 blurb: A grid model that shows how a gas engine power plant handles faults and frequency events before the plant first runs.
