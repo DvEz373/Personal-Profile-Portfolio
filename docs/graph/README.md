@@ -26,18 +26,18 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 
 | Node type | Count |
 |---|---|
-| `doc` | 31 |
+| `doc` | 32 |
 | `route` | 23 |
-| `dir` | 20 |
-| `asset` | 18 |
-| `decision` | 14 |
+| `dir` | 21 |
+| `asset` | 20 |
+| `decision` | 15 |
 | `component` | 14 |
 | `content` | 11 |
 | `page` | 11 |
 | `rule` | 10 |
 | `latex` | 8 |
-| `config` | 7 |
 | `lib` | 7 |
+| `config` | 6 |
 | `collection` | 6 |
 | `tool` | 6 |
 | `package` | 5 |
@@ -57,12 +57,12 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 | Edge type | Count | Meaning |
 |---|---|---|
 | `imports` | 127 | Code import (file or npm package) |
-| `links` | 116 | Doc links to a file or folder |
-| `documents` | 73 | Doc explains a file or folder (front matter covers) |
+| `links` | 121 | Doc links to a file or folder |
+| `documents` | 75 | Doc explains a file or folder (front matter covers) |
 | `built_from` | 31 | Output made from a source |
+| `affects` | 26 | Decision shaped a path |
 | `governs` | 26 | Rule applies to a path |
-| `affects` | 24 | Decision shaped a path |
-| `explained_in` | 24 | Rule or decision is explained in a doc |
+| `explained_in` | 25 | Rule or decision is explained in a doc |
 | `renders` | 23 | Page or endpoint produces a route |
 | `uses_asset` | 21 | Uses an image |
 | `reads` | 20 | Code reads a content collection |
@@ -77,34 +77,40 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 
 ## Coverage
 
-84 of 84 code, data, config and CI files are explained by a reference doc (front matter `covers`). `--check` fails on any file that is not.
+83 of 83 code, data, config and CI files are explained by a reference doc (front matter `covers`). `--check` fails on any file that is not.
 
 ## Products and outputs
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryTextColor": "#12161c", "primaryBorderColor": "#12161c", "lineColor": "#4c5866", "secondaryColor": "#f3f5f7", "tertiaryColor": "#f3f5f7", "clusterBkg": "#f3f5f7", "clusterBorder": "#aeb8c3", "edgeLabelBackground": "#f3f5f7"}}}%%
 flowchart LR
-  n0{{"Name card"}}
-  n1{{"CV"}}
-  n2{{"Website"}}
-  n3(["cv.pdf on the website"])
-  n4["main.tex"]
+  classDef code fill:#e1eaf8,stroke:#1d5fc4,color:#12161c
+  classDef data fill:#d9f0ec,stroke:#0e8f7e,color:#12161c
+  classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c
+  classDef prod fill:#12161c,stroke:#12161c,color:#ffffff
+  classDef ext fill:#ffffff,stroke:#aeb8c3,color:#4c5866
+  n0{{"Name card"}}:::prod
+  n1{{"CV"}}:::prod
+  n2{{"Website"}}:::prod
+  n3(["cv.pdf on the website"]):::out
+  n4["main.tex"]:::code
   n4 --> n3
-  n5["website.yml"]
+  n5["website.yml"]:::code
   n5 --> n3
-  n6(["CV PDF artifacts"])
+  n6(["CV PDF artifacts"]):::out
   n4 --> n6
-  n7["build-cv.yml"]
+  n7["build-cv.yml"]:::code
   n7 --> n6
-  n8(["Link preview image"])
-  n9["/og-card/"]
+  n8(["Link preview image"]):::out
+  n9["/og-card/"]:::code
   n9 --> n8
-  n10["make-og.mjs"]
+  n10["make-og.mjs"]:::code
   n10 --> n8
-  n11(["Public site on GitHub Pages"])
+  n11(["Public site on GitHub Pages"]):::out
   n5 --> n11
-  n12["astro.config.mjs"]
+  n12["astro.config.mjs"]:::code
   n12 --> n11
-  n13(["GitHub Pages"])
+  n13(["GitHub Pages"]):::out
   n11 --> n13
   n2 --> n11
   n0 --> n11
@@ -116,19 +122,25 @@ flowchart LR
 By folder. Numbers count the edges (imports, collection reads and loads, image uses) between folders. Use `query` for the files behind an arrow.
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryTextColor": "#12161c", "primaryBorderColor": "#12161c", "lineColor": "#4c5866", "secondaryColor": "#f3f5f7", "tertiaryColor": "#f3f5f7", "clusterBkg": "#f3f5f7", "clusterBorder": "#aeb8c3", "edgeLabelBackground": "#f3f5f7"}}}%%
 flowchart LR
-  pages["pages (11 + 2 endpoints)"]
-  layouts["layouts"]
-  components["components"]
-  lib["lib"]
-  scripts["client scripts"]
-  styles["styles"]
-  data["data/*.yaml"]
-  content["content/projects/*.md"]
-  assets["assets (images)"]
-  schema["content.config.ts"]
-  collections["content collections"]
-  packages["npm packages"]
+  classDef code fill:#e1eaf8,stroke:#1d5fc4,color:#12161c
+  classDef data fill:#d9f0ec,stroke:#0e8f7e,color:#12161c
+  classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c
+  classDef prod fill:#12161c,stroke:#12161c,color:#ffffff
+  classDef ext fill:#ffffff,stroke:#aeb8c3,color:#4c5866
+  pages["pages (11 + 2 endpoints)"]:::code
+  layouts["layouts"]:::code
+  components["components"]:::code
+  lib["lib"]:::code
+  scripts["client scripts"]:::code
+  styles["styles"]:::code
+  data["data/*.yaml"]:::data
+  content["content/projects/*.md"]:::data
+  assets["assets (images)"]:::data
+  schema["content.config.ts"]:::data
+  collections["content collections"]:::data
+  packages["npm packages"]:::ext
   collections -->|11| content
   collections -->|5| data
   collections -->|6| schema
@@ -169,6 +181,7 @@ File by file: [modules.md](modules.md) (large). In Obsidian, [portfolio.canvas](
 | [docs/graph/README.md](README.md) | index | `docs/graph/curated.mjs`, `scripts/graph.mjs` |
 | [docs/project/architecture.md](../project/architecture.md) | reference | `.github/workflows/build-cv.yml`, `.github/workflows/docs.yml`, `.github/workflows/website.yml`, `.gitignore`, `cv/main.tex`, `website/astro.config.mjs`, `website/package.json` |
 | [docs/project/decisions.md](../project/decisions.md) | reference | `docs/card/01-research.md`, `docs/website/04-framework-research.md`, `docs/website/05-visual-direction.md`, `docs/website/07-v5-plan.md` |
+| [docs/project/diagram-style.md](../project/diagram-style.md) | reference | `docs/project/img/`, `scripts/graph.mjs` |
 | [docs/project/environments.md](../project/environments.md) | reference | `website/package.json`, `website/playwright.config.ts`, `website/scripts/shots.mjs` |
 | [docs/project/obsidian.md](../project/obsidian.md) | reference | `.gitignore`, `docs/Docs.base`, `scripts/obsidian-setup.mjs` |
 | [docs/project/overview.md](../project/overview.md) | reference | `README.md` |

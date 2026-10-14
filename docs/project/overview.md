@@ -17,6 +17,8 @@ One repository, one person, three products. Together they make Devin Ezekiel Pur
 
 The name card is part of the website build. The CV is built separately but is published through the website.
 
+![How sources become the public site, drawn as a single-line diagram](img/system-single-line.drawio.svg)
+
 ## Audience and purpose
 
 - **Recruiters and hiring managers**: should understand who Devin is and what he has built within one screen, and be able to download the CV.

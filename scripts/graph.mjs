@@ -101,6 +101,7 @@ function typeOf(p) {
     [/^website\/src\/data\//, "data"],
     [/^website\/src\/content\//, "content"],
     [/^website\/src\/assets\//, "asset"],
+    [/\.(svg|png|jpg)$/, "asset"],
     [/^website\/src\/content\.config\.ts$/, "schema"],
     [/^website\/tests\//, "test"],
     [/^(website\/)?scripts\//, "tool"],
@@ -436,6 +437,16 @@ function graphJson() {
   ].join("\n");
 }
 
+// Mermaid theme: the website's tokens (docs/website/design-system.md), so diagrams match the site.
+const MERMAID_INIT = `%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryTextColor": "#12161c", "primaryBorderColor": "#12161c", "lineColor": "#4c5866", "secondaryColor": "#f3f5f7", "tertiaryColor": "#f3f5f7", "clusterBkg": "#f3f5f7", "clusterBorder": "#aeb8c3", "edgeLabelBackground": "#f3f5f7"}}}%%`;
+const MERMAID_CLASSES = [
+  "  classDef code fill:#e1eaf8,stroke:#1d5fc4,color:#12161c",
+  "  classDef data fill:#d9f0ec,stroke:#0e8f7e,color:#12161c",
+  "  classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c",
+  "  classDef prod fill:#12161c,stroke:#12161c,color:#ffffff",
+  "  classDef ext fill:#ffffff,stroke:#aeb8c3,color:#4c5866",
+];
+
 const mid = (() => {
   const ids = new Map();
   return (id) => ids.get(id) ?? (ids.set(id, `n${ids.size}`), ids.get(id));
@@ -446,15 +457,15 @@ function moduleDiagram() {
   const groups = ["pages", "layouts", "components", "lib", "scripts", "styles"];
   const inGroup = (id) => groups.find((g) => id.startsWith(`website/src/${g}/`));
   const code = NODE_LIST.filter((n) => n.type !== "dir" && (inGroup(n.id) || n.id === CONFIG));
-  const lines = ["flowchart LR"];
+  const lines = [MERMAID_INIT, "flowchart LR", ...MERMAID_CLASSES];
   for (const g of groups) {
     lines.push(`  subgraph ${g}`);
-    for (const n of code.filter((c) => inGroup(c.id) === g)) lines.push(`    ${mid(n.id)}["${esc(n.id.slice(`website/src/${g}/`.length))}"]`);
+    for (const n of code.filter((c) => inGroup(c.id) === g)) lines.push(`    ${mid(n.id)}["${esc(n.id.slice(`website/src/${g}/`.length))}"]:::code`);
     lines.push("  end");
   }
-  lines.push(`  ${mid(CONFIG)}["content.config.ts"]`);
-  for (const n of NODE_LIST.filter((x) => x.type === "data")) lines.push(`  ${mid(n.id)}[("${esc(n.label)}")]`);
-  lines.push(`  ${mid("website/src/content/projects/")}[("projects/*.md")]`);
+  lines.push(`  ${mid(CONFIG)}["content.config.ts"]:::data`);
+  for (const n of NODE_LIST.filter((x) => x.type === "data")) lines.push(`  ${mid(n.id)}[("${esc(n.label)}")]:::data`);
+  lines.push(`  ${mid("website/src/content/projects/")}[("projects/*.md")]:::data`);
   const ids = new Set(code.map((c) => c.id));
   for (const e of EDGE_LIST.filter((x) => x.type === "imports" && ids.has(x.from) && ids.has(x.to))) lines.push(`  ${mid(e.from)} --> ${mid(e.to)}`);
   for (const e of EDGE_LIST.filter((x) => x.type === "reads")) lines.push(`  ${mid(e.from)} -.-> ${mid(CONFIG)}`);
@@ -482,8 +493,9 @@ function folderDiagram() {
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
   const used = new Set([...counts.keys()].flatMap((k) => k.split("|")));
-  const lines = ["flowchart LR"];
-  for (const g of Object.keys(label).filter((x) => used.has(x))) lines.push(`  ${g}["${label[g]}"]`);
+  const cls = { data: "data", content: "data", assets: "data", schema: "data", collections: "data", packages: "ext" };
+  const lines = [MERMAID_INIT, "flowchart LR", ...MERMAID_CLASSES];
+  for (const g of Object.keys(label).filter((x) => used.has(x))) lines.push(`  ${g}["${label[g]}"]:::${cls[g] ?? "code"}`);
   for (const [k, n] of [...counts].sort()) {
     const [a, b] = k.split("|");
     lines.push(`  ${a} -->|${n}| ${b}`);
@@ -492,13 +504,13 @@ function folderDiagram() {
 }
 
 function overviewDiagram() {
-  const lines = ["flowchart LR"];
-  for (const p of curated.products.filter((x) => x.id !== "product:project")) lines.push(`  ${mid(p.id)}{{"${esc(p.label)}"}}`);
+  const lines = [MERMAID_INIT, "flowchart LR", ...MERMAID_CLASSES];
+  for (const p of curated.products.filter((x) => x.id !== "product:project")) lines.push(`  ${mid(p.id)}{{"${esc(p.label)}"}}:::prod`);
   for (const o of [...curated.outputs, ...curated.hosts]) {
-    lines.push(`  ${mid(o.id)}(["${esc(o.label)}"])`);
+    lines.push(`  ${mid(o.id)}(["${esc(o.label)}"]):::out`);
     for (const f of o.from) {
       const label = f.startsWith("route:") ? f.slice(6) : f.startsWith("output:") ? null : basename(f.replace(/\/$/, ""));
-      if (label) lines.push(`  ${mid(f)}["${esc(label)}"]`);
+      if (label) lines.push(`  ${mid(f)}["${esc(label)}"]:::code`);
       lines.push(`  ${mid(f)} --> ${mid(o.id)}`);
     }
   }
@@ -607,7 +619,7 @@ function canvasJson() {
     return 3;
   };
   const titles = ["Start here", "Project reference", "Website reference", "CV and name card", "History (why)"];
-  const colors = ["3", "4", "5", "6", "2"];
+  const colors = ["#12161c", "#0e8f7e", "#1d5fc4", "#8a6300", "#aeb8c3"]; // ink, leaf, signal, sun-ink, line (site tokens)
   const W = 340, H = 70, GAP = 24, COL = W + 120, PAD = 30;
   const cards = [];
   const groups = [];

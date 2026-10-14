@@ -9,6 +9,7 @@ Devin Ezekiel Purba's professional profile: a **website** (Astro 7, `website/`),
 3. **The private folder and name scanner live only on Devin's PC.** Never ask for their contents or recreate them here.
 4. **Ask Devin before** opening a PR, merging (merging deploys), or changing the CV, unless he already said so for this change. Never force-push or rewrite pushed history.
 5. Commit as `DvEz373 <ezekiel.devin@gmail.com>`. Plain English, short sentences, no em dashes.
+6. **Visual work is designed, not defaulted.** Any diagram, figure or image: use draw.io, the `frontend-design` and `design:design-critique` skills (and impeccable / taste-skill on Devin's PC), the site palette, and a rendered critique before committing. Guide: `docs/project/diagram-style.md`.
 
 ## Find things without reading everything
 

@@ -50,6 +50,7 @@ Every doc starts with front matter: `title`, `aliases` (for Obsidian's quick swi
 | [project/runbooks.md](project/runbooks.md) | Task recipes R-01 to R-13 |
 | [project/environments.md](project/environments.md) | Windows PC versus cloud session, gotchas |
 | [project/obsidian.md](project/obsidian.md) | Using the repository as an Obsidian vault with Claude Code |
+| [project/diagram-style.md](project/diagram-style.md) | Diagram and visual style: tools, palette, single-line-diagram language, process |
 
 ### Website
 

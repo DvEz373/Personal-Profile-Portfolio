@@ -11,67 +11,73 @@ type: index
 Every file in `website/src` and its imports. Solid arrows are imports; dotted arrows show files reading content collections and the data files behind them. The folder-level view is in [the knowledge graph](README.md#website-modules).
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryTextColor": "#12161c", "primaryBorderColor": "#12161c", "lineColor": "#4c5866", "secondaryColor": "#f3f5f7", "tertiaryColor": "#f3f5f7", "clusterBkg": "#f3f5f7", "clusterBorder": "#aeb8c3", "edgeLabelBackground": "#f3f5f7"}}}%%
 flowchart LR
+  classDef code fill:#e1eaf8,stroke:#1d5fc4,color:#12161c
+  classDef data fill:#d9f0ec,stroke:#0e8f7e,color:#12161c
+  classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c
+  classDef prod fill:#12161c,stroke:#12161c,color:#ffffff
+  classDef ext fill:#ffffff,stroke:#aeb8c3,color:#4c5866
   subgraph pages
-    n14["404.astro"]
-    n15["about.astro"]
-    n16["card-qr.svg.ts"]
-    n17["card/index.astro"]
-    n18["card/print.astro"]
-    n19["devin-ezekiel-purba.vcf.ts"]
-    n20["education.astro"]
-    n21["experience.astro"]
-    n22["index.astro"]
-    n23["og-card.astro"]
-    n24["projects/[slug].astro"]
-    n25["projects/index.astro"]
-    n26["skills.astro"]
+    n14["404.astro"]:::code
+    n15["about.astro"]:::code
+    n16["card-qr.svg.ts"]:::code
+    n17["card/index.astro"]:::code
+    n18["card/print.astro"]:::code
+    n19["devin-ezekiel-purba.vcf.ts"]:::code
+    n20["education.astro"]:::code
+    n21["experience.astro"]:::code
+    n22["index.astro"]:::code
+    n23["og-card.astro"]:::code
+    n24["projects/[slug].astro"]:::code
+    n25["projects/index.astro"]:::code
+    n26["skills.astro"]:::code
   end
   subgraph layouts
-    n27["Bare.astro"]
-    n28["Base.astro"]
+    n27["Bare.astro"]:::code
+    n28["Base.astro"]:::code
   end
   subgraph components
-    n29["CommandPalette.astro"]
-    n30["Footer.astro"]
-    n31["Gantt.astro"]
-    n32["Header.astro"]
-    n33["Icon.astro"]
-    n34["Instrument.astro"]
-    n35["PageHead.astro"]
-    n36["Photo.astro"]
-    n37["ProjectArt.astro"]
-    n38["ProjectCard.astro"]
-    n39["ProjectCover.astro"]
-    n40["Schematic.astro"]
-    n41["SectionHead.astro"]
-    n42["Timeline.astro"]
+    n29["CommandPalette.astro"]:::code
+    n30["Footer.astro"]:::code
+    n31["Gantt.astro"]:::code
+    n32["Header.astro"]:::code
+    n33["Icon.astro"]:::code
+    n34["Instrument.astro"]:::code
+    n35["PageHead.astro"]:::code
+    n36["Photo.astro"]:::code
+    n37["ProjectArt.astro"]:::code
+    n38["ProjectCard.astro"]:::code
+    n39["ProjectCover.astro"]:::code
+    n40["Schematic.astro"]:::code
+    n41["SectionHead.astro"]:::code
+    n42["Timeline.astro"]:::code
   end
   subgraph lib
-    n43["content.ts"]
-    n44["dates.ts"]
-    n45["glossary.ts"]
-    n46["qr.ts"]
-    n47["themes.ts"]
-    n48["transitions.ts"]
-    n49["url.ts"]
+    n43["content.ts"]:::code
+    n44["dates.ts"]:::code
+    n45["glossary.ts"]:::code
+    n46["qr.ts"]:::code
+    n47["themes.ts"]:::code
+    n48["transitions.ts"]:::code
+    n49["url.ts"]:::code
   end
   subgraph scripts
-    n50["cmdk.ts"]
-    n51["filters.ts"]
-    n52["instrument.ts"]
-    n53["shell.ts"]
+    n50["cmdk.ts"]:::code
+    n51["filters.ts"]:::code
+    n52["instrument.ts"]:::code
+    n53["shell.ts"]:::code
   end
   subgraph styles
-    n54["global.css"]
+    n54["global.css"]:::code
   end
-  n55["content.config.ts"]
-  n56[("certifications.yaml")]
-  n57[("education.yaml")]
-  n58[("experience.yaml")]
-  n59[("profile.yaml")]
-  n60[("skills.yaml")]
-  n61[("projects/*.md")]
+  n55["content.config.ts"]:::data
+  n56[("certifications.yaml")]:::data
+  n57[("education.yaml")]:::data
+  n58[("experience.yaml")]:::data
+  n59[("profile.yaml")]:::data
+  n60[("skills.yaml")]:::data
+  n61[("projects/*.md")]:::data
   n29 --> n33
   n29 --> n43
   n29 --> n49

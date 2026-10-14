@@ -25,30 +25,10 @@ covers: [website/astro.config.mjs, website/package.json, cv/main.tex, .github/wo
 
 ## Data flow
 
-```mermaid
-flowchart LR
-  subgraph Sources
-    P["profile.yaml"]
-    E["experience, education,<br/>skills, certifications .yaml"]
-    PR["projects/*.md and figures"]
-    TEX["cv/*.tex"]
-  end
-  subgraph Build
-    CC["content.config.ts<br/>Zod schemas"]
-    LIB["src/lib/content.ts"]
-    PAGES["src/pages/*"]
-    LTX[LaTeX]
-  end
-  subgraph Outputs
-    SITE[Website pages]
-    CARD["/card/ and /card/print/"]
-    VCF[".vcf and card-qr.svg"]
-    CVPDF["cv.pdf"]
-  end
-  P & E & PR --> CC --> LIB --> PAGES
-  PAGES --> SITE & CARD & VCF
-  TEX --> LTX --> CVPDF --> SITE
-```
+![The build and publish path drawn as a single-line diagram: three generators (profile and data, case studies, CV) feed a build bus through check breakers; the CV passes a LaTeX transformer; the bus feeds GitHub Pages through merge and deploy breakers; PR checks measure the bus and the docs and permit the merge.](img/system-single-line.drawio.svg)
+
+Drawn as a single-line diagram, the drawing Devin works with every day: content sources are generators, each check is a breaker, the build is the bus, and GitHub Pages is the grid. The file is an editable draw.io SVG: open it in draw.io (desktop or app.diagrams.net), edit, save; GitHub and Obsidian show the new version.
+
 
 Two facts matter most:
 
@@ -58,14 +38,18 @@ Two facts matter most:
 ## Build and deploy
 
 ```mermaid
+%%{init: {"theme": "base", "themeVariables": {"fontSize": "14px", "primaryColor": "#ffffff", "primaryTextColor": "#12161c", "primaryBorderColor": "#12161c", "lineColor": "#4c5866", "secondaryColor": "#f3f5f7", "tertiaryColor": "#f3f5f7", "clusterBkg": "#f3f5f7", "clusterBorder": "#aeb8c3", "edgeLabelBackground": "#f3f5f7"}}}%%
 flowchart TB
-  PUSH[push or PR] --> W{paths}
-  W -->|"website/** or cv/**"| WEB[Website workflow]
-  W -->|"cv/**"| CVW[Build CV workflow]
-  W -->|"docs, code, CI files"| DOCS[Docs workflow]
+  classDef code fill:#e1eaf8,stroke:#1d5fc4,color:#12161c
+  classDef check fill:#ffffff,stroke:#0e8f7e,color:#12161c
+  classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c
+  PUSH[push or PR]:::code --> W{paths}
+  W -->|"website/** or cv/**"| WEB[Website workflow]:::check
+  W -->|"cv/**"| CVW[Build CV workflow]:::check
+  W -->|"docs, code, CI files"| DOCS[Docs workflow]:::check
   WEB --> C1["compile cv/main.tex to public/cv.pdf<br/>(main only)"]
   C1 --> C2["npm ci, check, build, test"]
-  C2 -->|"main and PAGES_ENABLED"| DEP[deploy to GitHub Pages]
+  C2 -->|"main and PAGES_ENABLED"| DEP[deploy to GitHub Pages]:::out
   CVW --> V1["personal and work variants<br/>ATS text check, PDF artifacts"]
   DOCS --> G["node scripts/graph.mjs --check"]
 ```
