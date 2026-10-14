@@ -13,3 +13,7 @@ cv/main*.pdf
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Obsidian vault (settings are per person; run node scripts/obsidian-setup.mjs)
+.obsidian/
+.trash/

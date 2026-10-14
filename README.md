@@ -51,4 +51,11 @@ The QR points to `/card/`, so details can change without reprinting. Contact dat
 
 ## Docs
 
-Research, design decisions and the step-by-step log: [`docs/website/`](docs/website/) and [`docs/card/`](docs/card/).
+| Start here | For |
+|---|---|
+| [`docs/README.md`](docs/README.md) | Index and reading paths per task (website, CV, name card) |
+| [`docs/project/overview.md`](docs/project/overview.md) | How the three parts fit together, sources of truth, publishing rules, runbooks |
+| [`docs/graph/README.md`](docs/graph/README.md) | Knowledge graph: `node scripts/graph.mjs query <file>` shows what a file touches and which doc explains it |
+| [`CLAUDE.md`](CLAUDE.md) | Short brief for coding agents |
+
+History (research, design decisions, the step-by-step work log) stays in [`docs/website/`](docs/website/) and [`docs/card/`](docs/card/).

@@ -1,7 +1,7 @@
 # Website
 
 Devin Ezekiel Purba's portfolio, built with [Astro](https://astro.build) 7 and TypeScript. It ships static HTML with about 9–11 KB of JavaScript per page.
-Why Astro: [`docs/website/04-framework-research.md`](../docs/website/04-framework-research.md). Design: [`docs/website/05-visual-direction.md`](../docs/website/05-visual-direction.md).
+Reference docs: [architecture](../docs/website/architecture.md), [content model](../docs/website/content-model.md), [design system](../docs/website/design-system.md), [quality and tests](../docs/website/quality.md). Index of all docs: [`docs/README.md`](../docs/README.md).
 
 ## Run it on your computer (Windows, macOS or Linux)
 

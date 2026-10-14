@@ -1,0 +1,49 @@
+filters:
+  and:
+    - file.ext == "md"
+    - or:
+        - file.inFolder("docs")
+        - file.name == "CLAUDE"
+properties:
+  note.title:
+    displayName: Title
+  note.type:
+    displayName: Type
+  note.covers:
+    displayName: Covers
+  note.current:
+    displayName: Replaced by
+views:
+  - type: table
+    name: All docs by type
+    groupBy:
+      property: note.type
+      direction: ASC
+    order:
+      - file.name
+      - note.title
+      - note.type
+      - file.folder
+      - note.covers
+      - file.mtime
+  - type: table
+    name: Reference and runbooks
+    filters:
+      or:
+        - note.type == "reference"
+        - note.type == "runbook"
+        - note.type == "index"
+    order:
+      - note.title
+      - file.folder
+      - note.covers
+  - type: table
+    name: History (why)
+    filters:
+      or:
+        - note.type == "history"
+        - note.type == "log"
+    order:
+      - note.title
+      - note.current
+      - file.folder

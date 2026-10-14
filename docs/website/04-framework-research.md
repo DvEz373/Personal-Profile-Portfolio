@@ -1,3 +1,10 @@
+---
+title: Framework research and decision
+aliases: [Framework research and decision]
+type: history
+current: ../project/decisions.md
+---
+
 # Framework research and decision
 
 Status: **Decided** · Date: 2026-10-03 · Benchmark data: [`research/framework-benchmark/`](research/framework-benchmark/)

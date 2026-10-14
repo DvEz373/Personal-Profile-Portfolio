@@ -1,3 +1,10 @@
+---
+title: v5 handover
+aliases: [v5 handover]
+type: history
+current: ../project/runbooks.md
+---
+
 # Handover: building v5 step by step
 
 Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–12 done; step 12 in a Claude Code cloud session, §7–§8; merged into `main` at Devin's request; he runs the name scan after pulling) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
