@@ -43,7 +43,8 @@ const filters = (["work", "internship", "campus"] as const).map((k) => ({ key: k
 </Base>
 
 <style>
-  .narrow {
+  /* A narrower reading column on the same left edge as the page title and the chart. */
+  .narrow > :global(*) {
     max-width: 880px;
   }
 </style>

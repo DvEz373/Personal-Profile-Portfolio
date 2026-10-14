@@ -55,7 +55,8 @@ const filters = (["degree", "exchange", "courses"] as const).map((k) => ({ key: 
 </Base>
 
 <style>
-  .narrow {
+  /* A narrower reading column on the same left edge as the page title and the chart. */
+  .narrow > :global(*) {
     max-width: 880px;
   }
   .banner :global(.frame) {

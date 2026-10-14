@@ -135,6 +135,33 @@ test("the closed phone menu does not block taps on the page", async ({ page }, i
   expect(hit).toBe(true);
 });
 
+test("the datasheet never covers the figures or the story", async ({ page }, info) => {
+  test.skip(info.project.name !== "desktop", "the datasheet sits beside the story only on wide screens");
+  // 1280 × 900: the datasheet scrolls with the page; 1920 × 1200: it is sticky while the story is read.
+  for (const size of [{ width: 1280, height: 900 }, { width: 1920, height: 1200 }]) {
+    await page.setViewportSize(size);
+    await page.goto("projects/pumped-storage-dfim-model/");
+    const worst = await page.evaluate(async () => {
+      const spec = document.querySelector(".spec")!;
+      const others = [...document.querySelectorAll(".lead, .story section, .prose > *, .figs h2, .figs figure, .pager a")];
+      let max = 0;
+      for (let y = 0; y < document.documentElement.scrollHeight; y += 150) {
+        window.scrollTo(0, y);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        const s = spec.getBoundingClientRect();
+        for (const o of others) {
+          const r = o.getBoundingClientRect();
+          const w = Math.min(s.right, r.right) - Math.max(s.left, r.left);
+          const h = Math.min(s.bottom, r.bottom) - Math.max(s.top, r.top);
+          if (w > 0 && h > 0) max = Math.max(max, w * h);
+        }
+      }
+      return max;
+    });
+    expect(worst, `overlap at ${size.width} × ${size.height}`).toBe(0);
+  }
+});
+
 test("project lead figures show the whole image", async ({ page }) => {
   for (const slug of ["ccgt-excitation-limiters", "datacenter-grid-compliance", "tw-fault-locator"]) {
     await page.goto(`projects/${slug}/`);
@@ -192,6 +219,17 @@ test("contact card is a valid vCard", async ({ request }) => {
   expect(body).toContain("FN:Devin Ezekiel Purba");
   expect(body).toContain("TEL;TYPE=CELL:+6281291615474");
   expect(body.trimEnd().endsWith("END:VCARD")).toBe(true);
+});
+
+test("pages fit a 320 px phone without sideways scroll", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "phone widths only");
+  // The name card once grew to its longest contact row (bug found 2026-10-14).
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const path of ["", "experience/", "projects/tw-fault-locator/", "card/"]) {
+    await page.goto(path);
+    // Compare with 320, not innerWidth: a phone browser widens its layout viewport to fit the content.
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), `/${path}`).toBeLessThanOrEqual(320);
+  }
 });
 
 test("unknown pages show the 404 page", async ({ page }) => {

@@ -116,6 +116,9 @@ const links = [
   .card-page {
     min-height: 100dvh;
     display: grid;
+    /* minmax(0, 1fr): the card follows the screen width, so long contact rows truncate
+       instead of widening the page on 320 px phones. */
+    grid-template-columns: minmax(0, 1fr);
     place-items: center;
     padding: 24px 16px 40px;
     background:
@@ -218,7 +221,7 @@ const links = [
   }
   .actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
     gap: 10px;
     margin-top: 14px;
   }

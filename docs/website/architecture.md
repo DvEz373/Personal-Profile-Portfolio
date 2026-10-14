@@ -17,7 +17,7 @@ Astro 7 static site with TypeScript. Every page is pre-rendered at build time; t
 | `/experience/` | `pages/experience.astro` | Base | `Gantt` career chart and filterable `Timeline` |
 | `/education/` | `pages/education.astro` | Base | `Timeline` of degree, exchange, courses |
 | `/projects/` | `pages/projects/index.astro` | Base | Theme filter chips, client work then academic |
-| `/projects/<slug>/` | `pages/projects/[slug].astro` | Base | One per project file (11). Lead figure, "My part", datasheet, Problem / Approach / Result, Markdown body, figures, prev/next. Acronyms wrapped in `<abbr>` |
+| `/projects/<slug>/` | `pages/projects/[slug].astro` | Base | One per project file (11). Two areas: `.main` (lead figure, datasheet beside it, Problem / Approach / Result, Markdown body) and the full-width `.figs` below, then prev/next. The datasheet is sticky only inside `.main` and only on screens at least 960 × 1100 px, so it never covers the figures or hides its own key facts. Acronyms wrapped in `<abbr>` |
 | `/skills/` | `pages/skills.astro` | Base | Skill domains with levels, certificates |
 | `/about/` | `pages/about.astro` | Base (`contact={false}`) | Bio, spec sheet (role, focus tags), contact list |
 | `/404.html` | `pages/404.astro` | Base | |

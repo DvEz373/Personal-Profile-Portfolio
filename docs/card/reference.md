@@ -48,4 +48,4 @@ Everything comes from `website/src/data/profile.yaml` (`name`, `givenNames`, `fa
 
 ## Tests
 
-`website/tests/site.spec.ts`: both card pages load without errors or overflow and pass axe; the card test checks every contact link, the WhatsApp URL, the QR dialog and the SVG download; the vCard test checks the `.vcf` fields.
+`website/tests/site.spec.ts`: both card pages load without errors or overflow and pass axe; the card fits a 320 px phone (long contact rows truncate, Copy link and Show QR stack); the card test checks every contact link, the WhatsApp URL, the QR dialog and the SVG download; the vCard test checks the `.vcf` fields.
