@@ -1,3 +1,9 @@
+---
+title: Design audit of v4.1
+type: history
+current: quality.md
+---
+
 # Design audit (v4.1, live site)
 
 Status: **Audit done 2026-10-11; fixes in progress on branch `website-v5-audit-and-projects`** · Audited build: `main` @ `bd3a209`, the same build deployed at <https://dvez373.github.io/Personal-Profile-Portfolio/>

@@ -1,3 +1,9 @@
+---
+title: Name card research
+type: history
+current: reference.md
+---
+
 # Online name card with QR: research
 
 Goal: a name card that is easy to open, save and pass on, linking the website, LinkedIn and Instagram.

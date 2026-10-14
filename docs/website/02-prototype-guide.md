@@ -1,3 +1,9 @@
+---
+title: v3 prototype guide
+type: history
+current: architecture.md
+---
+
 # Prototype review guide (v3, superseded)
 
 > The live site is now the Astro build in [`website/`](../../website/). This vanilla-JS prototype is kept only for before/after comparison and can be deleted.

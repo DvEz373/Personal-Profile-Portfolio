@@ -1,3 +1,8 @@
+---
+title: Work log
+type: log
+---
+
 # Website work log
 
 Each step records what was done, why, and how it was checked.
@@ -145,7 +150,7 @@ Request: upgrade the frontend, research frameworks first (React, Vue, Next.js or
 Single Geist typeface; removed section numbers, § and FIG labels; clearer section titles; motion pass (hero entrance, scroll reveals, smooth dropdowns, mobile menu slide, nav underline). Deployed 2026-10-03.
 
 ## Step 10: Online name card with QR
-Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. Added `/card/`, `/card/print/` and `/card-qr.svg`.
+Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (now `docs/card/reference.md`). Added `/card/`, `/card/print/` and `/card-qr.svg`.
 
 ## 2026-10-11 · Step 11: Design audit of the live site
 - Pulled `main` (`bd3a209`), built it and captured every page at 1440 px (light and dark) and 390 px.
@@ -330,3 +335,13 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - `cv/professional_experience.tex`: the Power System Engineer entry is now nine STAR bullets (task, action, measured result), one per client project plus one for the smaller work. Facts and numbers come only from the published case studies and the earlier CV; ratings stay approximate.
 - Devin: no locations. Grid codes and operators are written in general terms ("grid-code test scenarios", "the TSO's requirements", "the applicable grid code"). The market operator and grid-code acronyms are gone from the CV summary, experience and skills, from Experience on the site, and from the prototype data.
 - **Checks:** both CV builds (personal and work email) compile to 2 pages with pdflatex and pass the workflow's text-extraction keywords. Website: check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped.
+
+## 2026-10-14 · Documentation system and knowledge graph (website, CV, name card)
+- **Plan**: one documentation system for the whole portfolio, layered so an agent loads only what a task needs: `CLAUDE.md` (always loaded, about 750 tokens) → `docs/README.md` index with reading paths → reference docs (about 600 to 1,500 tokens each) → history docs (about 30,000 tokens, read only for the "why").
+- **Entry layer**: `CLAUDE.md` (rules, where to look, commands, finish checklist), `AGENTS.md` pointer, `docs/README.md` rewritten as the index, root and website READMEs point to it.
+- **Project reference** (`docs/project/`): overview, architecture (data flow, build and deploy diagrams), sources of truth (which facts the CV repeats by hand, hard-coded copies, derived outputs), publishing rules, decision register (A1 to A8, N1 to N2, D1 to D11, R1 to R17, K1 to K3), runbooks R-01 to R-13, environments (PC versus cloud).
+- **Component reference**: website architecture, content model, design system, quality; `docs/cv/reference.md`; `docs/card/reference.md` (replaces `02-build.md`). History docs keep their text and gain front matter (`type: history`, `current:` pointing to the reference that replaced them).
+- **Knowledge graph**: `scripts/graph.mjs` extracts imports, LaTeX inputs, content collections (attributed per getter, so a data file maps to the pages that use it), routes, tests, doc front matter and links; `docs/graph/curated.mjs` adds products, outputs, rules, decisions and sync links. Output: `docs/graph/graph.json` (one node or edge per line) and a generated `docs/graph/README.md` (counts, coverage, diagrams, doc and sync tables). `query <file>` and `impact <file>` answer "what does this touch, which doc explains it, which rule applies" without reading code.
+- **Guard**: `node scripts/graph.mjs --check` fails on a stale graph, a broken relative link, a missing `covers` or curated path, or a code file no reference doc covers (82 of 82 covered). New `.github/workflows/docs.yml` runs it.
+- Also: `profile.yaml` comment on `chain` corrected (it feeds About, not Home).
+- **Checks**: graph check passes (215 nodes, about 540 edges); all Mermaid diagrams render (mermaid 11 in Chromium); website gate: check 0 errors, 21 pages, Playwright 92 passed, 2 skipped.

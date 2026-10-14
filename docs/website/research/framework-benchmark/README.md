@@ -1,3 +1,8 @@
+---
+title: Framework benchmark
+type: history
+---
+
 # Framework baseline benchmark
 
 Reproducible data behind [04-framework-research.md](../../04-framework-research.md).

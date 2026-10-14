@@ -1,3 +1,9 @@
+---
+title: Visual direction v4
+type: history
+current: design-system.md
+---
+
 # Visual direction v4: "Grid & Signal"
 
 Status: **Implemented in `website/`, open for review** · Date: 2026-10-03 · Builds on [01-design-plan.md](01-design-plan.md) (structure, palette §12)

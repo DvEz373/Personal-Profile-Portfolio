@@ -25,7 +25,7 @@
     - "I'm an electrical engineer working where energy systems meet intelligent software. My background is in control systems, automation and digitalization: I studied Control Systems and Automation at Universitas Indonesia and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks."
     - "Today I work on renewable energy and power systems: power system dynamics, power electronics, distributed energy resources, and the controllers that keep generators, batteries and solar plants stable on the grid."
     - "I'm an AI and digital transformation enthusiast, and I'm most interested in applying AI, machine learning, deep learning and reinforcement learning to intelligent control of energy systems."
-  # The three blocks of the "signal chain" on the home page.
+  # Three blocks of focus areas; About shows their items as "Focus" tags.
   chain:
     - stage: Foundation
       label: Where I come from

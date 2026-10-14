@@ -1,3 +1,9 @@
+---
+title: Website design plan (v1 to v3)
+type: history
+current: design-system.md
+---
+
 # Website design plan
 
 Status: **Superseded for visuals by [05-visual-direction.md](05-visual-direction.md)** (v4, built in `website/`). Page structure (§2, §11), positioning and palette (§12) still apply. v3 prototype: [`design/prototype/`](../../design/prototype/)
