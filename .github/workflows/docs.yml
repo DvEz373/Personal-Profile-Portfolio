@@ -1,0 +1,24 @@
+name: Docs
+
+# Keeps the documentation true: fails if the knowledge graph is stale, a relative link in
+# the docs is broken, or a doc's "covers" path no longer exists. See docs/graph/README.md.
+on:
+  push:
+    paths: ["docs/**", "CLAUDE.md", "AGENTS.md", "README.md", "scripts/**", "website/src/**", "website/scripts/**", "website/tests/**", "website/*.md", "website/*.mjs", "website/*.ts", "website/package.json", "cv/**", ".github/workflows/**"]
+  pull_request:
+    paths: ["docs/**", "CLAUDE.md", "AGENTS.md", "README.md", "scripts/**", "website/src/**", "website/scripts/**", "website/tests/**", "website/*.md", "website/*.mjs", "website/*.ts", "website/package.json", "cv/**", ".github/workflows/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  graph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Knowledge graph, doc links and covers paths
+        run: node scripts/graph.mjs --check
