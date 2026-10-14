@@ -74,10 +74,11 @@ Notes on rules not applied:
 |---|---|
 | 1. Certificates grid (finding 1) | Done: grid reduced to name, date and icon columns |
 | 1. Public placeholder strings (finding 2) | Done: placeholder project removed, "Image to come" slots removed, Skills caveat reworded |
-| 2. Client projects with real figures (findings 4–5) | In progress: 2 of 9 added (data-center grid compliance, fault locator); 7 wait on OneDrive downloads |
+| 2. Client projects with real figures (findings 4–5) | Done (v5): 8 of 8 client case studies, all anonymised with approximate ratings (the two PV controller projects merged into one, so 9 sources became 8) |
 | 3. "Selected work" on Home (finding 3) | Done |
 | 4. Project-page H1 and header art (finding 6) | Done: H1 back to weight 600 and max 22ch; header ornament hidden when a real figure is shown; leftover 56 px step indent removed |
 | 4. Chart tap targets (finding 7) | Done: invisible 24 × 24 px minimum hit area per bar |
 | 5. Regression test (finding 15) | Done: per-page squeezed-text and placeholder check; home → project figure-loading check |
+| v5 design revision (findings 8–14 and the step 2b review) | Done: plan items R1–R17 in [07-v5-plan.md](07-v5-plan.md) §5 (steps 2, 10 and 11); audit 19/20, critique 25/32 |
 
 Progress is logged in [03-work-log.md](03-work-log.md).

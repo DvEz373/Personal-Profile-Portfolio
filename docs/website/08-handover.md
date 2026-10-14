@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–11 done; step 12 moves to a Claude Code cloud session, §7–§8) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–12 done; step 12 in a Claude Code cloud session, §7–§8; waiting on Devin's name scan and his OK for a PR) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -8,7 +8,7 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Item | State |
 |---|---|
 | Repo | `D:\Documents\Projects\Personal-Profile-Portfolio`, GitHub `DvEz373/Personal-Profile-Portfolio`, **public**, deployed to GitHub Pages from `main` |
-| Branch | `website-v5-audit-and-projects`, **not pushed**. On top of `main`: audit, v5, plan + handover, step 0, impeccable plan update, step 1, step 2 |
+| Branch | `website-v5-audit-and-projects`, pushed (no PR yet). On top of `main`: audit, v5, plan + handover, step 0, impeccable plan update, step 1, step 2 |
 | Done on the branch | Audit; certificates fix; public placeholders removed; project schema with real figures (`kind`, `featured`, `also`, `facts`, `figures`); `ProjectCover` / `ProjectCard`; Selected work on Home (demo at the bottom); 2 anonymised client case studies; 24 px chart targets; squeezed-text, placeholder and figure-loading tests; figure-metadata guard (`scripts/figures.mjs` in `npm run check`); screenshot script (`scripts/shots.mjs`); measurement script (`scripts/measure.mjs`) |
 | Last gate | After step 2: `npm run check` 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; private name scan clean |
 | Step 3 draft | In `git stash` (`stash@{0}`, "v5 step 3 draft"): rounded data-center text and role, data-center overview re-exported without voltages, fault-locator approach and hybrid-method figure generalised (D7). **Not gated, not committed.** Apply with `git stash pop`, view both figures, then run the gate |
@@ -17,7 +17,8 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8), `biogas-chp-plant-controller` (step 9). Skipped for D7: figures that draw controller internals or settings |
 | Step 10 | Done: four featured, order 1–8, theme filters (R3); fixed the phone menu blocking taps |
 | Step 11 | Done: R4–R17; audit 19/20, critique 25/32 (target 26 not met, reasons in plan §2.4) |
-| Next | **Step 12, in a Claude Code cloud session** (prompt in §7, environment in §8) |
+| Step 12 | Done 2026-10-14 in the cloud: README, audit §6, plan status; clean-build gate (check 0 errors, 21 pages, Playwright 92 passed, 2 skipped); screenshots viewed |
+| Next | Devin: pull the branch, run the private name scan on his PC, then say whether to open the PR (§8) |
 
 ## 2. Rules that are not negotiable
 
@@ -97,10 +98,10 @@ Order: `pumped-storage-dfim-model`, `synchronous-condenser-model`, `ccgt-excitat
 - [x] Gate; full screenshot set.
 
 ### Step 12. Wrap-up
-- [ ] Update: audit §6 progress table, plan status line, `website/README.md` (add-a-project section: `role`, cover focus, the no-names rule, the figure-metadata check), work log.
-- [ ] Final gate on a clean build (`rm -rf website/dist && npm run build`).
-- [ ] Send Devin the screenshots (Home, Projects, two case studies; light, dark, phone).
-- [ ] **Ask before pushing.** If he agrees: run the private scan once more (it also scans unpushed history), `gh auth status` (DvEz373 active), `git push -u origin website-v5-audit-and-projects`, open a PR to `main` that describes the changes without client details, and let the Website workflow run. Merging deploys the public site.
+- [x] Update: audit §6 progress table, plan status line, `website/README.md` (add-a-project section: `role`, cover focus, the no-names rule, the figure-metadata check), work log.
+- [x] Final gate on a clean build (`rm -rf website/dist && npm run build`).
+- [x] Send Devin the screenshots (Home, Projects, two case studies; light, dark, phone).
+- [ ] (Cloud session: the branch was pushed; the private scan, the PR and the merge wait on Devin, §8.) **Ask before pushing.** If he agrees: run the private scan once more (it also scans unpushed history), `gh auth status` (DvEz373 active), `git push -u origin website-v5-audit-and-projects`, open a PR to `main` that describes the changes without client details, and let the Website workflow run. Merging deploys the public site.
 
 ## 5. The gate (every step)
 

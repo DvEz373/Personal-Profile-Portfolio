@@ -47,25 +47,30 @@ Dates are `YYYY-MM`. Use `end: present` for something ongoing. Projects may also
 
 ## Add a project
 
-1. Copy the figures into `src/assets/projects/<project>/`. Export diagrams as PNG on a white background; the site shows them on a white sheet in both themes, and the first figure becomes the card cover.
+1. Copy the figures into `src/assets/projects/<project>/`. Export diagrams as PNG on a white background; the site shows them on a sheet in both themes, and the first figure becomes the card cover.
+   - Large draw.io diagrams: export as SVG and render that SVG in Chromium at device scale 2 (Playwright, a screenshot of the `svg` element). A `--scale 2` PNG export can crop large diagrams, so check every export at full extent.
+   - Run `node scripts/figures.mjs --fix`. draw.io PNGs embed the whole editable diagram, which can hold names the picture does not show. `npm run check` fails until the metadata is gone. Then look at every figure.
 2. Create `src/content/projects/<project>.md`. Copy the front matter from an existing file and fill it in:
 
    | Field | Meaning |
    |---|---|
    | `kind` | `professional` (client work, listed first) or `academic` |
-   | `category`, `also` | Main filter chip, and any extra chips (`energy`, `ai`, `iot`) |
+   | `category`, `also` | Main theme chip, and any extra chips. Themes come from `src/lib/themes.ts`: `controllers` (Plant controllers), `machines` (Machine models), `grid` (Grid studies), `ai` (AI), `iot` (IoT). A new theme goes there, with its label, tone and domain |
    | `featured` | `true` puts it in "Selected work" on the home page (first four by `order`) |
+   | `role` | Your own part in one line. Shown as "My part" in the datasheet and under the blurb |
    | `facts` | Short label/value pairs shown under "Key facts" |
    | `figures` | `src` (path to the image, relative to the `.md` file), `alt` (what the figure shows, for screen readers) and `caption` |
+   | `coverFocus`, `coverZoom` | Optional card crop of the cover: a CSS `object-position` (for example `"20% 35%"`) and a zoom from 1 to 3. Cards only; the project page always shows the whole figure |
 
 3. Anything below the front matter is Markdown, shown after Problem / Approach / Result.
-   Keep client work general: no client, employer or project names and no locations, in the text or drawn into the figures.
-4. `npm run check && npm run build && npm test`. The build stops with a message if a field is missing or an image path is wrong.
+4. Acronyms are expanded on first use per page from `src/lib/glossary.ts`. Add any new acronym there with a plain meaning.
+5. Keep client work general: no client, employer, plant, vendor, grid operator, market body or place names, no project codes and no internal model names. This holds for the text, the figure pixels and the figure metadata, and for commit messages too. Use approximate ratings only and describe methods at block level.
+6. `npm run check && npm run build && npm test`. The build stops with a message if a field is missing or an image path is wrong.
 
 ## Still to confirm
 
 - **Skill levels** in `skills.yaml` are self-assessed.
-- **Client project dates** show the start year only (from the project code). Replace with `YYYY-MM` start and end when known.
+- **Client project dates** show the start year only, by choice. The six newest start years still wait on Devin's confirmation.
 
 ## Social preview image
 

@@ -310,3 +310,10 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Devin wants step 12 done in a Claude Code cloud session on GitHub. [08-handover.md](08-handover.md) §7 has the new prompt and §8 the differences: Linux, no private folder, no source folders, no name scan in the cloud.
 - The name scan moves to Devin's PC: pull the branch and run it before the PR is merged.
 - Two open questions added to §6: the start years of the new case studies, and the shortened synchronous condenser role.
+
+## 2026-10-14 · v5 Step 12: Wrap-up (cloud session)
+- `website/README.md` "Add a project": `role` ("My part"), `coverFocus` / `coverZoom` (card crop only), the theme values from `src/lib/themes.ts` (they replace `energy` / `ai` / `iot`), the acronym glossary in `src/lib/glossary.ts`, the no-names rule, `scripts/figures.mjs --fix`, and the SVG route for large draw.io figures (rendered in Chromium at 2×, because `--scale 2` PNG exports can crop). "Still to confirm" now says start years only, by choice.
+- [06-design-audit.md](06-design-audit.md) §6: client projects 8 of 8 done; new row for R1–R17 done. Plan and handover status lines updated.
+- **Gate on a clean build** (`rm -rf dist`, Linux cloud container): check 0 errors, 2 hints, figures clean; 21 pages; Playwright 92 passed, 2 skipped. `measure.mjs`: no text under 12 px, no target under 24 px, no em dashes on any page; uppercase labels Home 9, Experience 5.
+- Screenshots of Home, Projects, the data-center and the pumped-storage case studies (desktop light, desktop dark, phone) viewed and shared in the chat; not committed. No horizontal overflow; lead figures whole; dark-mode figure sheets off-white; acronyms underlined.
+- **Not run here:** the private name scan (Devin's PC only). No case-study facts, ratings, dates or figures changed in this step.
