@@ -53,12 +53,15 @@ Page transitions: `lib/transitions.ts` (200 ms out, 360 ms in). Every animation 
 
 - Phone layout below 860 px (`max-width: 859px`) and on coarse pointers.
 - Under `(pointer: coarse)`: header tools, filter chips and footer links get at least 44 × 44 px hit areas with 8 px gaps (R14). Nothing under 24 × 24 px anywhere.
-- No horizontal overflow at any width. Tests and `shots.mjs` check it.
+- No horizontal overflow at any width, down to 320 px. Tests and `shots.mjs` check it. A grid that centres a card needs `minmax(0, 1fr)` columns, or the card grows to its longest unbroken line.
+- One left edge per page: narrower reading columns (the Experience and Education timelines, 880 px) start where the page title starts.
 - Sticky side panels stay inside the area they describe and stick only where they fit on screen. The project datasheet sticks only at 960 × 1100 px and up; a test scrolls the page at 1280 × 900 and 1920 × 1200 and fails on any overlap.
 
 ## Content style on the page
 
 - One eyebrow at most per page header (R5). Section notes are sentence case, not uppercase labels.
 - Readouts and empty values use "–" (en dash), never an em dash (R17).
+- Inline meta rows ("dates · duration · type") never start a line with a separator dot: the Timeline clips line-start dots.
+- Uppercase labels must not change meaning: write "Frequency", not the symbol f, which would show as F.
 - Project figures always show whole on the project page (R16). Cards may crop (R1).
 - Uppercase labels kept low (Home 9, Experience 5 on 2026-10-14).

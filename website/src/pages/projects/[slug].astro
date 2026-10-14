@@ -315,6 +315,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   }
   .spec dd {
     margin: 4px 0 0;
+    text-wrap: pretty;
   }
   .facts-h {
     margin: 18px 0 0;
@@ -456,6 +457,9 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   @media (max-width: 559px) {
     .pager {
       grid-template-columns: 1fr;
+    }
+    .pager .next {
+      text-align: left;
     }
   }
 </style>

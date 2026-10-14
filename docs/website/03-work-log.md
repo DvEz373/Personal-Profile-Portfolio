@@ -372,3 +372,16 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - Also fixed, found by `measure.mjs`: the "Projects" breadcrumb and the "Full size" link were under 24 px tall; both now have 24 px targets.
 - **New test**: "the datasheet never covers the figures or the story" (fails on the old layout, passes on the new one).
 - **Checks**: scroll audit 0 overlaps at all sizes and themes; `measure.mjs` on project pages: no text under 12 px, no target under 24 px; check 0 errors; 21 pages; Playwright 93 passed, 3 skipped; screenshots viewed (desktop light and dark at 1440 and 1920 × 1200, phone light and dark).
+
+## 2026-10-14 · Visual check of the whole site, six fixes
+- **Asked by Devin**: a detailed, page-by-page visual check of the real site in light and dark, phone and desktop. The live site is blocked from the cloud session, so the check ran on a production build of the same code.
+- **Method**: every page (Home, Experience, Education, Projects, three project pages of different kinds, Skills, About, name card, 404) screen by screen as a visitor scrolls, at 1440 × 900 light and dark and 390 × 844 light and dark; interactive states (command palette, demo after a trip, filters, phone menu, QR dialog, keyboard focus); axe on all 20 pages in both themes (0 findings of any impact); internal links (0 broken; `cv.pdf` exists only on `main` builds); sideways overflow at ten widths from 320 to 2,560 px. Critique with the `design:design-critique` framework.
+- **Fixed**:
+  1. Name card overflowed by 39 px on a 320 px phone. Cause: the page grid sized its column to the longest contact row, so the rows never truncated. Fix: `minmax(0, 1fr)` column; Copy link and Show QR stack when they do not fit. New test checks 320 px against a fixed width (comparing with `innerWidth` hides it, because phone browsers widen the layout viewport).
+  2. Timeline meta rows on phones started a wrapped line with a lone "·" ("· Campus & academic"). Line-start dots are now clipped.
+  3. Experience and Education had two left edges: the timeline column was centred, the title and chart were not. The column now starts at the page edge.
+  4. Datasheet values could end with one short word on its own line ("km"); `text-wrap: pretty`.
+  5. Demo readout showed "F" (uppercase style on the symbol f; F is the farad). Now "Frequency".
+  6. Stacked prev/next cards on phones: the right-aligned "Next" title read raggedly over three lines; left-aligned when stacked.
+- **Left as is, for Devin to decide**: some card crops cut a diagram label at the top edge (synchronous condenser, PV, excitation); "Client work" repeats on every card in the Client work section; "My part" appears in the header and again in the datasheet; the graduation photo on Education is about 680 px tall on desktop; the phone footer repeats the whole navigation.
+- **Checks**: check 0 errors; 21 pages; Playwright 94 passed, 4 skipped; `measure.mjs` 0 small text, 0 small targets, 0 em dashes; overflow none at all ten widths; every fix viewed after the change.

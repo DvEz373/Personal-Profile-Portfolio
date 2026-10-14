@@ -33,7 +33,7 @@ Devin Ezekiel Purba's professional profile: a **website** (Astro 7, `website/`),
 cd website && npm ci                      # once
 npm run check && npm run build            # types, content schemas, figure metadata; 21 pages
 npx astro preview --port 4321 &           # then:
-npm test                                  # Playwright desktop + phone (93 passed, 3 skipped)
+npm test                                  # Playwright desktop + phone (94 passed, 4 skipped)
 node scripts/shots.mjs <scratch> "home,projects/"   # screenshots; node scripts/measure.mjs for sizes
 cd .. && node scripts/graph.mjs --check   # docs and graph up to date
 ```

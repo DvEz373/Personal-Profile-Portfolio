@@ -183,21 +183,25 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
   summary::-webkit-details-marker {
     display: none;
   }
+  /* Every item starts with a separator dot. The row is shifted left by one dot and that strip
+     is clipped, so a dot that starts a line (first item or after a wrap) never shows. */
   .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px 12px;
+    row-gap: 4px;
+    margin: 0 0 4px -24px;
+    clip-path: inset(0 0 0 24px);
     font-size: 0.76rem;
     color: var(--ink-2);
-    margin-bottom: 4px;
   }
   .type {
     color: var(--c-ink);
   }
-  .dur::before,
-  .type::before {
+  .meta > span::before {
     content: "·";
-    margin-right: 12px;
+    display: inline-block;
+    width: 24px;
+    text-align: center;
     color: var(--line-strong);
   }
   h3 {

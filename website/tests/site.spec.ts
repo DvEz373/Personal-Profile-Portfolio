@@ -221,6 +221,17 @@ test("contact card is a valid vCard", async ({ request }) => {
   expect(body.trimEnd().endsWith("END:VCARD")).toBe(true);
 });
 
+test("pages fit a 320 px phone without sideways scroll", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "phone widths only");
+  // The name card once grew to its longest contact row (bug found 2026-10-14).
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const path of ["", "experience/", "projects/tw-fault-locator/", "card/"]) {
+    await page.goto(path);
+    // Compare with 320, not innerWidth: a phone browser widens its layout viewport to fit the content.
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), `/${path}`).toBeLessThanOrEqual(320);
+  }
+});
+
 test("unknown pages show the 404 page", async ({ page }) => {
   const res = await page.goto("no-such-page/");
   expect(res?.status()).toBe(404);

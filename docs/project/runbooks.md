@@ -22,7 +22,7 @@ cd website
 npm run check                 # astro check (types, content schemas) + figure metadata guard
 npm run build                 # 21 pages expected today
 npx astro preview --port 4321 &   # tests reuse a running preview
-npm test                      # Playwright, desktop and phone (93 passed, 3 skipped today)
+npm test                      # Playwright, desktop and phone (94 passed, 4 skipped today)
 node scripts/shots.mjs <scratch>/shots "home,projects/,projects/<slug>/"   # desktop light/dark + phone
 node scripts/measure.mjs      # no text < 12 px, no target < 24 px, uppercase labels, em dashes
 cd .. && node scripts/graph.mjs --check
