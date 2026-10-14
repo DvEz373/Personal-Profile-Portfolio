@@ -305,3 +305,8 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 
 ## 2026-10-14 · Paused before step 12
 - Devin asked to pause. Steps 2b–11 are committed; step 12 (README, audit §6, clean-build gate, screenshots, push question) is next. The handover prompt (§7) now starts there.
+
+## 2026-10-14 · Handover to a Claude Code cloud session
+- Devin wants step 12 done in a Claude Code cloud session on GitHub. [08-handover.md](08-handover.md) §7 has the new prompt and §8 the differences: Linux, no private folder, no source folders, no name scan in the cloud.
+- The name scan moves to Devin's PC: pull the branch and run it before the PR is merged.
+- Two open questions added to §6: the start years of the new case studies, and the shortened synchronous condenser role.

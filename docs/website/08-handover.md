@@ -1,6 +1,6 @@
 # Handover: building v5 step by step
 
-Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–11 done, paused before step 12) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
+Status: **Open** · Written 2026-10-13, updated 2026-10-14 (steps 0–11 done; step 12 moves to a Claude Code cloud session, §7–§8) · For: the next agent (or Devin) continuing on branch `website-v5-audit-and-projects`
 Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v5-plan.md) (what), this file (how).
 
 ## 1. Where things stand
@@ -17,7 +17,7 @@ Read first: [06-design-audit.md](06-design-audit.md) (why), [07-v5-plan.md](07-v
 | Steps 4–9 | Done: `pumped-storage-dfim-model` (step 4), `synchronous-condenser-model` (step 5), `ccgt-excitation-limiters` (step 6), `pv-plant-controller-models` (step 7), `gas-engine-plant-model` (step 8), `biogas-chp-plant-controller` (step 9). Skipped for D7: figures that draw controller internals or settings |
 | Step 10 | Done: four featured, order 1–8, theme filters (R3); fixed the phone menu blocking taps |
 | Step 11 | Done: R4–R17; audit 19/20, critique 25/32 (target 26 not met, reasons in plan §2.4) |
-| Next | **Step 12** |
+| Next | **Step 12, in a Claude Code cloud session** (prompt in §7, environment in §8) |
 
 ## 2. Rules that are not negotiable
 
@@ -117,26 +117,45 @@ All must pass. If the scan reports a hit in history (an earlier commit on this b
 
 ## 6. Open questions to carry
 
+- Start years of the six new case studies (2025 or 2026) come from the year digits of the source project numbers. Devin to confirm.
+- The synchronous condenser role was shortened slightly (no content removed). Devin to confirm the wording.
+
 - Experience bullets and the CV name a market operator and a grid-code document. They describe the job, not a client, but Devin may want them generalised too (asked 2026-10-11, no answer yet).
 - The Home hero status line names the current employer. Rule 1 allows the employer in job history; ask Devin whether the hero line counts as that or should say "Power System Engineer" only.
 - ~~Exact project months~~ Settled 2026-10-13: start years only (D8).
 
-## 7. Prompt for the next session
+## 7. Prompt for the next session (Claude Code cloud, GitHub)
 
-Paste this into a new Claude Code session opened in the repo folder.
+From 2026-10-14 the work continues in a Claude Code cloud session on GitHub, not on Devin's PC. Section 8 says what changes. Paste this into a new cloud session on `DvEz373/Personal-Profile-Portfolio`, branch `website-v5-audit-and-projects`.
 
 ```text
-Continue v5 of Devin Ezekiel Purba's portfolio (Astro 7 + TypeScript in `website/`) in `D:\Documents\Projects\Personal-Profile-Portfolio`, branch `website-v5-audit-and-projects` (local, not pushed).
+Continue v5 of Devin Ezekiel Purba's portfolio (Astro 7 + TypeScript in `website/`) in this cloud session. Repository DvEz373/Personal-Profile-Portfolio (PUBLIC, deploys to GitHub Pages from `main`), branch `website-v5-audit-and-projects`.
 
-1. `git switch website-v5-audit-and-projects`. `git status` must be clean (an untracked `.claude/` is fine). `git stash list` should be empty.
-2. Read, in this order: `docs/website/08-handover.md` (your task list, rules and gate), `docs/website/07-v5-plan.md` (decisions D1–D8, content plan, backlog R1–R15), `docs/website/03-work-log.md` (the step 1 entry has Devin's role for each project), `docs/website/06-design-audit.md`, then the private `D:\Documents\Projects\Portfolio_Private\HANDOVER_PRIVATE.md`, including its section 6 update.
-3. Steps 0–11 are done (the stash is used up). Next is **step 12, the wrap-up**: README add-a-project section (`role`, `coverFocus`/`coverZoom`, the theme values from `src/lib/themes.ts`, the glossary in `src/lib/glossary.ts`, the no-names rule, the figure-metadata check, the SVG render path for large draw.io figures), audit §6 progress table, final gate on a clean build, screenshots for Devin, then ask before pushing. Tick the boxes in 08-handover.md and add a dated work-log entry.
+1. Check out `website-v5-audit-and-projects` and confirm `git log -1` is the "Handover: cloud session" commit or later. Do not work on `main`.
+2. Read, in this order: `docs/website/08-handover.md` (task list, rules, gate; section 8 is about this cloud environment), `docs/website/07-v5-plan.md` (decisions D1–D8, §2.4 audit results, backlog R1–R17), the last five entries of `docs/website/03-work-log.md`, and §6 of `docs/website/06-design-audit.md`.
+3. Steps 0–11 are done. Do **step 12 (wrap-up)** only:
+   - `website/README.md` "Add a project": `role` ("My part"), `coverFocus` / `coverZoom` (card crop), the theme values from `src/lib/themes.ts` (replaces `energy`/`ai`/`iot`), the acronym glossary in `src/lib/glossary.ts`, the no-names rule, `scripts/figures.mjs`, and the note that large draw.io figures are exported as SVG and rendered in Chromium at 2× because `--scale 2` PNG exports can crop.
+   - `docs/website/06-design-audit.md` §6 progress table: client projects 8 of 8 done; R items done.
+   - Final gate on a clean build (section 5 of the handover, without the private scan, see section 8).
+   - Screenshots of Home, Projects and two case studies in desktop light, desktop dark and phone. Do not commit them; share them with Devin in the chat if you can, otherwise describe what you checked.
+   - Tick the step 12 boxes and add a dated work-log entry. One commit.
 
 Rules that matter most:
-- The repo is public. Write no client, employer, plant, vendor, grid operator, market body or place names, no project codes and no internal model names in any committed file, commit message, figure pixels or figure metadata. Never copy anything from `Portfolio_Private` into the repo.
-- Devin's terms (D7): approximate ratings only, for every plant, and no internal algorithms (no thresholds, layer sizes, gains or controller logic). Start years only. Use his roles from the work log; never invent a role, date or number.
-- Sources in `D:\Documents\Work\Project_History\` are read-only. Edit `.drawio` copies in your scratchpad only. Export with `--scale 2`, because scale 3 crops the image. Check every figure from a scaled preview written to your scratchpad, then run `node website/scripts/figures.mjs --fix` and the private scan.
-- The gate after every step is in handover §5. A preview server may already be running on port 4321; reuse it.
-- Ask Devin before pushing, opening a PR, merging or changing the CV. Commit as DvEz373 <ezekiel.devin@gmail.com>. Run `gh auth status` before any push.
-- Keep token use low: read only what a step needs, batch commands, view only the screenshots the gate requires, and report briefly.
+- The repo is public. Write no client, employer, plant, vendor, grid operator, market body or place names, no project codes and no internal model names in any file, commit message, PR or issue. Step 12 adds no new client content: do not add or change case-study facts, ratings, dates or figures.
+- The private folder, the name scanner and the source folders live only on Devin's PC and are not available here. Never ask for their contents and never recreate them in the repo.
+- Push only to `website-v5-audit-and-projects`. Ask Devin before opening a PR, merging, or changing the CV. Merging deploys the public site.
+- Plain English, short sentences, no em dashes. Report briefly.
 ```
+
+## 8. Working in the cloud session
+
+| Item | On Devin's PC (steps 0–11) | In the cloud session (step 12 on) |
+|---|---|---|
+| Shell | Windows, PowerShell and Git Bash, `py -3` | Linux; use `python3`; no Git Bash path rewriting, so `home` and `/` both work in `scripts/shots.mjs` |
+| Setup | already installed | `cd website && npm ci && npx playwright install --with-deps chromium` |
+| Preview | port 4321, may already run | `npm run build && npx astro preview --port 4321` in the background; the tests reuse it |
+| Private name scan | `node D:/Documents/Projects/Portfolio_Private/scan-names.mjs` | **Not available.** Devin runs it on his PC after pulling the branch, before the PR is merged |
+| Source folders, draw.io | available, read-only | **Not available.** No new figures or case-study facts in the cloud |
+| Pushing | ask Devin first | push to this branch only; ask before a PR or merge |
+
+Before the PR is merged, on Devin's PC: `git pull` on this branch, `node D:/Documents/Projects/Portfolio_Private/scan-names.mjs` (must exit 0), then merge.
