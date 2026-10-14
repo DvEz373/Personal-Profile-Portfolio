@@ -325,3 +325,8 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. 
 - Handover §6: these three questions are settled. Still open: Experience bullets and the CV name a market operator and a grid-code document.
 - Devin asked to merge into `main` now. He will run the private name scan on his PC after pulling.
 - **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; Home and the synchronous condenser page viewed in desktop light, desktop dark and phone, no horizontal overflow.
+
+## 2026-10-14 · CV in STAR form, no locations
+- `cv/professional_experience.tex`: the Power System Engineer entry is now nine STAR bullets (task, action, measured result), one per client project plus one for the smaller work. Facts and numbers come only from the published case studies and the earlier CV; ratings stay approximate.
+- Devin: no locations. Grid codes and operators are written in general terms ("grid-code test scenarios", "the TSO's requirements", "the applicable grid code"). The market operator and grid-code acronyms are gone from the CV summary, experience and skills, from Experience on the site, and from the prototype data.
+- **Checks:** both CV builds (personal and work email) compile to 2 pages with pdflatex and pass the workflow's text-extraction keywords. Website: check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped.
