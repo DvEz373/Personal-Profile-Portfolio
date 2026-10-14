@@ -20,8 +20,8 @@ import Icon from "./Icon.astro";
   <dl class="readouts mono">
     <div><dt>f</dt><dd><span data-f>50.000</span> Hz</dd></div>
     <div><dt>RoCoF</dt><dd><span data-rocof>0.00</span> Hz/s</dd></div>
-    <div><dt>Nadir</dt><dd><span data-nadir>—</span> Hz</dd></div>
-    <div><dt>Settled in</dt><dd><span data-settle>—</span> s</dd></div>
+    <div><dt>Nadir</dt><dd><span data-nadir>–</span> Hz</dd></div>
+    <div><dt>Settled in</dt><dd><span data-settle>–</span> s</dd></div>
   </dl>
 
   <div class="controls">
@@ -73,15 +73,12 @@ import Icon from "./Icon.astro";
   .screen {
     position: relative;
     height: clamp(300px, 34vw, 400px);
-    background-color: var(--paper);
+    background-color: var(--screen);
     background-image:
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 24px 24px;
     border-bottom: 1px solid var(--line);
-  }
-  :global([data-theme="dark"]) .screen {
-    background-color: #080b0f;
   }
   canvas {
     width: 100%;
@@ -114,7 +111,7 @@ import Icon from "./Icon.astro";
     border-right: 0;
   }
   .readouts dt {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -141,7 +138,7 @@ import Icon from "./Icon.astro";
     background: var(--paper);
   }
   .seg-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -181,7 +178,7 @@ import Icon from "./Icon.astro";
   }
   .note {
     margin: 6px 18px 16px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: none;
     letter-spacing: 0.02em;
   }

@@ -15,9 +15,11 @@ interface Props {
   description: string;
   /** Path of the Open Graph image inside /public. */
   image?: string;
+  /** Show the contact band above the footer links. About has its own contact list. */
+  contact?: boolean;
 }
 
-const { title, description, image = "og.jpg" } = Astro.props;
+const { title, description, image = "og.jpg", contact = true } = Astro.props;
 const profile = await getProfile();
 const fullTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.headline}, ${profile.headlineAccent}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -75,7 +77,7 @@ const ogImage = new URL(url(image), Astro.site);
     <main id="main" transition:name="main" transition:animate={pageAnimation}>
       <slot />
     </main>
-    <Footer profile={profile} />
+    <Footer profile={profile} contact={contact} />
     <CommandPalette />
     <div class="toast mono" role="status" aria-live="polite" data-toast></div>
   </body>

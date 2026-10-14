@@ -1,20 +1,17 @@
 ---
 import Schematic from "./Schematic.astro";
 
-/** Header for inner pages: index, serif title, one-line intro, schematic art behind. */
+/** Header for inner pages: title, one-line intro, schematic art behind. */
 interface Props {
-  index: string;
-  eyebrow: string;
   title: string;
   intro: string;
   art?: "grid" | "turbine" | "solar" | "neural" | "circuit";
 }
-const { index, eyebrow, title, intro, art = "grid" } = Astro.props;
+const { title, intro, art = "grid" } = Astro.props;
 ---
 
 <header class="page-head drafting-fade">
   <div class="wrap">
-    <p class="label">{eyebrow}</p>
     <h1>{title}</h1>
     <p>{intro}</p>
     <slot />

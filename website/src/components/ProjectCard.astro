@@ -1,0 +1,113 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectCover from "./ProjectCover.astro";
+import { CATEGORY_LABEL, KIND_LABEL_PROJECT } from "../lib/content";
+import { formatRange } from "../lib/dates";
+import { url } from "../lib/url";
+
+/** One project as a card with its cover figure; used on Projects and in Home's "Selected work". */
+interface Props {
+  entry: CollectionEntry<"projects">;
+}
+const { entry } = Astro.props;
+const p = entry.data;
+---
+
+<a class="card" href={url(`projects/${entry.id}/`)}>
+  <span class="fig" transition:name={`fig-${entry.id}`}>
+    <ProjectCover id={entry.id} category={p.category} figure={p.figures[0]} focus={p.coverFocus} zoom={p.coverZoom} decorative sizes="(min-width: 1240px) 380px, (min-width: 760px) 50vw, 100vw" />
+  </span>
+  <span class="body">
+    <span class="meta mono">
+      <span class="cat">{p.kind === "professional" ? KIND_LABEL_PROJECT.professional : CATEGORY_LABEL[p.category]}</span>
+      <span>{formatRange(p.start, p.end)}</span>
+    </span>
+    <span class="title" transition:name={`title-${entry.id}`}>{p.title}</span>
+    <span class="blurb">{p.blurb}</span>
+    <span class="stack">
+      {p.stack.slice(0, 4).map((s) => <span class="tag">{s}</span>)}
+    </span>
+    <span class="go mono">
+      Read the case study <span aria-hidden="true">→</span>
+    </span>
+  </span>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--panel);
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      border-color var(--t-ui) var(--ease),
+      transform var(--t-ui) var(--ease),
+      box-shadow var(--t-ui) var(--ease);
+  }
+  .card:hover,
+  .card:focus-visible {
+    border-color: var(--c);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    --play: running;
+  }
+  .card:active {
+    transform: translateY(-2px);
+  }
+  .fig {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden; /* keeps tall figures from stretching the 16:9 box */
+    border-bottom: 1px solid var(--line);
+  }
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.78rem;
+    color: var(--ink-2);
+  }
+  .cat {
+    color: var(--c-ink);
+  }
+  .title {
+    font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .blurb {
+    color: var(--ink-2);
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .go {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 0.8rem;
+    color: var(--signal);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover,
+    .card:focus-visible,
+    .card:active {
+      transform: none;
+    }
+  }
+</style>

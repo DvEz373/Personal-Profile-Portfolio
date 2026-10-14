@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "skills/", "about/", "card/", "card/print/"];
+const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "projects/tw-fault-locator/", "skills/", "about/", "card/", "card/print/"];
 
 function collectErrors(page: Page) {
   const errors: string[] = [];
@@ -23,6 +23,24 @@ for (const path of pages) {
     expect(errors).toEqual([]);
   });
 
+  test(`page /${path} has no squeezed text or leftover placeholders`, async ({ page }) => {
+    await page.goto(path);
+    // A text block crushed into a narrow column (one word per line) means a grid track went wrong.
+    const squeezed = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>("body *")]
+        .filter((el) => [...el.childNodes].some((n) => n.nodeType === 3 && (n.textContent ?? "").trim().length >= 24))
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          const lh = parseFloat(getComputedStyle(el).lineHeight) || parseFloat(getComputedStyle(el).fontSize) * 1.4;
+          return r.width > 0 && r.width < 120 && r.height / lh >= 4;
+        })
+        .map((el) => (el.textContent ?? "").trim().slice(0, 40)),
+    );
+    expect(squeezed).toEqual([]);
+    const text = await page.locator("body").innerText();
+    expect(text).not.toMatch(/placeholder|image to come|replace with/i);
+  });
+
   test(`page /${path} has no serious accessibility violations`, async ({ page }) => {
     await page.goto(path);
     const results = await new AxeBuilder({ page }).analyze();
@@ -37,6 +55,29 @@ test("content is in the HTML before any JavaScript runs", async ({ request }) =>
   const exp = await (await request.get("experience/")).text();
   expect(exp).toContain("Power System Engineer");
   expect(exp).toContain('property="og:image"');
+});
+
+test("home shows selected work and project figures load", async ({ page }) => {
+  await page.goto("");
+  const cards = page.locator(`section[aria-labelledby="s-work"] .card`);
+  expect(await cards.count()).toBeGreaterThanOrEqual(1);
+  await cards.first().click();
+  await expect(page).toHaveURL(/\/projects\/[^/]+\/$/);
+  const imgs = page.locator(".lead img, .figs img");
+  expect(await imgs.count()).toBeGreaterThanOrEqual(1);
+  for (const img of await imgs.all()) {
+    await img.scrollIntoViewIfNeeded();
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    expect(await img.getAttribute("alt")).toBeTruthy();
+  }
+});
+
+test("case studies state the author's own part when it is known", async ({ page }) => {
+  await page.goto("projects/tw-fault-locator/");
+  await expect(page.locator(".head .role")).toContainText("My part:");
+  await expect(page.locator(".spec dt", { hasText: "My part" })).toHaveCount(1);
+  await page.goto("projects/sonodirect/");
+  await expect(page.locator(".head .role")).toHaveCount(0);
 });
 
 test("command palette opens with the keyboard and navigates", async ({ page, isMobile }) => {
@@ -74,6 +115,50 @@ test("experience filters and the career chart work", async ({ page }) => {
   await page.locator('[data-filter="all"]').click();
   await page.locator('.bar[data-target="teep-ntust"]').click();
   await expect(page.locator("#teep-ntust details")).toHaveAttribute("open", "");
+});
+
+test("project theme filters show client and academic work together", async ({ page }) => {
+  await page.goto("projects/");
+  const total = await page.locator("[data-kind]").count();
+  await page.locator('[data-filter="machines"]').click();
+  await expect(page.locator("[data-shown]")).toHaveText(`Showing 3 of ${total}`);
+  await page.locator('[data-filter="ai"]').click();
+  await expect(page.locator("[data-kind~='ai']:visible")).toHaveCount(3);
+  await page.locator('[data-filter="all"]').click();
+  await expect(page.locator("[data-shown]")).toHaveText(`Showing ${total} of ${total}`);
+});
+
+test("the closed phone menu does not block taps on the page", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "phone layout only");
+  await page.goto("projects/");
+  const hit = await page.evaluate(() => document.elementFromPoint(150, 150)?.closest(".site-header") === null);
+  expect(hit).toBe(true);
+});
+
+test("project lead figures show the whole image", async ({ page }) => {
+  for (const slug of ["ccgt-excitation-limiters", "datacenter-grid-compliance", "tw-fault-locator"]) {
+    await page.goto(`projects/${slug}/`);
+    const img = page.locator(".lead img");
+    await expect(img).toBeVisible();
+    await img.evaluate((el: HTMLImageElement) => el.decode());
+    const [box, frame] = await Promise.all([img.boundingBox(), page.locator(".lead .figure").boundingBox()]);
+    expect(box && frame).toBeTruthy();
+    expect(box!.y + box!.height).toBeLessThanOrEqual(frame!.y + frame!.height + 1);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(frame!.x + frame!.width + 1);
+  }
+});
+
+test("acronyms are expanded once, at first use", async ({ page }) => {
+  await page.goto("projects/pumped-storage-dfim-model/");
+  await expect(page.locator('abbr:text-is("DFIM")')).toHaveCount(1);
+  await expect(page.locator('abbr:text-is("DFIM")')).toHaveAttribute("title", "doubly fed induction machine");
+  expect(await page.locator("main").innerText()).toContain("PSS/E");
+  await expect(page.locator('abbr:text-is("PSS")')).toHaveCount(0);
+});
+
+test("home features four client case studies", async ({ page }) => {
+  await page.goto("");
+  await expect(page.locator(".work > li")).toHaveCount(4);
 });
 
 test("instrument trips, reports a nadir and settles with the controller on", async ({ page }) => {

@@ -28,7 +28,7 @@ const filters = (["work", "internship", "campus"] as const).map((k) => ({ key: k
 ---
 
 <Base title="Experience" description="Devin Ezekiel Purba's jobs, internships and campus roles: power system engineering, research internships in Taiwan and Indonesia, teaching and leadership.">
-  <PageHead index="01" eyebrow="Experience" title="Experience" intro="Jobs, internships and campus roles. Newest first; open any entry for the details." art="grid" />
+  <PageHead title="Experience" intro="Jobs, internships and campus roles. Newest first; open any entry for the details." art="grid" />
 
   <section class="wrap" aria-label="Career chart">
     <Gantt bars={bars} caption="Career timeline · select a bar to open the role" />
@@ -36,7 +36,7 @@ const filters = (["work", "internship", "campus"] as const).map((k) => ({ key: k
 
   <section class="section" aria-labelledby="s-roles">
     <div class="wrap narrow">
-      <SectionHead index="01.1" title="Roles" id="s-roles" />
+      <SectionHead title="Roles" id="s-roles" />
       <Timeline items={items} filters={filters} label="Roles" />
     </div>
   </section>

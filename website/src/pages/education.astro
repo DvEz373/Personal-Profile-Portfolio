@@ -4,7 +4,6 @@ import PageHead from "../components/PageHead.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Photo from "../components/Photo.astro";
 import Timeline, { type TimelineItem } from "../components/Timeline.astro";
-import graduation from "../assets/photos/graduation.jpg";
 import graduationWide from "../assets/photos/graduation-wide.jpg";
 import { getEducation, KIND_LABEL } from "../lib/content";
 import { formatDuration, formatRange } from "../lib/dates";
@@ -26,13 +25,12 @@ const items: TimelineItem[] = education.map((e) => ({
   tags: [],
   callout: e.callout,
   link: e.link,
-  photo: e.photo ? { src: graduation, alt: "Devin in a graduation gown beside the #UI Graduation sign at Universitas Indonesia" } : undefined,
 }));
 const filters = (["degree", "exchange", "courses"] as const).map((k) => ({ key: k, label: KIND_LABEL[k], tone: TONE[k] }));
 ---
 
 <Base title="Education" description="Devin Ezekiel Purba's education: B.Eng. in Electrical Engineering (Control Systems and Automation, Cum Laude) from Universitas Indonesia, an NTUST research exchange, and AI specializations.">
-  <PageHead index="02" eyebrow="Education" title="Education" intro="A control-systems degree, a research exchange in Taiwan, and a steady habit of learning AI." art="neural" />
+  <PageHead title="Education" intro="A control-systems degree, a research exchange in Taiwan, and a steady habit of learning AI." art="neural" />
 
   <section class="wrap">
     <Photo
@@ -50,7 +48,7 @@ const filters = (["degree", "exchange", "courses"] as const).map((k) => ({ key: 
 
   <section class="section" aria-labelledby="s-path">
     <div class="wrap narrow">
-      <SectionHead index="02.1" title="Path" id="s-path" />
+      <SectionHead title="Path" id="s-path" />
       <Timeline items={items} filters={filters} label="Education" />
     </div>
   </section>

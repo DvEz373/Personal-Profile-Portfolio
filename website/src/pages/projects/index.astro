@@ -1,22 +1,24 @@
 ---
 import Base from "../../layouts/Base.astro";
 import PageHead from "../../components/PageHead.astro";
-import ProjectArt from "../../components/ProjectArt.astro";
-import { getProjects, CATEGORY_LABEL } from "../../lib/content";
-import { formatRange } from "../../lib/dates";
-import { url } from "../../lib/url";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getProjects, CATEGORY_LABEL, THEMES, TONE } from "../../lib/content";
 
 const projects = await getProjects();
-const TONE = { energy: "c-sun", ai: "c-signal", iot: "c-leaf" } as const;
-const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CATEGORY_LABEL[k], tone: TONE[k], n: projects.filter((p) => p.data.category === k).length }));
+const keysOf = (p: (typeof projects)[number]) => [p.data.category, ...p.data.also];
+const cats = THEMES.map((k) => ({ key: k, label: CATEGORY_LABEL[k], tone: TONE[k], n: projects.filter((p) => keysOf(p).includes(k)).length }));
+const groups = [
+  { id: "client-work", title: "Client work", note: "Power system models and studies delivered for utilities, plant owners and manufacturers.", items: projects.filter((p) => p.data.kind === "professional") },
+  { id: "academic", title: "Academic and personal", note: "Thesis, capstone and lab projects from Universitas Indonesia.", items: projects.filter((p) => p.data.kind === "academic") },
+].filter((g) => g.items.length > 0);
 ---
 
-<Base title="Projects" description="Projects by Devin Ezekiel Purba: multi-agent reinforcement learning for edge computing, an AI-assisted IoT sound system, a computer-vision document scanner, and power plant control work.">
-  <PageHead index="03" eyebrow="Projects" title="Projects" intro="Things I have built across energy, AI and IoT. Open one for the problem, approach and result." art="circuit" />
+<Base title="Projects" description="Projects by Devin Ezekiel Purba: power plant controllers, generator and synchronous condenser models, grid compliance studies and an AI fault locator, plus multi-agent reinforcement learning, IoT and computer-vision projects.">
+  <PageHead title="Projects" intro="Client studies in power systems, and the AI and IoT projects that led to them. Open one for the problem, approach, result and figures." art="circuit" />
 
   <section class="wrap" data-filterable>
     <div class="bar">
-      <div class="chips" role="group" aria-label="Filter projects by category">
+      <div class="chips" role="group" aria-label="Filter projects by theme">
         <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">{projects.length}</span></button>
         {
           cats.map((c) => (
@@ -31,35 +33,21 @@ const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CAT
       <p class="label" aria-live="polite" data-shown>Showing {projects.length} of {projects.length}</p>
     </div>
 
-    <ul class="grid">
-      {
-        projects.map((p, i) => (
-          <li data-kind={p.data.category} class={TONE[p.data.category]}>
-            <a class="card" href={url(`projects/${p.id}/`)}>
-              <span class="fig" transition:name={`fig-${p.id}`}>
-                <ProjectArt id={p.id} category={p.data.category} fig="" />
-              </span>
-              <span class="body">
-                <span class="meta mono">
-                  <span class="cat">{CATEGORY_LABEL[p.data.category]}</span>
-                  <span>{formatRange(p.data.start, p.data.end)}</span>
-                </span>
-                <span class="title" transition:name={`title-${p.id}`}>{p.data.title}</span>
-                <span class="blurb">{p.data.blurb}</span>
-                <span class="stack">
-                  {p.data.stack.slice(0, 4).map((s) => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </span>
-                <span class="go mono">
-                  Read the datasheet <span aria-hidden="true">→</span>
-                </span>
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      groups.map((g) => (
+        <section class="group" aria-labelledby={`h-${g.id}`}>
+          <h2 id={`h-${g.id}`}>{g.title}</h2>
+          <p class="note">{g.note}</p>
+          <ul class="grid">
+            {g.items.map((p) => (
+              <li data-kind={keysOf(p).join(" ")} class={TONE[p.data.category]}>
+                <ProjectCard entry={p} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
   </section>
 </Base>
 
@@ -94,66 +82,20 @@ const cats = (["energy", "ai", "iot"] as const).map((k) => ({ key: k, label: CAT
   .grid li[hidden] {
     display: none;
   }
-  .card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-l);
-    background: var(--panel);
-    color: var(--ink);
-    text-decoration: none;
-    overflow: hidden;
-    transition: border-color var(--t-ui) var(--ease), transform var(--t-ui) var(--ease), box-shadow var(--t-ui) var(--ease);
+  .group + .group {
+    margin-top: clamp(40px, 6vw, 64px);
   }
-  .card:hover,
-  .card:focus-visible {
-    border-color: var(--c);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-    --play: running;
+  .group h2 {
+    font-size: var(--step-2);
+    margin: 0 0 4px;
   }
-  .fig {
-    display: block;
-    aspect-ratio: 16 / 9;
-    border-bottom: 1px solid var(--line);
-  }
-  .body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 18px;
-  }
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    font-size: 0.74rem;
+  .group .note {
+    margin: 0 0 20px;
     color: var(--ink-2);
   }
-  .cat {
-    color: var(--c-ink);
-  }
-  .title {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 1.75rem;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .blurb {
-    color: var(--ink-2);
-  }
-  .stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .go {
-    margin-top: auto;
-    padding-top: 10px;
-    font-size: 0.78rem;
-    color: var(--signal);
+  /* A filter can empty a group; hide its heading too. */
+  .group:not(:has(li:not([hidden]))) {
+    display: none;
   }
 </style>
 

@@ -12,7 +12,7 @@ const items: Item[] = [
   { id: "p-home", group: "Pages", title: "Home", href: url(), keywords: "start index grid frequency" },
   { id: "p-exp", group: "Pages", title: "Experience", hint: "Jobs, internships, campus roles", href: url("experience/"), keywords: "work career timeline" },
   { id: "p-edu", group: "Pages", title: "Education", hint: "Degree, exchange, courses", href: url("education/"), keywords: "university school thesis" },
-  { id: "p-proj", group: "Pages", title: "Projects", hint: "Energy, AI and IoT builds", href: url("projects/"), keywords: "portfolio work samples" },
+  { id: "p-proj", group: "Pages", title: "Projects", hint: "Client studies, AI and IoT builds", href: url("projects/"), keywords: "portfolio work samples" },
   { id: "p-skills", group: "Pages", title: "Skills", hint: "Domains, tools, certificates", href: url("skills/"), keywords: "certifications tools" },
   { id: "p-about", group: "Pages", title: "About", hint: "Bio and contact", href: url("about/"), keywords: "contact bio photo" },
   ...projects.map((p) => ({ id: `pr-${p.id}`, group: "Projects", title: p.data.title, hint: p.data.context, href: url(`projects/${p.id}/`), keywords: p.data.stack.join(" ") })),
@@ -113,7 +113,7 @@ const items: Item[] = [
   ul :global(.group) {
     padding: 10px 10px 4px;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-2);

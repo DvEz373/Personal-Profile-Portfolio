@@ -29,5 +29,6 @@ export async function getCertifications() {
 
 export const TYPE_LABEL = { work: "Work", internship: "Internship", campus: "Campus & academic" } as const;
 export const KIND_LABEL = { degree: "Degree", exchange: "Exchange", courses: "Courses" } as const;
-export const CATEGORY_LABEL = { energy: "Energy & power", ai: "AI / ML", iot: "IoT & automation" } as const;
+export { CATEGORY_LABEL, THEMES, TONE, DOMAIN, type Theme } from "./themes";
 export const LEVEL_LABEL = ["", "Aware", "Familiar", "Proficient", "Advanced", "Expert"] as const;
+export const KIND_LABEL_PROJECT = { professional: "Client work", academic: "Academic" } as const;

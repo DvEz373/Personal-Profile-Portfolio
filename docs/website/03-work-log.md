@@ -146,3 +146,182 @@ Single Geist typeface; removed section numbers, § and FIG labels; clearer secti
 
 ## Step 10: Online name card with QR
 Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md`. Added `/card/`, `/card/print/` and `/card-qr.svg`.
+
+## 2026-10-11 · Step 11: Design audit of the live site
+- Pulled `main` (`bd3a209`), built it and captured every page at 1440 px (light and dark) and 390 px.
+- Reviewed against taste-skill and ui-ux-pro-max, plus scripted measurements (text under 12 px, targets under 24 px, labels, dashes) and the existing 55-test suite (all pass).
+- Found two live P0 issues: the Skills certificates list collapses (a v4.1 leftover grid column) and developer placeholder notes are public.
+- Main gap: no proof of professional work on Home or in Projects.
+- Full record: [06-design-audit.md](06-design-audit.md).
+
+## 2026-10-11 · Step 12: P0 fixes and real client projects (branch `website-v5-audit-and-projects`)
+- **Certificates list:** the grid kept a 36 px column for the row number that v4.1 removed. Now `minmax(0, 1fr) auto 20px` (desktop) and `minmax(0, 1fr) 20px` (phone).
+- **Placeholders:** deleted `hybrid-ppc.md`; removed the "Image to come" figure slots and the placeholder notice; Skills caveat now reads "Levels are self-assessed."
+- **Project schema:** `kind` (professional / academic), `featured`, `client`, `also` (extra filter chips), `facts`, and `figures` as real images (`src`, `alt`, `caption`). Dates accept a bare year and `end` is optional.
+- **New components:** `ProjectCover` (first figure on a white sheet, falls back to the drawn illustration) and `ProjectCard` (shared by Projects and Home).
+- **Projects page:** "Client work" and "Academic and personal" groups; filters match any of a project's categories.
+- **Project page:** real lead figure with "Full size" link, client and key facts in the datasheet, full-width figure gallery, Markdown body styles; H1 back on the type system; removed the 56 px indent left from the step numbers.
+- **Home:** "Selected work" (first four `featured` projects) directly under the hero, then the demo.
+- **Career chart:** 24 × 24 px minimum hit area per bar.
+- **Added projects (figures from the project folders, checked for confidential content first):**
+  - `datacenter-grid-compliance`: two figures.
+  - `tw-fault-locator`: three figures.
+- **Blocked:** the other seven project folders were cloud-only OneDrive files. Pinning them (`attrib +P`) queued downloads, but nothing arrived within 10 minutes, and this session cannot trigger the download itself.
+- **Check:** `astro check` 0 errors; build 15 pages; Playwright 81 passed, 1 skipped. The new squeezed-text test fails on the old build, as intended.
+
+## 2026-10-11 · Step 13: Demo moved to the bottom of Home
+- Feedback: the interactive demo is not the most important thing on the page.
+- New Home order: hero → Selected work → Explore → Career direction → Interactive demo → contact. The demo already pauses when off-screen (IntersectionObserver), so it costs nothing until scrolled to.
+- **Check:** build 15 pages; Playwright 81 passed, 1 skipped.
+
+## 2026-10-11 · Step 14: Client work kept anonymous
+- Rule from Devin: client case studies name no client, employer or project, and no location.
+- Fault locator: dropped the client and country, and the employer from the context line; the body now says "the utility". Removed the development-path figure, because the client name is drawn into it.
+- Data center: "European Network Code on Demand Connection" is now "the grid code for demand connection".
+- Removed the `client` field from the project schema and page, so a name cannot slip back in; the README states the rule.
+- Every new figure is checked for drawn-in names before it is added.
+
+## 2026-10-13 · Step 15: Research, plan and handover for the remaining case studies
+- All client project sources are now in a local folder (read-only). Read the summaries and screened every figure: SVG text for drawn-in names, PNG metadata, and a visual check of the candidate covers.
+- **Found:** draw.io PNG exports embed the whole editable diagram (`zTXt`), and several figures that look clean carry client or plant names there. The "Full size" link serves the original PNG.
+  - Added `scripts/figures.mjs` (check, `--fix` strips everything but image chunks) and made it part of `npm run check`.
+  - Stripped the two published fault-locator figures and rewrote the unpushed commit, so no embedded source is in the branch history.
+- Added `scripts/shots.mjs` (screenshots) and `scripts/measure.mjs` (12 px text, 24 px targets, labels, em dashes).
+- Research: taste-skill, ui-ux-pro-max design-system query, the Design plugin's critique framework, and web sources on case-study structure and NDA work. `frontend-design` is in the plugin catalog but not installed; `impeccable` is not available.
+- Decisions from Devin: round the ratings of unique plants, merge the two PV controller projects, and give his own role per project.
+- Wrote [07-v5-plan.md](07-v5-plan.md) and [08-handover.md](08-handover.md). The source map, removal lists, deny list and name scanner sit in a private folder outside the repo.
+- Tested the draw.io command-line export for re-exporting figures without exact ratings.
+
+## 2026-10-13 · v5 Step 0: Baseline
+- Branch `website-v5-audit-and-projects` clean, 3 commits on top of `main`, not pushed.
+- Read the audit (06), the v5 plan (07), the handover (08) and the private source map.
+- **Gate:** `npm run check` 0 errors, "figures: no metadata found"; build 15 pages; Playwright 81 passed, 1 skipped; private name scan clean; screenshots of Home, Projects and the data-center case study viewed (desktop light, desktop dark, phone), no horizontal overflow.
+
+## 2026-10-13 · Step 16: impeccable installed and run
+- Devin approved installing impeccable. Cloned the repository to a scratch folder and reviewed it before installing:
+  - read `SKILL.md`, `audit.md`, `critique.md` and `polish.md` in full;
+  - scanned every other instruction file for downloads, shell commands, settings or hook changes, credentials and injected instructions (none found).
+- Installed the instructions only into `~/.claude/skills/impeccable`. Left out the launcher, the engine binary it downloads on first run, and the Claude Code hooks it would add.
+- Ran its audit and critique by hand (no detector): audit 16/20, critique 23/32. Three new plan items, R13 (plain language), R14 (44 px phone targets) and R15 (colour tokens), are recorded in [07-v5-plan.md](07-v5-plan.md) §2.4; handover step 11 now uses impeccable.
+
+## 2026-10-13 · v5 Step 1: Answers from Devin
+- **His part per project** (his words, lightly edited; one named test set and market body generalised):
+  1. Data center: MATLAB and PSCAD model developer, benchmark measurement test bench developer, model validation.
+  2. Pumped storage: RMS model developer (PSS/E user-defined model) and a simplified PSCAD EMT model for early benchmarking.
+  3. Synchronous condenser: PSS/E RMS model developer (user-defined and generic), PSCAD vs PSS/E benchmarking for the grid operator's model acceptance tests, steady-state studies (short circuit, load flow, QV capability, component current ratings), generic limiter model benchmarking in PSS/E and PSCAD.
+  4. Fault locator: physics-informed machine learning model developer and research.
+  5. Combined-cycle limiters: RMS model developer (PSS/E user-defined model) and basic functional testing for the user guide.
+  6. PV plant controllers: same as 5.
+  7. Gas engine plant: same as 5, plus steady-state studies (load flow, short circuit, PQ capability).
+  8. Biogas CHP: same as 5, plus EMT model development in PSCAD.
+- **Dates:** not needed; start years only.
+- **R3 and R4:** "proceed as you see fit"; both go ahead as recommended.
+- **Permission:** allowed on these terms: no names, no locations, no real ratings (approximate only, for every plant), no internal algorithms, as general as possible. Recorded as plan decisions D7 and D8; D7 replaces the D2 exception that kept exact ratings for common plants.
+
+## 2026-10-13 · v5 Step 2: "My part" and card crops (plan R1, R2)
+- Schema: optional `role`, `coverFocus` (CSS `object-position`) and `coverZoom` (1–3) on projects.
+- Project page: "My part" as the first datasheet row and as one line under the blurb.
+- `ProjectCover`: with a focus or zoom, card thumbnails crop to that region (`object-fit: cover`, scaled from the focus point); page headers still show the whole figure.
+- Fault locator: role added from Devin's answer.
+- Test: a project with `role` shows "My part" in the header and datasheet; one without does not.
+- **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-13 · Handover update (building paused after step 2)
+- Devin: this session only prepares the handover; no further code changes or audit runs here.
+- The step 3 draft (rounded data-center text and role, re-exported overview without voltages, fault-locator approach and figure generalised per D7) is kept in `git stash`, not committed and not gated.
+- Found while drafting: draw.io `--scale 3` exports are cropped on this machine, so `--scale 2` is used; the Read tool shows only part of large PNGs, so preview a scaled copy.
+- [08-handover.md](08-handover.md): new step 2b (design audit before continuing: what to run and how, no code changes), Devin's publishing terms as rule 7, D7 notes in steps 3–9, export and relabel notes in §3.
+
+## 2026-10-14 · v5 Step 2b: Design audit before the case studies
+- Screenshots of Home, Projects and the data-center case study (desktop light and dark, phone) and `scripts/measure.mjs`; no code changed.
+- impeccable audit and critique by hand (single context, no detector): audit 16/20 and critique 23/32, both unchanged from the 2026-10-13 baseline. taste-skill §14 and ui-ux-pro-max §1–§3 on the same pages.
+- **New finding (P1):** the project-page lead figure is clipped. The image is taller than its 16:9 box, so the bottom of the data-center diagram is cut off. Plan item R16.
+- Also new: R17 (em dashes in the demo's empty readouts, Astro version in the footer). Every other finding maps to R1, R4–R6, R9, R10, R13–R15, step 3 or step 10. Results in [07-v5-plan.md](07-v5-plan.md) §2.4.
+- Open question added to the handover: the Home hero names the current employer.
+- **Gate:** check 0 errors, figures clean; build 15 pages; Playwright 83 passed, 1 skipped; name scan clean.
+
+## 2026-10-14 · v5 Step 3: Data center rounded, fault locator generalised (D7)
+- Applied the stashed draft. Data center: "over 100 MW of IT load", "high-voltage transmission network", "tens of thousands of 3 kW PSUs"; voltage-levels fact dropped; role added from Devin's answer.
+- Overview figure re-exported without voltages (HV / MV / LV bands only) and replaced; metadata clean; viewed.
+- Fault locator: approach describes the textbook steps only (Clarke transform, Teager energy, arrival times); the arrival threshold and the layer count are gone from text and figure. No other published text names an internal parameter.
+- Card crops (R1): `coverFocus` and `coverZoom` for the data center, `coverFocus` for the fault locator; both cards now show a readable region.
+- **Gate:** check 0 errors, figures clean; 15 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (lead figure still clipped, R16).
+
+## 2026-10-14 · v5 Step 4: Pumped storage case study
+- New `pumped-storage-dfim-model`: blurb, Problem / Approach / Result, four facts, role from Devin's answer, "What we did" and "How we checked it". Ratings as classes only ("gigawatt-class, several units", "extra-high-voltage grid"); control described at block level (D7). Start year 2025 from the source.
+- Figures re-exported from scratch copies of the three `.drawio` files, with every unit rating, bus voltage, the model code and the manufacturer's document name removed: plant overview (cover), PSS/E model against the WT3 chain, development workflow. Metadata stripped; each viewed.
+- **Found:** draw.io crops this overview even at `--scale 2` (scale 1 is complete). Exported it as SVG and rendered it in Chromium at 2× instead; noted in the handover §3.
+- Card crop on the reservoir and machine (`coverFocus`, `coverZoom`).
+- **Gate:** check 0 errors, figures clean; 16 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop light and dark, phone).
+
+## 2026-10-14 · v5 Step 5: Synchronous condenser case study
+- New `synchronous-condenser-model`: "about 160 MVA" on the "high-voltage transmission grid"; the acceptance tests and the market body are not named; the limiter and controller model is described at block level (D7). Role from Devin's answer, shortened without changing its content. Start year 2026 from the source.
+- Network overview re-exported from a scratch copy (rating rounded, three voltages replaced by "Machine terminal", "Step-up transformer", "HV bus"), rendered via SVG at 2×; metadata stripped; viewed.
+- **Gate:** check 0 errors, figures clean; 17 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed (desktop dark, phone, Projects cards).
+
+## 2026-10-14 · v5 Step 6: Combined-cycle excitation limiter case study
+- New `ccgt-excitation-limiters`: "gigawatt-class combined cycle, three gas and one steam turbine unit" on the "extra-high-voltage grid"; limiters named by function only, no settings (D7). Role from Devin's answer. Start year 2026 (start years only, D8).
+- Figures: plant and unit control overview re-exported without unit ratings, voltages and the plant name in the page title; unit model chain re-exported with the employer abbreviation replaced by "user-defined model". Both rendered via SVG at 2×, metadata stripped, viewed.
+- **Skipped** the excitation reference chain figure: it draws the limiter logic with its settings (internal algorithm, D7).
+- Synchronous condenser card crop moved to the machine and its excitation system.
+- **Gate:** check 0 errors, figures clean; 18 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. The lead figure on this page is clipped too (R16, step 11).
+
+## 2026-10-14 · v5 Step 7: PV power plant controller case study (two projects merged, D3)
+- New `pv-plant-controller-models`: the port from PSCAD to PSS/E and the later release update as one story. Ratings approximate ("about 20 and 25 MVA", "high-voltage transmission grid"); controller functions listed by name only, no settings, and the import limit value left out (D7). Role from Devin's answer. Start year 2026.
+- Figures: both network overviews re-exported without plant ratings, transformer ratings or voltages (approximate plant size kept as "about 20 / 25 MVA"); rendered via SVG at 2×; metadata stripped; viewed. The manufacturer's controller-logic figures were not used.
+- **Gate:** check 0 errors, figures clean; 19 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-14 · v5 Step 8: Gas engine plant case study
+- New `gas-engine-plant-model`: "five units of about 12 MVA", "about 50 MW", "high-voltage transmission grid"; no grid short-circuit data, no country, no vendors; the user model described at block level (D7). Role from Devin's answer, including the steady-state studies. Start year 2026.
+- Plant overview re-exported without unit, transformer and grid ratings or voltages; rendered via SVG at 2×; metadata stripped; viewed.
+- **Skipped** the model structure figure: it draws the controller internals (controller types, a fault threshold, mode flags) and carries the model code name.
+- **Gate:** check 0 errors, figures clean; 20 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed.
+
+## 2026-10-14 · v5 Step 9: Biogas CHP case study
+- New `biogas-chp-plant-controller`: "about 5 MW, three gensets", "medium-voltage distribution network"; no client, farm, state or country, no network company or market operator names, no model code; controller functions by name only (D7). Role from Devin's answer, including the PSCAD EMT model. Start year 2025.
+- Figures: network overview (cover) and the aggregated version, both re-exported without genset, plant, transformer and bus ratings and with the plant name removed from the page title; rendered via SVG at 2×; metadata stripped; viewed.
+- **Skipped:** the control architecture figure (controller internals and the model code) and the project workflow (names drawn in).
+- Gas engine card crop moved to the left edge of the figure.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 83 passed, 1 skipped; name scan clean; screenshots viewed. All eight client case studies are now in.
+
+## 2026-10-14 · v5 Step 10: Selection, order and theme filters (R3)
+- Featured on Home: data center, pumped storage, synchronous condenser, fault locator. Client work ordered 1–8 as in plan §4; academic projects keep 20–22.
+- **R3:** themes replace Energy / AI / IoT: Plant controllers (3), Machine models (3), Grid studies (1), AI (3), IoT (1). One source in `src/lib/themes.ts` (labels, tones, and the domain that picks the drawn illustration); schema, Projects, project pages, Home and the illustrations use it. The three energy themes share the sun colour, so colour still means domain. Palette and Explore hint now read "Client studies, AI and IoT builds".
+- **Found and fixed (live since v4):** on phones the closed menu keeps its 326 px box under the header, and that empty box swallowed every tap on the page below it. `.nav` now has `pointer-events: none`, the open menu `auto`. Checked: menu links and chips both work on a phone.
+- Tests: theme filters (3 machine models, 3 AI, back to all), Home shows four case studies, the closed phone menu does not block taps.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 88 passed, 2 skipped; name scan clean; Home and Projects screenshots viewed (desktop light and dark, phone).
+
+## 2026-10-14 · v5 Step 11: Design revision (R4–R17)
+- **R4** Home: hero, Selected work (4), About (one paragraph and a link), Interactive demo, contact. Explore and Career direction removed; their components (`FeederNav`, `SignalChain`) deleted.
+- **R5/R11** Page headers lose the eyebrow that repeated the H1; `PageHead` and `SectionHead` lose their `index` props and the hidden `§` span. Section notes are now sentence-case text, not uppercase labels. The footer "Contact" label is gone.
+- **R6** Hero eyebrow shows the location only. **R7** About has no second contact band (`Base contact={false}`). **R8** No photo inside the degree entry (photo field removed from the schema, data and `Timeline`).
+- **R9** Every label at least 12 px. **R10** Less space under the hero and above the footer. **R12/R15** `--figure-sheet` (off-white in dark mode) and `--screen` tokens; dead annotation CSS removed from Home.
+- **R13** `src/lib/glossary.ts`: acronyms in project pages get `<abbr title>` at first use (summary fields and Markdown body; "PSS" inside "PSS/E" is left alone). Astro 7's default Markdown processor no longer takes rehype plugins without an extra package, so the body is processed from its rendered HTML instead.
+- **R14** 44 px targets with 8 px gaps under `(pointer: coarse)`: header tools, filter chips, footer links (checked on a Pixel 5 profile).
+- **R16** Project-page lead figures keep their own shape (height capped, never cropped). **R17** Demo readouts start at "–"; footer shows "Updated <date>" without the Astro version.
+- Tests: lead figures fit their box (three pages), acronyms expanded once, plus the step 10 tests.
+- Review: audit 19/20, critique 25/32, measurements in [07-v5-plan.md](07-v5-plan.md) §2.4. The critique target (26) is not met; the reasons are listed there.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; name scan clean; screenshots of every page viewed, no horizontal overflow.
+
+## 2026-10-14 · Paused before step 12
+- Devin asked to pause. Steps 2b–11 are committed; step 12 (README, audit §6, clean-build gate, screenshots, push question) is next. The handover prompt (§7) now starts there.
+
+## 2026-10-14 · Handover to a Claude Code cloud session
+- Devin wants step 12 done in a Claude Code cloud session on GitHub. [08-handover.md](08-handover.md) §7 has the new prompt and §8 the differences: Linux, no private folder, no source folders, no name scan in the cloud.
+- The name scan moves to Devin's PC: pull the branch and run it before the PR is merged.
+- Two open questions added to §6: the start years of the new case studies, and the shortened synchronous condenser role.
+
+## 2026-10-14 · v5 Step 12: Wrap-up (cloud session)
+- `website/README.md` "Add a project": `role` ("My part"), `coverFocus` / `coverZoom` (card crop only), the theme values from `src/lib/themes.ts` (they replace `energy` / `ai` / `iot`), the acronym glossary in `src/lib/glossary.ts`, the no-names rule, `scripts/figures.mjs --fix`, and the SVG route for large draw.io figures (rendered in Chromium at 2×, because `--scale 2` PNG exports can crop). "Still to confirm" now says start years only, by choice.
+- [06-design-audit.md](06-design-audit.md) §6: client projects 8 of 8 done; new row for R1–R17 done. Plan and handover status lines updated.
+- **Gate on a clean build** (`rm -rf dist`, Linux cloud container): check 0 errors, 2 hints, figures clean; 21 pages; Playwright 92 passed, 2 skipped. `measure.mjs`: no text under 12 px, no target under 24 px, no em dashes on any page; uppercase labels Home 9, Experience 5.
+- Screenshots of Home, Projects, the data-center and the pumped-storage case studies (desktop light, desktop dark, phone) viewed and shared in the chat; not committed. No horizontal overflow; lead figures whole; dark-mode figure sheets off-white; acronyms underlined.
+- **Not run here:** the private name scan (Devin's PC only). No case-study facts, ratings, dates or figures changed in this step.
+
+## 2026-10-14 · Devin's answers, then merge to main
+- **Home status line:** no longer shows the job title and employer. It lists the fields Devin keeps learning across, from a new `focus` list in `profile.yaml` (power systems, control, power electronics, AI/ML and intelligent systems, cyber-physical energy systems, digitalization, digital twins). The Home meta description follows. Job title and employer stay on About, Experience, the name card and the contact card. The status pill now has 14 px corners at every width, so a two-line status looks right.
+- **Synchronous condenser role** in Devin's words: control engineer for the model development, power system engineer for the dynamic and steady-state studies. The model and study details from his first answer are kept.
+- **Start years:** kept as they are. All client work falls between 2025 and now; Devin will say if one needs to change.
+- Handover §6: these three questions are settled. Still open: Experience bullets and the CV name a market operator and a grid-code document.
+- Devin asked to merge into `main` now. He will run the private name scan on his PC after pulling.
+- **Gate:** check 0 errors, figures clean; 21 pages; Playwright 92 passed, 2 skipped; Home and the synchronous condenser page viewed in desktop light, desktop dark and phone, no horizontal overflow.

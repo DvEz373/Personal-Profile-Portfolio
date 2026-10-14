@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "astro check && node scripts/figures.mjs",
     "test": "playwright test",
     "test:install": "playwright install --with-deps chromium"
   },

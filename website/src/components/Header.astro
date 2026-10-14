@@ -116,7 +116,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
   }
   .nav-links .idx {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--ink-2);
     transition: color var(--t-ui) var(--ease);
   }
@@ -170,6 +170,16 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     cursor: pointer;
     transition: border-color var(--t-ui) var(--ease);
   }
+  /* Touch screens: 44 px targets with 8 px between them. */
+  @media (pointer: coarse) {
+    .tools {
+      gap: 8px;
+    }
+    .tool {
+      min-width: 44px;
+      height: 44px;
+    }
+  }
   .tool:hover {
     border-color: var(--signal);
   }
@@ -215,6 +225,8 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       position: absolute;
       inset: var(--header-h) 0 auto 0;
       margin: 0;
+      /* The closed menu keeps its height; without this its empty box swallows taps on the page below. */
+      pointer-events: none;
     }
     .nav-links {
       display: flex;
@@ -235,6 +247,7 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
       box-shadow: var(--shadow);
     }
     .nav-links[data-open] {
+      pointer-events: auto;
       visibility: visible;
       opacity: 1;
       transform: none;
