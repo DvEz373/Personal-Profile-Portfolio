@@ -54,6 +54,7 @@ Page transitions: `lib/transitions.ts` (200 ms out, 360 ms in). Every animation 
 - Phone layout below 860 px (`max-width: 859px`) and on coarse pointers.
 - Under `(pointer: coarse)`: header tools, filter chips and footer links get at least 44 × 44 px hit areas with 8 px gaps (R14). Nothing under 24 × 24 px anywhere.
 - No horizontal overflow at any width. Tests and `shots.mjs` check it.
+- Sticky side panels stay inside the area they describe and stick only where they fit on screen. The project datasheet sticks only at 960 × 1100 px and up; a test scrolls the page at 1280 × 900 and 1920 × 1200 and fails on any overlap.
 
 ## Content style on the page
 

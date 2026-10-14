@@ -51,6 +51,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     </header>
 
     <div class="wrap layout">
+      <div class="main">
       <figure class="lead">
         <div class:list={["figure", { fit: cover }]} transition:name={`fig-${entry.id}`}>
           <ProjectCover id={entry.id} category={p.category} figure={cover} sizes="(min-width: 960px) 760px, 100vw" eager />
@@ -139,6 +140,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
           <Fragment set:html={abbrRenderedHtml(entry.rendered?.html ?? "", seen)} />
         </div>
       </div>
+      </div>
 
       {
         more.length > 0 && (
@@ -203,6 +205,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   }
   .crumbs {
     display: flex;
+    align-items: center;
     gap: 8px;
     font-size: 0.78rem;
     color: var(--ink-2);
@@ -238,7 +241,13 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     color: var(--ink);
     font-weight: 600;
   }
+  /* Two areas: .main (figure, datasheet, story) and the full-width .figs below it.
+     The datasheet can only stick inside .main, so it never slides over the figures. */
   .layout {
+    display: grid;
+    gap: clamp(28px, 4vw, 40px);
+  }
+  .main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 320px;
     gap: 28px 40px;
@@ -269,6 +278,12 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     max-height: min(72vh, 640px);
     margin-inline: auto;
   }
+  /* Small links keep a 24 px tall target (WCAG 2.2 target size). */
+  .crumbs a,
+  .lead figcaption a {
+    display: inline-block;
+    padding-block: 4px;
+  }
   .lead figcaption,
   .figs figcaption {
     margin-top: 10px;
@@ -278,8 +293,6 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
   .spec {
     grid-column: 2;
     grid-row: 1 / span 2;
-    position: sticky;
-    top: calc(var(--header-h) + 20px);
     padding: 18px;
     border: 1px solid var(--line);
     border-top: 3px solid var(--c);
@@ -421,14 +434,23 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
     font-size: 1.5rem;
     line-height: 1.1;
   }
+  /* Stick only where the whole datasheet fits on screen (about 970 px tall today); on shorter
+     screens a sticky datasheet would hide its own key facts. The scroll is a safety net for longer ones. */
+  @media (min-width: 960px) and (min-height: 1100px) {
+    .spec {
+      position: sticky;
+      top: calc(var(--header-h) + 20px);
+      max-height: calc(100vh - var(--header-h) - 40px);
+      overflow-y: auto;
+    }
+  }
   @media (max-width: 959px) {
-    .layout {
+    .main {
       grid-template-columns: 1fr;
     }
     .spec {
       grid-column: 1;
       grid-row: auto;
-      position: static;
     }
   }
   @media (max-width: 559px) {

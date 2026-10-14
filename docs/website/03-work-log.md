@@ -363,3 +363,12 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - **Mermaid** (architecture build and deploy, generated graph diagrams): themed with the site tokens and node classes (code, data, out, prod, ext). Found and avoided a Mermaid bug: a font list in `fontFamily` drops the CSS and falls back to a serif.
 - **Canvas**: column colours are now the site tokens.
 - **Checks**: all Mermaid blocks render (mermaid 11 in Chromium); graph check passes.
+
+## 2026-10-14 · Project pages: datasheet no longer covers the figures
+- **Reported by Devin** (screenshot of the pumped storage page): the sticky datasheet on the right covered wide figures lower on the page.
+- **Cause**: `.spec` was `position: sticky` inside the same grid as the full-width Figures section, and a sticky element moves within its whole containing block. Second problem found while testing: the datasheet is 780 to 966 px tall, so on screens up to 900 px high a sticky datasheet hid its own key facts.
+- **Reproduced** with a scroll audit of all 11 project pages at 2560 × 1440, 1920 × 1200, 1920 × 1080, 1440 × 900, 1280 × 720, 1024 × 768 and 390 × 844, light and dark: 1,520 overlapping scroll positions before the fix, on every client case study with extra figures, at every desktop size.
+- **Fix** (`projects/[slug].astro`): the page now has two areas, `.main` (lead figure, datasheet, story) and the full-width `.figs`; the datasheet can only stick inside `.main`, and only at 960 × 1100 px and up, with a scroll fallback for very long datasheets. Elsewhere it scrolls with the page.
+- Also fixed, found by `measure.mjs`: the "Projects" breadcrumb and the "Full size" link were under 24 px tall; both now have 24 px targets.
+- **New test**: "the datasheet never covers the figures or the story" (fails on the old layout, passes on the new one).
+- **Checks**: scroll audit 0 overlaps at all sizes and themes; `measure.mjs` on project pages: no text under 12 px, no target under 24 px; check 0 errors; 21 pages; Playwright 93 passed, 3 skipped; screenshots viewed (desktop light and dark at 1440 and 1920 × 1200, phone light and dark).
