@@ -33,6 +33,7 @@ jobs:
 
       - name: ATS text-extraction check
         run: |
+          sudo apt-get update -qq >/dev/null
           sudo apt-get install -y poppler-utils >/dev/null
           pdftotext -enc UTF-8 cv/${{ matrix.jobname }}.pdf cv/${{ matrix.jobname }}.txt
           for kw in "Devin Ezekiel Purba" "Education" "Experience" "Skills" "PSCAD" "Python" "${{ matrix.email }}"; do

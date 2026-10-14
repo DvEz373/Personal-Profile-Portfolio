@@ -6,16 +6,15 @@
 {
 \begin{itemize}
     \itemsep0em
-    \item Developed synchronous generator (CCGT) and synchronous condenser models with excitation limiters and controls, including Over-Excitation Limiter (OEL), Under-Excitation Limiter (UEL), Stator Current Limiter (SCL), V/Hz (over-flux) limiter, Power System Stabilizer (PSS), various governor models, and plant P and Q controllers, RTU, and Power Plant Controller (PPC).
-    \item Developed user-defined PPC models for multi-unit hybrid solar PV and Battery Energy Storage System (BESS) plants using grid-following control, in both RMS and EMT domains.
-    \item Developed RMS (PSS/E user-defined models in Fortran) and EMT (PSCAD/EMTDC, MATLAB/Simulink) dynamic models for gas engine, Combined Cycle Gas Turbine (CCGT), gas turbine, and steam turbine power plants, with benchmarking between PSS/E and PSCAD.
-    \item Developed an RMS and EMT model of a Doubly-Fed Induction Generator (DFIG) for a pumped-storage hydropower plant, and user-defined On-Load Tap Changer (OLTC) models for two-winding transformers in both domains.
-    \item Performed DMAT studies against AEMO and TRGC grid code requirements.
-    \item Performed steady-state studies including load flow, short circuit, and capability curve analysis (P-Q, Q-V, stator and field current capability).
-    \item Researched and analyzed a MATLAB/Simulink model of a Rectifier Power Supply Unit for a data center application.
-    \item Developed an Impedance Scanning GUI application integrated with PSCAD, and Python automation scripts that streamline benchmarking and simulation workflows across PSCAD and PSS/E.
-    \item Contributed to the research and development of an AI-based fault locator and fault-type classification system.
-    \item Delivered engineering consulting support to clients on power system and control system solutions.
+    \item Built a PSS/E model of a 160\,MVA-class synchronous condenser with user-defined RTU and OEL, UEL, SCL and V/Hz limiters, benchmarked against the vendor's PSCAD model in 163 automated acceptance tests; ran load flow, short-circuit, Q-V studies.
+    \item Wrote a user-defined Fortran model (WT3 structure, PSS/E 33 and 35) of a gigawatt-class adjustable-speed pumped-storage unit (DFIM), not in the library; stable in 9 tests per mode (generating, pumping) and matched the PSCAD reference.
+    \item Filled a PSS/E library gap for a gigawatt-class Combined Cycle Gas Turbine (CCGT) plant with user-defined V/Hz and stator current limiter models built from the manufacturer's logic; same plant response in PSS/E 33 and 36 across four client releases.
+    \item Converted a 50\,MW-class, five-unit gas engine plant from PSCAD to user-defined PSS/E models; passed 13 grid-code test scenarios and a third-party pre-validation; ran load flow, short-circuit and P-Q capability studies.
+    \item Ported a PV Power Plant Controller (PPC) from PSCAD to PSS/E 35 and 36 for two plants of 20--25\,MVA; passed 16 tests from the TSO's requirements, then updated it for a new controller release (4 of 38 modules changed).
+    \item Built PSS/E RMS and PSCAD EMT models of a 5\,MW-class biogas CHP plant controller; matched every setpoint and droop characteristic in an 8-test benchmark under the system operator's model guidelines.
+    \item Modelled a 100\,MW-plus data center for the applicable demand-connection grid code: validated a Simulink EMT model of a 3\,kW server power supply on a measurement test bench and aggregated it into a PSCAD facility model.
+    \item Developed a physics-informed AI fault locator (travelling-wave features and a deep neural network) trained on 1,944 PSCAD fault cases; R\textsuperscript{2} = 96.7\% and 8.3\,km mean absolute error on unseen faults.
+    \item Developed hybrid PV and Battery Energy Storage System (BESS) PPC models (grid-following) and On-Load Tap Changer (OLTC) models in RMS and EMT; performed dynamic model acceptance studies against TSO grid connection requirements; built a PSCAD impedance-scanning GUI and Python automation for PSS/E and PSCAD benchmarking.
 \end{itemize}
 }
 

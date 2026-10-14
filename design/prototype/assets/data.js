@@ -50,7 +50,7 @@ window.PROFILE = {
         "Synchronous generator (CCGT) and synchronous condenser models with OEL, UEL, SCL, V/Hz limiter, PSS, governors, and P/Q controllers, RTU and PPC.",
         "User-defined PPC for multi-unit hybrid PV and BESS plants with grid-following control, in RMS and EMT.",
         "RMS and EMT models for gas engine, CCGT, gas turbine, steam turbine and DFIG pumped-storage plants; OLTC models for two-winding transformers.",
-        "DMAT studies against AEMO and Technical Requirements for Grid Connection (TRGC); load flow, short circuit and capability curve studies.",
+        "Dynamic model acceptance studies against TSO grid connection requirements; load flow, short circuit and capability curve studies.",
         "Impedance-scanning GUI for PSCAD, Python automation, and an AI-based fault locator.",
       ],
       tags: ["PSS/E", "PSCAD/EMTDC", "MATLAB/Simulink", "Fortran", "Python"],
