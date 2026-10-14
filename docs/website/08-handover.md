@@ -121,7 +121,7 @@ All must pass. If the scan reports a hit in history (an earlier commit on this b
 - ~~Start years of the six new case studies~~ Settled 2026-10-14: keep them; all client work falls between 2025 and now. Devin will say if one needs to change.
 - ~~Synchronous condenser role wording~~ Settled 2026-10-14: control engineer for the model, power system engineer for the dynamic and steady-state studies (Devin's words).
 
-- ~~Experience bullets and the CV name a market operator and a grid-code document~~ Settled 2026-10-14: keep them. The CV may name publicly known TSOs and grid codes; where the name is not known it says "Country A's grid code" and so on. Devin may replace the Country A to D placeholders in `cv/professional_experience.tex`. Plant, client and vendor names stay out.
+- ~~Experience bullets and the CV name a market operator and a grid-code document~~ Settled 2026-10-14: keep them. The CV may name publicly known TSOs and grid codes; otherwise it says "the applicable grid code" or "the TSO's requirements". No locations (Devin, 2026-10-14). Plant, client and vendor names stay out.
 - ~~Home hero status line~~ Settled 2026-10-14: it lists the fields Devin keeps learning across (`focus` in `profile.yaml`) instead of the job title and employer. Job title and employer stay on About, Experience, the name card and the contact card.
 - ~~Exact project months~~ Settled 2026-10-13: start years only (D8).
 
