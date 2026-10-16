@@ -1,10 +1,11 @@
 ---
 title: AI Fault Locator for Power Lines
 category: ai
+coverFocus: "20.6% 13.5%"
+coverZoom: 1.16
 kind: professional
 order: 4
 featured: true
-coverFocus: "35% 50%"
 context: Client project for a power utility
 start: "2025"
 blurb: Travelling-wave physics and a deep neural network that turn one substation recording into a distance to the fault.

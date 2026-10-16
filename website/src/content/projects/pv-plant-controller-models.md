@@ -3,8 +3,6 @@ title: Power Plant Controller Models for PV Plants
 category: controllers
 kind: professional
 order: 6
-coverFocus: "0% 30%"
-coverZoom: 1.3
 context: Client projects, controller models for grid studies
 start: "2026"
 blurb: Grid models of the controller that makes a solar plant act as one power station, ported to the simulation tool grid operators use.

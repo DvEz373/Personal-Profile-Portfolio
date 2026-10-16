@@ -1,10 +1,10 @@
 ---
 title: Biogas CHP Plant Controller Model
 category: controllers
+coverFocus: "1.6% 0%"
+coverZoom: 1.42
 kind: professional
 order: 8
-coverFocus: "10% 40%"
-coverZoom: 1.4
 context: Client project, plant model for grid connection
 start: "2025"
 blurb: A grid model of a small biogas power plant's controller, matched to its detailed model so the network company can study the connection.

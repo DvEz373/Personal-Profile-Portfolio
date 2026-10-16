@@ -53,7 +53,7 @@ All content is plain files, validated by Zod schemas in `website/src/content.con
 | `title` | string | Card and page H1 |
 | `category` | theme | Main filter chip. Themes from `lib/themes.ts`: `controllers` (Plant controllers), `machines` (Machine models), `grid` (Grid studies), `ai` (AI), `iot` (IoT) |
 | `also` | list of themes | Extra chips |
-| `kind` | `professional` \| `academic` | Client work is listed first and labelled "Client work" |
+| `kind` | `professional` \| `academic` | Client work is listed first, under the "Client work" heading; the project page eyebrow says "Client work". Cards show the theme (`category`) instead |
 | `order` | integer | Client work 1 to 8, academic 20 and up |
 | `featured` | boolean | Home "Selected work" takes the first four by `order` |
 | `context` | string | Datasheet "Context" |
@@ -65,7 +65,7 @@ All content is plain files, validated by Zod schemas in `website/src/content.con
 | `facts` | list of `label`, `value` | Datasheet "Key facts", 3 to 5 |
 | `links` | list of `label`, `href` | For example source code |
 | `figures` | list of `src` (path relative to the `.md` file), `alt`, `caption` | First is the cover and lead figure. PNG only, metadata stripped |
-| `coverFocus`, `coverZoom` | CSS `object-position`, number 1 to 3 | Card crop only; the page shows the whole figure |
+| `coverFocus`, `coverZoom` | CSS `object-position`, number 1 to 3 | Card crop only; the page shows the whole figure. The crop must not cut any text: draw a 16:9 rectangle (x0, y0, w) in image pixels whose edges fall in white space, then `coverFocus` = x0 / (W − w), y0 / (H − h) and `coverZoom` = (cover width at zoom 1) / w, where the cover width is W, or H × 16/9 for figures wider than 16:9. Leave both out when no clean rectangle exists (the card then shows the whole figure) |
 
 The Markdown body follows Problem / Approach / Result. Client case studies use "What we did" and "How we checked it".
 

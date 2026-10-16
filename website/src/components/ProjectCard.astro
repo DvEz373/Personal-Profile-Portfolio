@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ProjectCover from "./ProjectCover.astro";
-import { CATEGORY_LABEL, KIND_LABEL_PROJECT } from "../lib/content";
+import { CATEGORY_LABEL } from "../lib/content";
 import { formatRange } from "../lib/dates";
 import { url } from "../lib/url";
 
@@ -19,7 +19,7 @@ const p = entry.data;
   </span>
   <span class="body">
     <span class="meta mono">
-      <span class="cat">{p.kind === "professional" ? KIND_LABEL_PROJECT.professional : CATEGORY_LABEL[p.category]}</span>
+      <span class="cat">{CATEGORY_LABEL[p.category]}</span>
       <span>{formatRange(p.start, p.end)}</span>
     </span>
     <span class="title" transition:name={`title-${entry.id}`}>{p.title}</span>

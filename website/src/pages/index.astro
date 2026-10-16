@@ -23,7 +23,7 @@ const focus = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(profi
         <p class="label eyebrow">{profile.city}, {profile.country}</p>
         <h1 id="hero-name" class="name serif">{profile.name}</h1>
         <p class="headline">
-          {profile.headline} <span class="sep" aria-hidden="true">·</span>
+          <span>{profile.headline}</span>
           <span class="accent">{profile.headlineAccent}</span>
         </p>
         <p class="now">
@@ -147,19 +147,27 @@ const focus = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(profi
     letter-spacing: -0.04em;
     margin: 14px 0 18px;
   }
+  /* Each part starts with a separator dot. The row is shifted left by one dot and that strip is
+     clipped, so when the accent wraps onto its own line (phones) its dot never shows. */
   .headline {
+    display: flex;
+    flex-wrap: wrap;
     font-size: clamp(1.35rem, 1.1rem + 1.1vw, 2rem);
     line-height: 1.25;
     letter-spacing: -0.01em;
     font-weight: 500;
-    margin: 0 0 18px;
+    margin: 0 0 18px -1em;
+    clip-path: inset(0 0 0 1em);
+  }
+  .headline > span::before {
+    content: "·" / "";
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    color: var(--line-strong);
   }
   .headline .accent {
     color: var(--signal);
-  }
-  .sep {
-    margin: 0 0.25em;
-    color: var(--line-strong);
   }
   .now {
     display: inline-flex;

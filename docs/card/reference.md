@@ -22,7 +22,7 @@ Linked from the footer, the About page and the command palette.
 
 ## Data
 
-Everything comes from `website/src/data/profile.yaml` (`name`, `givenNames`, `familyName`, `role`, `org`, `email`, `phone`, `city`, `country`, `links`, `headline`, `headlineAccent`, `tagline`) and the portrait in `website/src/assets/photos/portrait.jpg`. WhatsApp uses `https://wa.me/<phone without + and spaces>`.
+Everything comes from `website/src/data/profile.yaml` (`name`, `givenNames`, `familyName`, `role`, `org`, `email`, `phone`, `city`, `country`, `links`, `headline`, `headlineAccent`, `tagline`) and the portrait. On cards narrower than about 256 px the accent ("Control Systems") moves to its own line without the separator dot (container query in `card/index.astro`) in `website/src/assets/photos/portrait.jpg`. WhatsApp uses `https://wa.me/<phone without + and spaces>`.
 
 ## QR
 

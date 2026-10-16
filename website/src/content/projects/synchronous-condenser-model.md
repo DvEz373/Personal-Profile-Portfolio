@@ -1,11 +1,11 @@
 ---
 title: Synchronous Condenser Model and Automated Test Bench
 category: machines
+coverFocus: "5.2% 86.9%"
+coverZoom: 1.22
 kind: professional
 order: 3
 featured: true
-coverFocus: "8% 62%"
-coverZoom: 1.15
 context: Client project, model for grid connection
 start: "2026"
 blurb: A grid model of a spinning machine that steadies voltage without making power, checked against the manufacturer's model in 163 automated test cases.

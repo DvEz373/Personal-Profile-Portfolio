@@ -14,8 +14,8 @@ const degree = (await getEducation()).find((e) => e.kind === "degree");
 const tel = profile.phone.replace(/\s/g, "");
 ---
 
-<Base title="About" contact={false} description={`About ${profile.name}: ${profile.headline} in ${profile.city} working on renewable energy, power systems, AI and intelligent control. Contact details, CV and contact card.`}>
-  <PageHead title="About" intro="An electrical engineer between power grids and intelligent software." art="solar" />
+<Base title="About" contact={false} description={`About ${profile.name}: ${profile.headline} in ${profile.city} specializing in control systems, working on power systems, renewable energy and machine learning. Contact details, CV and contact card.`}>
+  <PageHead title="About" intro="An electrical engineer specializing in control systems, from power grids to machine learning." art="solar" />
 
   <div class="wrap layout">
     <div class="photos">
