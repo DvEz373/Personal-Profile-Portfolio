@@ -403,3 +403,11 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - **Also fixed**: "Download QR" and "Print card" on the name card were 18 px tall, now 24 px. `measure.mjs` did not cover the card by default; it does now.
 - **CV**: unchanged. Its summary already says "Power System Engineer specializing in control systems" and "B.Eng. in Electrical Engineering (Control Systems and Automation, Cum Laude)".
 - **Checks**: check 0 errors; 21 pages; Playwright 95 passed, 5 skipped; `measure.mjs` 0 small text and 0 small targets on all 7 default pages; Home (desktop, phone light and dark), name card (390 px light, 320 px dark), printable card and `og.jpg` viewed.
+
+## 2026-10-16 · Control systems in the status line, long-term goal stated
+- **Asked by Devin**: write "control systems" rather than "control" (the field covers control engineering and control theory), and state his end goal: digital transformation of the power grid, smart grids and intelligent energy systems.
+- **`profile.yaml`**: `focus` "control" -> "control systems" (Home status line and Home description). Third bio paragraph now states the goal: "My long-term goal is the digital transformation of the power grid: smart grids and intelligent energy systems. That is where my interests meet, from control theory and power system dynamics to machine learning, reinforcement learning and digital twins." The "Direction" block of `chain` now leads with Smart grids, Intelligent energy systems, Digital transformation.
+- **Home**: the About section shows the goal paragraph after "Today I work on...", so the goal is visible without opening About.
+- **About**: contact line "Open to conversations about smart grids, control and intelligent energy systems."
+- **Not changed**: headline and tagline (set on 2026-10-14 and 2026-10-16), CV.
+- **Checks**: check 0 errors; 21 pages; Playwright 95 passed, 5 skipped; `measure.mjs` on Home and About 0 small text, 0 small targets; Home hero and About section (desktop light, phone dark) and About bio and focus tags viewed.

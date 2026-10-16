@@ -10,7 +10,7 @@
   role: Power System Engineer
   org: Lean Power Solutions Indonesia
   # Fields I keep learning across; the Home status line lists them.
-  focus: [power systems, control, power electronics, AI/ML and intelligent systems, cyber-physical energy systems, digitalization, digital twins]
+  focus: [power systems, control systems, power electronics, AI/ML and intelligent systems, cyber-physical energy systems, digitalization, digital twins]
   city: Jakarta
   country: Indonesia
   timezone: Asia/Jakarta
@@ -24,7 +24,7 @@
   bio:
     - "I'm an electrical engineer specializing in control systems. I majored in Electrical Engineering at Universitas Indonesia, concentrating in Control Systems and Automation, and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks."
     - "Today I work on renewable energy and power systems: power system dynamics, power electronics, distributed energy resources, and the controllers that keep generators, batteries and solar plants stable on the grid."
-    - "I'm an AI and digital transformation enthusiast, most interested in applying machine learning, deep learning and reinforcement learning to the intelligent control of energy systems."
+    - "My long-term goal is the digital transformation of the power grid: smart grids and intelligent energy systems. That is where my interests meet, from control theory and power system dynamics to machine learning, reinforcement learning and digital twins."
   # Three blocks of focus areas; About shows their items as "Focus" tags.
   chain:
     - stage: Foundation
@@ -35,4 +35,4 @@
       items: [Renewable energy, Distributed energy resources, Power system dynamics, Power electronics]
     - stage: Direction
       label: Where I'm heading
-      items: [AI · ML · DL · RL, Intelligent control, Digital transformation]
+      items: [Smart grids, Intelligent energy systems, Digital transformation, Intelligent control, AI · ML · DL · RL]
