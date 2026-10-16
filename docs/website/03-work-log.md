@@ -392,3 +392,14 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - **Sharper crops**: zoomed covers were blurry, most visibly on the excitation limiter card (zoom 2.4). The browser picked a file for the card width, then CSS enlarged it. `ProjectCover` now scales `sizes` by how much wider than the card the crop draws the image. New test: each zoomed cover loads a file at least as wide as it is drawn (fails before: 380 px file for 513 px drawn).
 - **Labels**: client cards said "Client work" under the "Client work" heading. Cards now show the theme for all projects ("Grid studies", "Machine models", "Plant controllers", "AI", "IoT"), in the theme colour, matching the filter chips. The project page eyebrow keeps "Client work · theme".
 - **Checks**: check 0 errors; 21 pages; Playwright 95 passed, 5 skipped; `measure.mjs` on Home and Projects 0 small text, 0 small targets; cards viewed on Projects (desktop light and dark) and Home (phone).
+
+## 2026-10-16 · Headline: control systems specialization
+- **Asked by Devin**: say he is an electrical engineer specializing in control systems, and stop repeating "AI" on the name card (it said "Energy & AI" and then "AI & intelligent control").
+- **`profile.yaml`**: `headlineAccent` "Energy & AI" -> "Control Systems"; `tagline` -> "Power systems · Renewable energy · Machine learning". First bio paragraph now opens "I'm an electrical engineer specializing in control systems. I majored in Electrical Engineering at Universitas Indonesia, concentrating in Control Systems and Automation" (facts as on the CV). Third paragraph says "machine learning, deep learning and reinforcement learning" once instead of "AI, machine learning".
+- **About**: intro "An electrical engineer specializing in control systems, from power grids to machine learning."; page description updated.
+- **Follows automatically**: Home hero, page titles, name card, printable card, vCard note.
+- **Link preview**: `og.jpg` regenerated. Its eyebrow is now the location only, so "Electrical Engineer" no longer appears twice.
+- **Layout**: on phones the Home headline wraps before "Control Systems"; the separator dot is clipped at line starts (same method as the Timeline). The name card drops the dot and stacks the accent below 256 px card width (320 px phones).
+- **Also fixed**: "Download QR" and "Print card" on the name card were 18 px tall, now 24 px. `measure.mjs` did not cover the card by default; it does now.
+- **CV**: unchanged. Its summary already says "Power System Engineer specializing in control systems" and "B.Eng. in Electrical Engineering (Control Systems and Automation, Cum Laude)".
+- **Checks**: check 0 errors; 21 pages; Playwright 95 passed, 5 skipped; `measure.mjs` 0 small text and 0 small targets on all 7 default pages; Home (desktop, phone light and dark), name card (390 px light, 320 px dark), printable card and `og.jpg` viewed.

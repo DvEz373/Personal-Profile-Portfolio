@@ -33,7 +33,7 @@ const links = [
         <Photo src={portrait} alt={`Portrait of ${p.name}`} widths={[160, 240]} sizes="96px" ratio="1" eager class="avatar" />
         <h1>{p.name}</h1>
         <p class="role">{p.role} · {p.org}</p>
-        <p class="head">{p.headline} · <span>{p.headlineAccent}</span></p>
+        <p class="head">{p.headline}<span class="sep" aria-hidden="true"> · </span><span class="accent">{p.headlineAccent}</span></p>
       </header>
 
       <a class="btn primary save" href={url("devin-ezekiel-purba.vcf")} download><Icon name="vcard" />Save contact</a>
@@ -160,8 +160,21 @@ const links = [
     font-size: 0.9rem;
     font-weight: 500;
   }
-  .head span {
+  .head .accent {
     color: var(--signal);
+  }
+  /* "Electrical Engineer · Control Systems" needs about 248 px on one line. On narrower cards the
+     accent takes its own line without the dot, instead of leaving "·" at a line end. */
+  .top {
+    container-type: inline-size;
+  }
+  @container (max-width: 255px) {
+    .head .sep {
+      display: none;
+    }
+    .head .accent {
+      display: block;
+    }
   }
   .save {
     width: 100%;
@@ -238,6 +251,8 @@ const links = [
     margin: 0 8px;
   }
   .more a {
+    display: inline-block;
+    padding-block: 3px; /* 24 px tall targets (WCAG 2.2 target size) */
     color: var(--signal);
   }
   .qr {

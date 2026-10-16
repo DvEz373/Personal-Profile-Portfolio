@@ -6,7 +6,7 @@
 import { chromium } from "@playwright/test";
 
 const base = "http://localhost:4321/Personal-Profile-Portfolio/";
-const pages = (process.argv[2] ?? "home,experience/,education/,projects/,skills/,about/").split(",");
+const pages = (process.argv[2] ?? "home,experience/,education/,projects/,skills/,about/,card/").split(",");
 
 const browser = await chromium.launch();
 const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })).newPage();

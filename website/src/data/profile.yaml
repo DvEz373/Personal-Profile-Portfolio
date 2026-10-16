@@ -5,8 +5,8 @@
   familyName: Purba
   initials: DEP
   headline: Electrical Engineer
-  headlineAccent: Energy & AI
-  tagline: Renewable energy · Power systems · AI & intelligent control
+  headlineAccent: Control Systems
+  tagline: Power systems · Renewable energy · Machine learning
   role: Power System Engineer
   org: Lean Power Solutions Indonesia
   # Fields I keep learning across; the Home status line lists them.
@@ -22,9 +22,9 @@
     github: https://github.com/DvEz373
     instagram: https://www.instagram.com/dvn.ezekiel/
   bio:
-    - "I'm an electrical engineer working where energy systems meet intelligent software. My background is in control systems, automation and digitalization: I studied Control Systems and Automation at Universitas Indonesia and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks."
+    - "I'm an electrical engineer specializing in control systems. I majored in Electrical Engineering at Universitas Indonesia, concentrating in Control Systems and Automation, and wrote my thesis on multi-agent reinforcement learning in a digital twin of industrial IoT edge networks."
     - "Today I work on renewable energy and power systems: power system dynamics, power electronics, distributed energy resources, and the controllers that keep generators, batteries and solar plants stable on the grid."
-    - "I'm an AI and digital transformation enthusiast, and I'm most interested in applying AI, machine learning, deep learning and reinforcement learning to intelligent control of energy systems."
+    - "I'm an AI and digital transformation enthusiast, most interested in applying machine learning, deep learning and reinforcement learning to the intelligent control of energy systems."
   # Three blocks of focus areas; About shows their items as "Focus" tags.
   chain:
     - stage: Foundation
