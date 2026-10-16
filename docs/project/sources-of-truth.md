@@ -16,7 +16,7 @@ Every fact about Devin lives in one primary place. Some facts are repeated in a 
 | Field | Shown on |
 |---|---|
 | `name`, `givenNames`, `familyName`, `initials` | Home hero, About, footer, name card, print card, vCard, OG card, page titles and meta tags |
-| `headline`, `headlineAccent`, `tagline` | Home hero, page titles, name card, vCard note, OG card. Today: "Electrical Engineer" · "Control Systems"; tagline "Power systems · Renewable energy · Machine learning". Keep "AI" out of these three: the Skills domain and the bio already carry it, and one phrase per idea reads stronger |
+| `headline`, `headlineAccent`, `tagline` | Home hero, page titles, name card, vCard note, OG card. Today: "Electrical Engineer" · "Control Systems"; tagline "Smart grids · Intelligent energy systems · Machine learning" (his long-term goal). Keep "AI" out of these three: the Skills domain and the bio already carry it, and one phrase per idea reads stronger |
 | `role`, `org` | About "Role" line, name card, print card, vCard `TITLE` / `ORG`. Update when the job changes |
 | `focus` | Home status line ("Learning across ...") and the Home meta description |
 | `city`, `country`, `timezone`, `coordinates` | Hero eyebrow, About, footer clock, vCard address |

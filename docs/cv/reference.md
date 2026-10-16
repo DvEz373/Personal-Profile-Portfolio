@@ -15,7 +15,7 @@ ATS-friendly two-page CV in LaTeX. It is published as `cv.pdf` on the website an
 |---|---|
 | `cv/main.tex` | A4, 10 pt article; inputs the sections in order: title, education, professional experience, projects, certifications, skills |
 | `cv/config.sty` | Margins, ATS settings (`glyphtounicode`, `cmap`, T1 fonts, Latin Modern), `hyperref` metadata and keywords, the two emails (`\personalemail`, `\workemail`, switched by `\UseWorkEmail`), `\newEntry{title}{place}{org}{dates}{body}`, section style |
-| `cv/title.tex` | Name, contact line, summary paragraph |
+| `cv/title.tex` | Name, contact line, summary paragraph (role and specialization, tools, degree, ML background, then the long-term goal: digital transformation of power grids toward smart grids and intelligent energy systems) |
 | `cv/education.tex` | Degree, GPA, concentration, thesis, internship and scholarship |
 | `cv/professional_experience.tex` | Seven entries; the current job has nine STAR bullets |
 | `cv/projects.tex` | Three academic projects with links |
