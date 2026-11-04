@@ -17,7 +17,9 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest moved to 26.04, where Playwright 1.56.1 cannot install Chromium (2026-11-04).
+    # Lift this pin when Playwright is upgraded.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: website

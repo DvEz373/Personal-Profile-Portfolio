@@ -96,4 +96,4 @@ Pages for `shots.mjs` and `measure.mjs` are comma-separated paths; use `home` fo
 
 ## CI
 
-`.github/workflows/website.yml` runs `npm ci`, `npm run check`, `npm run build`, installs Chromium and runs `npm test` on every PR touching `website/`. On failure it uploads the Playwright report for 7 days. On `main` it also compiles the CV and deploys. See [project architecture](../project/architecture.md#build-and-deploy).
+`.github/workflows/website.yml` runs `npm ci`, `npm run check`, `npm run build`, installs Chromium and runs `npm test` on every PR touching `website/`. On failure it uploads the Playwright report for 7 days. On `main` it also compiles the CV and deploys. The build job runs on `ubuntu-24.04`, not `ubuntu-latest`: on Ubuntu 26.04 Playwright 1.56.1 cannot install Chromium (2026-11-04). Lift the pin when Playwright is upgraded. See [project architecture](../project/architecture.md#build-and-deploy).
