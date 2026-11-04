@@ -57,8 +57,13 @@ export function initTimelineAnchors() {
     bar.addEventListener("pointerleave", () => setHot(bar.dataset.target, false));
     bar.addEventListener("focus", () => setHot(bar.dataset.target, true));
     bar.addEventListener("blur", () => setHot(bar.dataset.target, false));
-    // Astro's router handles same-page anchors without a hashchange event.
-    bar.addEventListener("click", () => openById(bar.dataset.target));
+    // Astro's router handles same-page anchors without a hashchange event. Focus moves to the opened
+    // entry, so keyboard and screen reader users land on it instead of on the page body.
+    bar.addEventListener("click", () => {
+      openById(bar.dataset.target);
+      const summary = document.getElementById(bar.dataset.target ?? "")?.querySelector("summary");
+      requestAnimationFrame(() => summary?.focus({ preventScroll: true }));
+    });
   });
   document.querySelectorAll<HTMLElement>("[data-filterable] [data-kind]").forEach((item) => {
     item.addEventListener("pointerenter", () => setHot(item.id, true));

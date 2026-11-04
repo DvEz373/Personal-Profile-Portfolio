@@ -31,7 +31,7 @@ import Icon from "./Icon.astro";
       <button type="button" data-ctl="off" aria-pressed="true">Off</button>
       <button type="button" data-ctl="on" aria-pressed="false">On</button>
     </div>
-    <button class="btn ghost run" type="button" data-run aria-pressed="true"><Icon name="pause" size={16} /><span>Pause</span></button>
+    <button class="btn ghost run" type="button" data-run><Icon name="pause" size={16} /><span>Pause</span></button>
   </div>
   <p class="hint mono" aria-hidden="true">Now switch the controller <b>On</b> and trip again →</p>
   <p class="note label">Toy model · damped second-order response, ζ = 0.08 (off) / 0.55 (on) · for illustration</p>
@@ -162,6 +162,17 @@ import Icon from "./Icon.astro";
   .seg button[data-ctl="on"][aria-pressed="true"] {
     background: var(--leaf-ink);
     color: var(--paper);
+  }
+  /* Forced colours flatten both fills; mark the pressed side with the user's selection colours
+     (forced-color-adjust: none only here, so no Canvas backplate hides the text). */
+  @media (forced-colors: active) {
+    .seg button[aria-pressed="true"],
+    .seg button[data-ctl="on"][aria-pressed="true"] {
+      forced-color-adjust: none;
+      background: SelectedItem;
+      color: SelectedItemText;
+      outline-color: CanvasText;
+    }
   }
   .run {
     margin-left: auto;

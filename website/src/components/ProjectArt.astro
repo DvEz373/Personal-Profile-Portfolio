@@ -61,7 +61,7 @@ const phasor = (k: number) => {
 };
 ---
 
-<svg class:list={["art", tone, cls]} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Illustration for ${category === "ai" ? "an AI" : category === "iot" ? "an IoT" : "an energy"} project`} preserveAspectRatio="xMidYMid slice">
+<svg class:list={["art", tone, cls]} viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
   <defs>
     <pattern id={`g-${id}`} width="20" height="20" patternUnits="userSpaceOnUse">
       <path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-opacity="0.08" stroke-width="1"></path>

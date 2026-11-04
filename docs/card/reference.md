@@ -49,4 +49,6 @@ Everything comes from `website/src/data/profile.yaml` (`name`, `givenNames`, `fa
 
 ## Tests
 
-`website/tests/site.spec.ts`: both card pages load without errors or overflow and pass axe; the card fits a 320 px phone (long contact rows truncate, Copy link and Show QR stack); the card test checks every contact link, the WhatsApp URL, the QR dialog and the SVG download; the vCard test checks the `.vcf` fields.
+`website/tests/site.spec.ts`: both card pages load without errors or overflow and pass axe in light and dark, also with the QR dialog open; the card fits a 320 px phone (Copy link and Show QR stack); the card test checks every contact link, the WhatsApp URL, the QR dialog and the SVG download; the vCard test checks the `.vcf` fields.
+
+Long values wrap instead of ending in "…": the email breaks after the "@" (a `<wbr>`), so the whole address stays readable at 320 px and at 200 % text (WCAG 1.4.10, 1.4.4; audit 2026-11-02). The contact list clips its rounded corners, so the focus ring on its links is drawn inside the row (`outline-offset: -3px`).

@@ -19,13 +19,12 @@ const groups = [
   <section class="wrap" data-filterable>
     <div class="bar">
       <div class="chips" role="group" aria-label="Filter projects by theme">
-        <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">{projects.length}</span></button>
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All{" "}<span class="count">{projects.length}</span></button>
         {
           cats.map((c) => (
             <button class:list={["chip", c.tone]} type="button" data-filter={c.key} aria-pressed="false">
               <i class="dot" aria-hidden="true" />
-              {c.label}
-              <span class="count">{c.n}</span>
+              {c.label}{" "}<span class="count">{c.n}</span>
             </button>
           ))
         }

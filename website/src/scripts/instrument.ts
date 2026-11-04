@@ -127,7 +127,7 @@ export function initInstrument(root: HTMLElement): () => void {
 
   function setRunning(on: boolean) {
     running = on;
-    runBtn.setAttribute("aria-pressed", String(on));
+    // The label says what the button does next; no aria-pressed, which made "Pause, pressed" mean "running".
     runBtn.querySelector("span")!.textContent = on ? "Pause" : "Run";
     out.status.textContent = on ? "● RUN" : "■ STOP";
     out.status.dataset.state = on ? "run" : "stop";

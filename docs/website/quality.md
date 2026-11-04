@@ -29,7 +29,9 @@ Two projects: `desktop` (1280 × 900) and `mobile` (Pixel 7). CI retries once.
 - Loads with status 200 and no page or console errors.
 - No horizontal overflow.
 - No squeezed text and no leftover placeholder words ("placeholder", "image to come", "replace with").
-- No serious or critical axe-core accessibility violations.
+- No axe-core violations of any impact, in the light **and** the dark theme (since 2026-11-04; before, serious and critical only, light only).
+- No unreviewed colour-contrast checks: axe leaves some contrast checks "incomplete" (text over a gradient, an image or a pseudo-element, symbols). Each such node must sit inside an element group on the `CONTRAST_REVIEWED` list in the test file, and each entry states its measured ratio. A new node fails the test until someone measures it (by sampling the rendered pixels) and adds it with the reason. This rule exists because the filter chip counts failed contrast for weeks while axe called them "incomplete" (audit 2026-11-02).
+- One h1 and no skipped heading levels, read from the accessibility tree (`ariaSnapshot`), which is what screen readers list.
 
 **Features**:
 
@@ -38,11 +40,18 @@ Two projects: `desktop` (1280 × 900) and `mobile` (Pixel 7). CI retries once.
 | Content is in the HTML before JavaScript | H1 name; "Power System Engineer" on Experience (update when the job title changes); Open Graph image |
 | Home shows selected work, figures load | Featured cards and figure loading |
 | Case studies state the author's own part | "My part" when `role` is set |
-| Command palette (keyboard, desktop only) and search button | Ctrl K, navigation |
+| Command palette (keyboard, desktop only) and search button | Ctrl K, navigation; the search button's name contains the visible "Ctrl K" (WCAG 2.5.3) |
 | Theme choice survives navigation | `localStorage` theme across `ClientRouter` swaps |
-| Experience filters and career chart | Chips, Gantt bar opens the entry |
+| Experience filters and career chart | Chips, Gantt bar opens the entry, and Enter on a bar moves focus to that entry |
 | Project theme filters | Client and academic work together, counts |
 | Closed phone menu does not block taps (phone only) | `pointer-events` fix from v5 step 10 |
+| No accessibility violations in open states | axe, light and dark, with the command palette open, the phone menu open (phone only), a project filter on, every role open plus a filter, and the name card QR open. The first-load scan never sees these states; one serious violation hid there (2026-11-02) |
+| Forced colours keep the chart and the pressed filter visible | Windows High Contrast emulation: Gantt bars differ from the chart background, dimmed bars keep an edge, the pressed chip differs from the others (2026-11-02) |
+| Filter chips read as label and count | The name is "Internship 2", not "Internship2" |
+| The phone menu comes next in the Tab order (phone only) | Tab after opening reaches the first menu link; Tab past the last link closes the menu and lands on Search (WCAG 2.4.3, 2.4.11) |
+| Project cards are headed links with short names | Each card has one `h3 a`, name 80 characters or less, on Home and Projects |
+| Motion that starts by itself stops within five seconds | With motion allowed, no running clock-driven animation lasts over 5 s (WCAG 2.2.2). Scroll-driven reveals and hover-only art are excluded |
+| `robots.txt` names the sitemap | 200 and a `Sitemap:` line |
 | Lead figures show the whole image | R16 |
 | The datasheet never covers the figures or the story (desktop) | Scrolls a project page at 1280 × 900 and 1920 × 1200 and fails on any overlap of the datasheet with other content (bug found 2026-10-14) |
 | Pages fit a 320 px phone (phone only) | No sideways scroll on Home, Experience, a project page and the name card at 320 px; compares with 320, because a phone browser widens its layout viewport to fit wide content (bug found 2026-10-14) |
@@ -53,10 +62,10 @@ Two projects: `desktop` (1280 × 900) and `mobile` (Pixel 7). CI retries once.
 | Contact card is a valid vCard | `/devin-ezekiel-purba.vcf` fields |
 | CV download name, and the CV and its old address serve a PDF | Download CV links on Home and About point to `/CV_Devin_Ezekiel_Purba.pdf` with `download`; when the build has the CV (`main` only), that file, `/cv.pdf` and `/Personal-Profile-Portfolio/cv.pdf` return a PDF (2026-10-21) |
 | Old links forward to the new pages | `/Personal-Profile-Portfolio/...` (including the printed QR address `/card/`), `/card/` on the new site, a `#fragment`, and the old vCard file (move to the user site, 2026-10-18) |
-| Unknown pages show the 404 page | |
+| Unknown pages show the 404 page | No `canonical` link on it (it pointed at `/404/`, an address that does not exist) |
 | Name card links and scannable QR | Contact links, WhatsApp URL, QR dialog, SVG download |
 
-Last result: 97 passed, 5 skipped (the skips are the device-specific tests on the other project).
+Last result (2026-11-04, cloud session): 159 passed, 9 skipped. The skips are the device-specific tests on the other project, plus the CV PDF test on both projects, because only `main` builds compile the CV. With the CV in the build, expect 161 passed, 7 skipped.
 
 ## Scripts (`website/scripts/`)
 
@@ -68,18 +77,22 @@ Last result: 97 passed, 5 skipped (the skips are the device-specific tests on th
 | `legacy-paths.mjs` | Runs after `astro build` (part of `npm run build`): forwarding pages for every old `/Personal-Profile-Portfolio/` and `/card/` address, and copies of the CV, vCard, QR and preview image at their old paths. Skips itself if `SITE_BASE` is not `/` | `dist/` |
 | `make-og.mjs` | Screenshots `/og-card/` to `public/og.png` (and `og.jpg` with Pillow) | running preview |
 
-Pages for `shots.mjs` and `measure.mjs` are comma-separated paths; use `home` for the home page.
+Pages for `shots.mjs` and `measure.mjs` are comma-separated paths; use `home` for the home page. Like the Playwright config and `make-og.mjs`, both scripts launch the browser from `CHROMIUM_PATH` when it is set (cloud sessions: `CHROMIUM_PATH=/opt/pw-browsers/chromium`).
 
 ## Targets
 
-| Check | Target | Last measured (2026-10-14) |
+| Check | Target | Last measured |
 |---|---|---|
-| Text under 12 px | 0 | 0 on every page |
-| Targets under 24 × 24 px | 0 | 0 |
+| Text under 12 px | 0 | 0 on every page (2026-11-04) |
+| Targets under 24 × 24 px | 0 | 0 (2026-11-04) |
 | Phone touch targets | 44 × 44 px with 8 px gaps | met |
-| Em dashes on the site | 0 | 0 |
-| JavaScript per page | ≤ 40 KB gzip | about 9 to 11 KB |
-| impeccable audit / critique | ≥ 18/20, ≥ 26/32 | 19/20, 25/32 |
+| Em dashes on the site | 0 | 0 (2026-11-04) |
+| JavaScript per page | ≤ 40 KB gzip | 11 to 14 KB as transferred, shared router included (Lighthouse, 2026-11-02) |
+| Accessibility bar | WCAG 2.2 AA | met in Chromium, light and dark, 20 pages and 5 open states (2026-11-04); real screen readers and real Windows High Contrast not yet checked |
+| Text contrast | 4.5:1 (3:1 for large text) | lowest rendered pair 4.97:1 (`--sun-ink` on `--paper`), see [design system](design-system.md#contrast-matrix) |
+| Graphics that carry meaning | 3:1 (WCAG 1.4.11) | Gantt bar edges 4.26:1 or more |
+| Lighthouse lab, mobile, median of 3 | LCP ≤ 2.5 s, CLS ≤ 0.1 | Home 0.90 s, Projects 1.80 s, Experience 0.91 s, a project page 1.58 s; CLS 0; TBT 0 ms; fonts 29 KB (2026-11-04, Lighthouse 13.6, local preview, simulated throttling, not field data) |
+| impeccable audit / critique | ≥ 18/20, ≥ 26/32 | 19/20, 25/32 (2026-10-14) |
 
 ## CI
 

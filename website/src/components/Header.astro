@@ -24,6 +24,12 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     </a>
 
     <nav class="nav" aria-label="Main">
+      <!-- The phone menu button comes right before the links it opens, so Tab and screen readers
+           reach the links next (WCAG 2.4.3). CSS keeps it at the right end of the bar. -->
+      <button class="tool menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <Icon name="menu" size={20} class="i-open" />
+        <Icon name="close" size={20} class="i-close" />
+      </button>
       <ul class="nav-links" id="nav-links" data-nav>
         {
           items.map((item) => (
@@ -38,17 +44,15 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     </nav>
 
     <div class="tools">
-      <button class="tool search" type="button" data-cmdk-open aria-label="Search and quick actions" aria-keyshortcuts="Control+K Meta+K">
+      <!-- No aria-label: the name must contain the visible "Ctrl K" (WCAG 2.5.3). -->
+      <button class="tool search" type="button" data-cmdk-open aria-keyshortcuts="Control+K Meta+K">
         <Icon name="search" size={18} />
+        <span class="visually-hidden">Search and quick actions</span>
         <span class="kbd" data-kbd>Ctrl K</span>
       </button>
       <button class="tool" type="button" data-theme-toggle aria-label="Switch theme">
         <Icon name="moon" size={18} class="i-moon" />
         <Icon name="sun" size={18} class="i-sun" />
-      </button>
-      <button class="tool menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
-        <Icon name="menu" size={20} class="i-open" />
-        <Icon name="close" size={20} class="i-close" />
       </button>
     </div>
   </div>
@@ -221,14 +225,18 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     .search .kbd {
       display: none;
     }
+    .bar {
+      gap: 6px;
+    }
+    /* The nav now holds only the menu button in the bar; it sits after the tools, at the right end. */
     .nav {
+      order: 1;
+      margin: 0;
+    }
+    /* The open list hangs below the header (the sticky header is its containing block). */
+    .nav-links {
       position: absolute;
       inset: var(--header-h) 0 auto 0;
-      margin: 0;
-      /* The closed menu keeps its height; without this its empty box swallows taps on the page below. */
-      pointer-events: none;
-    }
-    .nav-links {
       display: flex;
       visibility: hidden;
       opacity: 0;
@@ -277,6 +285,11 @@ const isActive = (href: string) => route === `/${href}` || route.startsWith(`/${
     }
     .tools {
       margin-left: auto;
+    }
+  }
+  @media (max-width: 859px) and (pointer: coarse) {
+    .bar {
+      gap: 8px;
     }
   }
 </style>

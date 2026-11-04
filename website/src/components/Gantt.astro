@@ -146,6 +146,8 @@ const rows = [...bars].sort((a, b) => yearFraction(a.start) - yearFraction(b.sta
     height: 16px;
     border-radius: 4px;
     background: var(--c);
+    /* The darker edge keeps the light sun bars at 3:1 or more on the panel (WCAG 1.4.11); the fill alone is 2.4:1. */
+    border: 1px solid var(--c-ink);
     opacity: 0.88;
     transition: opacity var(--t-ui) var(--ease), transform var(--t-ui) var(--ease-settle), box-shadow var(--t-ui) var(--ease);
   }
@@ -166,8 +168,21 @@ const rows = [...bars].sort((a, b) => yearFraction(a.start) - yearFraction(b.sta
     transform: scaleY(1.35);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent);
   }
+  /* Filtered out: a pale fill with the same edge, so the bar stays visible (it is still a link). */
   .bar[data-dim] {
-    opacity: 0.18;
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    opacity: 1;
+  }
+  /* Forced colours paint backgrounds as Canvas, which made every bar vanish. System colours are kept. */
+  @media (forced-colors: active) {
+    .bar {
+      background: LinkText;
+      border-color: LinkText;
+      opacity: 1;
+    }
+    .bar[data-dim] {
+      background: Canvas;
+    }
   }
   @media (max-width: 639px) {
     .gantt {

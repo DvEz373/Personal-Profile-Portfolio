@@ -64,6 +64,13 @@ export function initShell() {
     nav.addEventListener("click", (e) => {
       if ((e.target as HTMLElement).closest("a")) setOpen(false);
     });
+    // Close the menu when keyboard focus moves past it, so the open panel never covers
+    // the element that has focus (WCAG 2.4.11). Focus leaving to the browser keeps it open.
+    const region = menuBtn.closest("nav") ?? nav;
+    region.addEventListener("focusout", (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (next && !region.contains(next)) setOpen(false);
+    });
     document.addEventListener(
       "keydown",
       (e) => {

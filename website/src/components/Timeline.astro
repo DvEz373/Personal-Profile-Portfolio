@@ -28,13 +28,12 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
 <div class="timeline" data-filterable>
   <div class="bar">
     <div class="chips" role="group" aria-label={`Filter ${label} by type`}>
-      <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">{items.length}</span></button>
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">All{" "}<span class="count">{items.length}</span></button>
       {
         filters.map((f) => (
           <button class:list={["chip", f.tone]} type="button" data-filter={f.key} aria-pressed="false">
             <i class="dot" aria-hidden="true" />
-            {f.label}
-            <span class="count">{count(f.key)}</span>
+            {f.label}{" "}<span class="count">{count(f.key)}</span>
           </button>
         ))
       }
@@ -197,8 +196,9 @@ const count = (key: string) => items.filter((i) => i.type === key).length;
   .type {
     color: var(--c-ink);
   }
+  /* Empty alt text: the dots are layout, not words, and stay out of the summary's spoken name. */
   .meta > span::before {
-    content: "·";
+    content: "·" / "";
     display: inline-block;
     width: 24px;
     text-align: center;
