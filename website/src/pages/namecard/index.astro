@@ -46,7 +46,8 @@ const links = [
                 <Icon name={l.icon} />
                 <span class="t">
                   <strong>{l.label}</strong>
-                  <span>{l.sub}</span>
+                  {/* A line break opportunity after "@", so a narrow card wraps the email there and not mid-word. */}
+                  <span>{l.sub.includes("@") ? <>{l.sub.slice(0, l.sub.indexOf("@") + 1)}<wbr />{l.sub.slice(l.sub.indexOf("@") + 1)}</> : l.sub}</span>
                 </span>
                 <Icon name="arrow-up-right" class="go" />
               </a>
@@ -205,6 +206,10 @@ const links = [
   .links a:focus-visible {
     background: var(--panel-2);
   }
+  /* The list clips its corners (overflow: hidden), which cut the outer focus ring; draw it inside. */
+  .links a:focus-visible {
+    outline-offset: -3px;
+  }
   .links :global(svg) {
     flex: none;
   }
@@ -218,12 +223,12 @@ const links = [
     font-weight: 600;
     font-size: 0.95rem;
   }
+  /* Long values (the email address) wrap instead of being cut off with "…" on 320 px phones
+     and at 200% text (WCAG 1.4.10, 1.4.4); anywhere-breaks keep the row inside the card. */
   .t span {
     color: var(--ink-2);
     font-size: 0.82rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
   .links :global(.go) {
     color: var(--ink-2);

@@ -47,7 +47,8 @@ const items: Item[] = [
       />
       <span class="kbd">Esc</span>
     </div>
-    <ul id="cmdk-list" role="listbox" aria-label="Results" data-cmdk-list></ul>
+    <!-- tabindex -1: arrow keys in the field move through the results; Chrome 130+ otherwise makes this scroller a Tab stop. -->
+    <ul id="cmdk-list" role="listbox" aria-label="Results" tabindex="-1" data-cmdk-list></ul>
     <p class="empty mono" data-cmdk-empty hidden>No match. Try "projects", "cv" or "email".</p>
     <div class="foot mono"><span><span class="kbd">↑</span> <span class="kbd">↓</span> move</span><span><span class="kbd">Enter</span> open</span><span><span class="kbd">Esc</span> close</span></div>
   </div>
@@ -92,6 +93,10 @@ const items: Item[] = [
     padding: 14px 16px;
     border-bottom: 1px solid var(--line);
     color: var(--ink-2);
+  }
+  /* The field has no outline of its own; this line shows where keyboard focus is (WCAG 2.4.7). */
+  .field:focus-within {
+    box-shadow: inset 0 -2px 0 var(--signal);
   }
   .field input {
     flex: 1;

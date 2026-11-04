@@ -31,176 +31,178 @@ flowchart LR
     n23["og-card.astro"]:::code
     n24["projects/[slug].astro"]:::code
     n25["projects/index.astro"]:::code
-    n26["skills.astro"]:::code
+    n26["robots.txt.ts"]:::code
+    n27["skills.astro"]:::code
   end
   subgraph layouts
-    n27["Bare.astro"]:::code
-    n28["Base.astro"]:::code
+    n28["Bare.astro"]:::code
+    n29["Base.astro"]:::code
   end
   subgraph components
-    n29["CommandPalette.astro"]:::code
-    n30["Footer.astro"]:::code
-    n31["Gantt.astro"]:::code
-    n32["Header.astro"]:::code
-    n33["Icon.astro"]:::code
-    n34["Instrument.astro"]:::code
-    n35["PageHead.astro"]:::code
-    n36["Photo.astro"]:::code
-    n37["ProjectArt.astro"]:::code
-    n38["ProjectCard.astro"]:::code
-    n39["ProjectCover.astro"]:::code
-    n40["Schematic.astro"]:::code
-    n41["SectionHead.astro"]:::code
-    n42["Timeline.astro"]:::code
+    n30["CommandPalette.astro"]:::code
+    n31["Footer.astro"]:::code
+    n32["Gantt.astro"]:::code
+    n33["Header.astro"]:::code
+    n34["Icon.astro"]:::code
+    n35["Instrument.astro"]:::code
+    n36["PageHead.astro"]:::code
+    n37["Photo.astro"]:::code
+    n38["ProjectArt.astro"]:::code
+    n39["ProjectCard.astro"]:::code
+    n40["ProjectCover.astro"]:::code
+    n41["Schematic.astro"]:::code
+    n42["SectionHead.astro"]:::code
+    n43["Timeline.astro"]:::code
   end
   subgraph lib
-    n43["content.ts"]:::code
-    n44["dates.ts"]:::code
-    n45["glossary.ts"]:::code
-    n46["qr.ts"]:::code
-    n47["themes.ts"]:::code
-    n48["transitions.ts"]:::code
-    n49["url.ts"]:::code
+    n44["content.ts"]:::code
+    n45["dates.ts"]:::code
+    n46["glossary.ts"]:::code
+    n47["qr.ts"]:::code
+    n48["themes.ts"]:::code
+    n49["transitions.ts"]:::code
+    n50["url.ts"]:::code
   end
   subgraph scripts
-    n50["cmdk.ts"]:::code
-    n51["filters.ts"]:::code
-    n52["instrument.ts"]:::code
-    n53["shell.ts"]:::code
+    n51["cmdk.ts"]:::code
+    n52["filters.ts"]:::code
+    n53["instrument.ts"]:::code
+    n54["shell.ts"]:::code
   end
   subgraph styles
-    n54["global.css"]:::code
+    n55["global.css"]:::code
   end
-  n55["content.config.ts"]:::data
-  n56[("certifications.yaml")]:::data
-  n57[("education.yaml")]:::data
-  n58[("experience.yaml")]:::data
-  n59[("profile.yaml")]:::data
-  n60[("skills.yaml")]:::data
-  n61[("projects/*.md")]:::data
+  n56["content.config.ts"]:::data
+  n57[("certifications.yaml")]:::data
+  n58[("education.yaml")]:::data
+  n59[("experience.yaml")]:::data
+  n60[("profile.yaml")]:::data
+  n61[("skills.yaml")]:::data
+  n62[("projects/*.md")]:::data
+  n30 --> n34
+  n30 --> n44
+  n30 --> n50
+  n30 --> n51
+  n31 --> n34
+  n31 --> n44
+  n31 --> n45
+  n31 --> n50
+  n32 --> n45
+  n33 --> n34
+  n33 --> n50
+  n35 --> n34
+  n35 --> n53
+  n36 --> n41
+  n38 --> n48
+  n39 --> n40
+  n39 --> n44
+  n39 --> n45
+  n39 --> n50
+  n40 --> n38
+  n40 --> n48
+  n43 --> n50
+  n43 --> n52
+  n56 --> n48
+  n28 --> n44
+  n28 --> n50
+  n28 --> n55
+  n29 --> n30
+  n29 --> n31
   n29 --> n33
-  n29 --> n43
+  n29 --> n44
   n29 --> n49
   n29 --> n50
-  n30 --> n33
-  n30 --> n43
-  n30 --> n44
-  n30 --> n49
-  n31 --> n44
-  n32 --> n33
-  n32 --> n49
-  n34 --> n33
-  n34 --> n52
-  n35 --> n40
-  n37 --> n47
-  n38 --> n39
-  n38 --> n43
-  n38 --> n44
-  n38 --> n49
-  n39 --> n37
-  n39 --> n47
-  n42 --> n49
-  n42 --> n51
-  n55 --> n47
-  n27 --> n43
-  n27 --> n49
-  n27 --> n54
-  n28 --> n29
-  n28 --> n30
-  n28 --> n32
-  n28 --> n43
-  n28 --> n48
-  n28 --> n49
-  n28 --> n53
-  n28 --> n54
-  n43 --> n44
-  n43 --> n47
-  n46 --> n49
-  n14 --> n28
-  n14 --> n49
-  n15 --> n33
-  n15 --> n35
+  n29 --> n54
+  n29 --> n55
+  n44 --> n45
+  n44 --> n48
+  n47 --> n50
+  n14 --> n29
+  n14 --> n50
+  n15 --> n34
   n15 --> n36
-  n15 --> n28
-  n15 --> n43
+  n15 --> n37
+  n15 --> n29
   n15 --> n44
-  n15 --> n49
-  n15 --> n53
-  n16 --> n43
-  n16 --> n49
-  n17 --> n35
+  n15 --> n45
+  n15 --> n50
+  n15 --> n54
+  n16 --> n44
+  n16 --> n50
   n17 --> n36
-  n17 --> n41
+  n17 --> n37
   n17 --> n42
-  n17 --> n28
   n17 --> n43
+  n17 --> n29
   n17 --> n44
-  n18 --> n31
-  n18 --> n35
-  n18 --> n41
+  n17 --> n45
+  n18 --> n32
+  n18 --> n36
   n18 --> n42
-  n18 --> n28
   n18 --> n43
+  n18 --> n29
   n18 --> n44
-  n19 --> n33
+  n18 --> n45
   n19 --> n34
-  n19 --> n36
-  n19 --> n38
-  n19 --> n40
+  n19 --> n35
+  n19 --> n37
+  n19 --> n39
   n19 --> n41
-  n19 --> n28
-  n19 --> n43
-  n19 --> n49
-  n20 --> n46
-  n21 --> n33
-  n21 --> n36
-  n21 --> n27
-  n21 --> n43
-  n21 --> n46
-  n21 --> n49
-  n22 --> n27
-  n22 --> n43
-  n22 --> n46
-  n23 --> n43
-  n23 --> n54
-  n24 --> n33
-  n24 --> n39
+  n19 --> n42
+  n19 --> n29
+  n19 --> n44
+  n19 --> n50
+  n20 --> n47
+  n21 --> n34
+  n21 --> n37
+  n21 --> n28
+  n21 --> n44
+  n21 --> n47
+  n21 --> n50
+  n22 --> n28
+  n22 --> n44
+  n22 --> n47
+  n23 --> n44
+  n23 --> n55
+  n24 --> n34
   n24 --> n40
-  n24 --> n28
-  n24 --> n43
+  n24 --> n41
+  n24 --> n29
   n24 --> n44
   n24 --> n45
-  n24 --> n49
-  n25 --> n35
-  n25 --> n38
-  n25 --> n28
-  n25 --> n43
-  n25 --> n51
-  n26 --> n33
-  n26 --> n35
-  n26 --> n41
-  n26 --> n28
-  n26 --> n43
-  n26 --> n44
-  n50 --> n53
-  n29 -.-> n55
-  n27 -.-> n55
-  n28 -.-> n55
-  n15 -.-> n55
-  n16 -.-> n55
-  n17 -.-> n55
-  n18 -.-> n55
-  n19 -.-> n55
-  n21 -.-> n55
-  n22 -.-> n55
-  n23 -.-> n55
-  n24 -.-> n55
-  n25 -.-> n55
-  n26 -.-> n55
-  n55 -.-> n56
-  n55 -.-> n57
-  n55 -.-> n58
-  n55 -.-> n59
-  n55 -.-> n60
-  n55 -.-> n61
+  n24 --> n46
+  n24 --> n50
+  n25 --> n36
+  n25 --> n39
+  n25 --> n29
+  n25 --> n44
+  n25 --> n52
+  n26 --> n50
+  n27 --> n34
+  n27 --> n36
+  n27 --> n42
+  n27 --> n29
+  n27 --> n44
+  n27 --> n45
+  n51 --> n54
+  n30 -.-> n56
+  n28 -.-> n56
+  n29 -.-> n56
+  n15 -.-> n56
+  n16 -.-> n56
+  n17 -.-> n56
+  n18 -.-> n56
+  n19 -.-> n56
+  n21 -.-> n56
+  n22 -.-> n56
+  n23 -.-> n56
+  n24 -.-> n56
+  n25 -.-> n56
+  n27 -.-> n56
+  n56 -.-> n57
+  n56 -.-> n58
+  n56 -.-> n59
+  n56 -.-> n60
+  n56 -.-> n61
+  n56 -.-> n62
 ```

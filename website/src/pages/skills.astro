@@ -187,6 +187,18 @@ const tone = (c: string) => `c-${c}`;
       opacity: 0.2;
     }
   }
+  /* Forced colours paint the segments as Canvas and the meter vanished (the level word stays).
+     Outline every segment and fill the lit ones with the text colour. */
+  @media (forced-colors: active) {
+    .meter i,
+    .pips i {
+      border: 1px solid CanvasText;
+    }
+    .meter i.on,
+    .pips i.on {
+      background: CanvasText;
+    }
+  }
   .certs {
     list-style: none;
     margin: 0;

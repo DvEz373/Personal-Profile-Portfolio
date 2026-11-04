@@ -17,7 +17,7 @@ const variants = [
 ];
 
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch();
+const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let failed = false;
 for (const { tag, ...options } of variants) {
   const context = await browser.newContext({ ...options, deviceScaleFactor: 1 });

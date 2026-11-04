@@ -9,7 +9,7 @@ covers: [website/src/pages/, website/src/layouts/, website/src/components/, webs
 
 Astro 7 static site with TypeScript. Every page is pre-rendered at build time; the browser gets HTML, one CSS file and small scripts. For the content files see [content-model.md](content-model.md), for tokens and visual rules [design-system.md](design-system.md), for tests and scripts [quality.md](quality.md).
 
-## Routes (21 pages and 2 files)
+## Routes (21 pages and 3 files)
 
 | Route | Source | Layout | Notes |
 |---|---|---|---|
@@ -26,6 +26,7 @@ Astro 7 static site with TypeScript. Every page is pre-rendered at build time; t
 | `/namecard/print/` | `pages/namecard/print.astro` | Bare | Print layout; not in the sitemap |
 | `/namecard-qr.svg` | `pages/namecard-qr.svg.ts` | endpoint | Vector QR of the card URL |
 | `/devin-ezekiel-purba.vcf` | `pages/devin-ezekiel-purba.vcf.ts` | endpoint | vCard 3.0 from `profile.yaml` |
+| `/robots.txt` | `pages/robots.txt.ts` | endpoint | Allows all crawling and names `sitemap-index.xml`, built from `site` (2026-11-04) |
 
 `public/` adds `favicon.svg`, `og.jpg` and, on `main` builds only, the CV as `CV_Devin_Ezekiel_Purba.pdf` (`scripts/legacy-paths.mjs` copies it to `/cv.pdf` for old links; the file name comes from `CV_FILE` in `src/lib/content.ts`).
 
@@ -33,26 +34,26 @@ Astro 7 static site with TypeScript. Every page is pre-rendered at build time; t
 
 | Layout | Used by | Provides |
 |---|---|---|
-| `layouts/Base.astro` | All main pages | Head (title, description, canonical, Open Graph, fonts), `ClientRouter` transitions, `Header`, `Footer` (with optional contact band), `CommandPalette`, theme bootstrap, `initShell()` |
+| `layouts/Base.astro` | All main pages | Head (title, description, canonical, Open Graph, fonts), `ClientRouter` transitions, `Header`, `Footer` (with optional contact band), `CommandPalette`, theme bootstrap, `initShell()`. Prop `canonical={false}` drops the canonical link (404 page). Only the upright Geist face is preloaded; italic loads when a page uses it |
 | `layouts/Bare.astro` | Card pages | Minimal head with Open Graph, `noindex` option, no header or footer |
 
 ## Components
 
 | Component | Role |
 |---|---|
-| `Header` | Brand, nav (Experience, Education, Projects, Skills, About), search button, theme toggle, phone menu |
+| `Header` | Brand, nav (Experience, Education, Projects, Skills, About), search button, theme toggle, phone menu. The phone menu button sits inside `<nav>`, right before the links it opens, so Tab and screen readers reach the links next; CSS keeps it at the right end of the bar. The search button's name is "Search and quick actions" plus the visible key hint |
 | `Footer` | Contact band, page and document links, Jakarta clock, "Updated <build date>" |
-| `CommandPalette` | Ctrl/⌘ K palette of pages, projects, roles and actions; data built at build time, behaviour in `scripts/cmdk.ts` |
+| `CommandPalette` | Ctrl/⌘ K palette of pages, projects, roles and actions; data built at build time, behaviour in `scripts/cmdk.ts`. The results list has `tabindex="-1"` (arrow keys in the field move through it); a `--signal` line marks the focused field |
 | `PageHead` | Page H1, intro and a `Schematic` ornament |
 | `SectionHead` | Section H2 with an optional note |
 | `Photo` | Responsive `<Picture>` (AVIF/WebP) with optional caption |
-| `ProjectCard` | Card on Home and Projects: cover, theme label (in the theme tone), year, title, blurb, stack |
+| `ProjectCard` | Card on Home and Projects: cover, theme label (in the theme tone), year, title, blurb, stack. An `<article>` whose `h3` title holds the only link; the link's `::after` covers the card, so the whole card is clickable and draws the focus ring, while the link's name is just the title. Category and year come after the title in the markup and show above it (`order: -1`) |
 | `ProjectCover` | First figure cropped by `coverFocus` / `coverZoom` on cards, else `ProjectArt`. Scales `sizes` by how much wider than the card a crop draws the image, so the browser loads a sharp file |
-| `ProjectArt` | Seeded SVG illustration by domain (energy, AI, IoT) for projects without figures |
+| `ProjectArt` | Seeded SVG illustration by domain (energy, AI, IoT) for projects without figures. Decorative: `aria-hidden` |
 | `Schematic` | Decorative SVG ornaments (grid, turbine, solar, neural, circuit) |
 | `Timeline` | Filterable, expandable entries for Experience and Education |
-| `Gantt` | Career chart; each bar opens its timeline entry |
-| `Instrument` | Home demo: grid frequency after a generator trip, controller on/off; behaviour in `scripts/instrument.ts` |
+| `Gantt` | Career chart; each bar opens its timeline entry and moves focus to it. Bars carry a `--c-ink` edge; forced colours draw them in `LinkText` |
+| `Instrument` | Home demo: grid frequency after a generator trip, controller on/off (`aria-pressed`); Pause/Run says what it does next (no `aria-pressed`); behaviour in `scripts/instrument.ts` |
 | `Icon` | Inline SVG icon set |
 
 ## Libraries (`src/lib/`)
@@ -73,9 +74,9 @@ All run on `astro:page-load`, so they work after client-side navigation, and the
 
 | Script | Loaded by | Does |
 |---|---|---|
-| `shell.ts` | `Base.astro` | Theme toggle and memory, phone menu, header state, Jakarta clock, `toast()` |
+| `shell.ts` | `Base.astro` | Theme toggle and memory, phone menu (Escape closes it and returns focus; it also closes when focus moves past it), header state, Jakarta clock, `toast()` |
 | `cmdk.ts` | `CommandPalette.astro` | Palette open/close, search, keyboard navigation (WAI-ARIA combobox) |
-| `filters.ts` | `Timeline.astro`, `projects/index.astro` | Filter chips with counts, anchor opening of timeline entries |
+| `filters.ts` | `Timeline.astro`, `projects/index.astro` | Filter chips with counts, anchor opening of timeline entries, focus to the entry a Gantt bar opens |
 | `instrument.ts` | `Instrument.astro` | Damped second-order frequency model, canvas drawing, reduced-motion still frames |
 
 ## Build configuration

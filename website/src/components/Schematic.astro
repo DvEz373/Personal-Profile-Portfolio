@@ -118,15 +118,19 @@ const { variant } = Astro.props;
   .sun-art {
     stroke: var(--sun);
   }
+  /* Motion that starts by itself stops within 5 s (WCAG 2.2.2 Pause, Stop, Hide): the flow runs three
+     cycles, and each turbine coasts down through one third of a turn, which looks the same as the start
+     (three blades). The first speed matches the old 9 s per turn. */
   @media (prefers-reduced-motion: no-preference) {
     .flow {
-      animation: flow 1.6s linear infinite;
+      animation: flow 1.6s linear 3;
     }
     .blades {
-      animation: spin 9s linear infinite;
+      animation: coast 4.8s cubic-bezier(0.3, 0.5, 0.4, 1) both;
     }
     .blades.slow {
-      animation-duration: 13s;
+      animation-duration: 4.2s;
+      animation-delay: 0.6s;
     }
   }
   @keyframes flow {
@@ -134,9 +138,9 @@ const { variant } = Astro.props;
       stroke-dashoffset: -24;
     }
   }
-  @keyframes spin {
+  @keyframes coast {
     to {
-      transform: rotate(360deg);
+      transform: rotate(120deg);
     }
   }
   @media (max-width: 759px) {

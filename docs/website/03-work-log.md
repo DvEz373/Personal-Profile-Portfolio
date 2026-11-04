@@ -436,3 +436,51 @@ Research in `docs/card/01-research.md`, build notes in `docs/card/02-build.md` (
 - **Tests**: two new Playwright tests. The Download CV links on Home and About point to the new file with `download`; on builds that have the CV, the new file and both old addresses serve a PDF (skipped on PR builds, which do not compile the CV).
 - **Docs**: CV reference, project overview, system architecture, website architecture, sources of truth, quality, environments, website README, decisions (D12), graph.
 - **Checks** (Windows PC): check 0 errors; 21 pages plus 22 forwarding pages and 5 file copies; Playwright 101 passed, 5 skipped (Chromium 153 through `CHROMIUM_PATH`; the Playwright browser download hung on this PC); `node scripts/graph.mjs --check` up to date.
+
+## 2026-11-04 · Accessibility audit and fixes (WCAG 2.2 AA)
+
+- **Asked by Devin**: audit the site past the basic checklist (structure, keyboard, contrast, speed), report, then fix after approval. Approved: the whole patch, motion option (a) "stop within 5 s", card option A "heading with a stretched link".
+- **Audit, 2026-11-02** (Chromium, axe-core 4.13, Lighthouse 13.6, pixel sampling; 20 pages, light and dark, 1280 px, Pixel 7 and 320 px; scripts and screenshots kept out of the repository):
+  - **Phone menu**: the links came before the menu button in the markup, so after opening the menu Tab went into the page behind it. On 12 of 18 pages the focused element was fully hidden under the open menu (WCAG 2.4.11, 2.4.3).
+  - **Chip counts**: 3.49:1 (light) and 4.14:1 (dark) at 12 px (WCAG 1.4.3). axe had filed them as "incomplete", which the test ignored. All 246 incomplete nodes were resolved by pixel sampling: 190 pass, 36 fail (the counts), 6 decorative.
+  - **Gantt bars**: light sun bars 2.39:1, bars dimmed by a filter 1.2 to 1.5:1 (WCAG 1.4.11).
+  - **Windows High Contrast**: the career chart was empty; pressed filters and the demo's Off/On looked the same.
+  - **Smaller**:
+    - decorative project art read as "Illustration for an AI project";
+    - name card email cut off at 320 px;
+    - search button name without its visible "Ctrl K";
+    - chip names "Internship2";
+    - a stray "·" at the start of timeline entries;
+    - Gantt activation left focus on the page body;
+    - "Pause, pressed" while running;
+    - decorative loops that never stopped (WCAG 2.2.2);
+    - a 404 canonical pointing at `/404/`;
+    - no `robots.txt`;
+    - the italic font preloaded on every page (used once).
+  - **Rejected with evidence**:
+    - "the sticky header hides focus on Shift+Tab" was caused by the test pressing End (Chromium animates keyboard scrolling): 0 of 507 stops hidden without it;
+    - the skip link sat off-screen only for one frame (0.01 ms reduced-motion transition).
+- **Fixes**:
+  - **Header**: menu button moved into `<nav>` before the links (same place on screen); `shell.ts` closes the menu when focus moves past it.
+  - **Filter chips**: count without opacity (7.25:1 / 7.13:1) and a real space before it.
+  - **Gantt**: a 1 px `--c-ink` edge on bars (4.26:1 or more); dimmed bars as an 18 % fill with the edge.
+  - **Forced colours**: `LinkText` bars; `SelectedItem` pressed chips and controller button (`forced-color-adjust: none` only there; without it a backplate hid the text); outlined Skills segments.
+  - **`ProjectArt`**: `aria-hidden`.
+  - **`ProjectCard`**: `<article>` with an `h3` title link stretched over the card. Names went from 179 to 275 characters to the title alone; Projects gained 11 headings (decision A13).
+  - **Timeline**: dots get empty alt text; Enter on a Gantt bar focuses the entry.
+  - **Name card**: the email wraps after "@"; inset focus ring.
+  - **Palette**: results list not a Tab stop; a `--signal` line on the focused field.
+  - **Pause/Run**: no `aria-pressed`.
+  - **Motion**: live dot 2 pulses, header flow 3 cycles, turbines coast a third of a turn; everything stops within 4.8 s (decision A14).
+  - **Head and routes**: no canonical on the 404 page; `robots.txt` endpoint with the sitemap; only the upright font preloaded.
+  - **Scripts**: `measure.mjs` and `shots.mjs` read `CHROMIUM_PATH`.
+- **Tests**: axe in light and dark at any impact, with a reviewed list for "incomplete" contrast nodes; heading outline per page; axe in 5 open states; forced colours; phone menu Tab order; chip names; card names; Gantt focus; motion under 5 s; `robots.txt`; 404 canonical. Run against the old build, 22 of them failed, and 6 more desktop scans after the reviewed list was tightened.
+- **Docs**: quality (tests, targets), design system (contrast matrix, forced colours, focus, motion), website architecture, card reference, decisions A12 to A14, CLAUDE.md and runbook test counts, graph.
+- **Checks**:
+  - check 0 errors; 21 pages;
+  - Playwright 159 passed, 9 skipped (cloud; no CV in the build);
+  - `measure.mjs` 0 small text, 0 small targets, 0 em dashes;
+  - Lighthouse mobile medians: Home 0.90 s, Projects 1.80 s (was 1.95 s), a project page 1.58 s (was 1.73 s), fonts 60 KB → 29 KB;
+  - before/after screenshots viewed (light, dark, phone, 320 px, forced colours) and a design critique with no regressions;
+  - `node scripts/graph.mjs --check` up to date.
+- **Not checked here**: real screen readers (VoiceOver, NVDA), Firefox and Safari, real Windows High Contrast in Edge, field data (PageSpeed Insights). The network policy blocked the live site and the W3C and Google pages, so the 2.2.2, 2.4.11 and 2.5.3 readings rest on secondary sources.

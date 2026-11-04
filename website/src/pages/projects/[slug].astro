@@ -52,7 +52,7 @@ const art = { energy: "grid", ai: "neural", iot: "circuit" } as const;
 
     <div class="wrap layout">
       <div class="main">
-      <figure class="lead">
+      <figure class="lead" aria-hidden={cover ? undefined : "true"}>
         <div class:list={["figure", { fit: cover }]} transition:name={`fig-${entry.id}`}>
           <ProjectCover id={entry.id} category={p.category} figure={cover} sizes="(min-width: 960px) 760px, 100vw" eager />
         </div>

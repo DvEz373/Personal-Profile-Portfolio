@@ -27,7 +27,7 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 | Node type | Count |
 |---|---|
 | `doc` | 32 |
-| `route` | 23 |
+| `route` | 24 |
 | `dir` | 21 |
 | `asset` | 20 |
 | `decision` | 15 |
@@ -46,8 +46,8 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 | `product` | 4 |
 | `client-script` | 4 |
 | `workflow` | 3 |
+| `endpoint` | 3 |
 | `layout` | 2 |
-| `endpoint` | 2 |
 | `graph-data` | 1 |
 | `host` | 1 |
 | `schema` | 1 |
@@ -56,18 +56,18 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 
 | Edge type | Count | Meaning |
 |---|---|---|
-| `imports` | 128 | Code import (file or npm package) |
-| `links` | 124 | Doc links to a file or folder |
+| `imports` | 130 | Code import (file or npm package) |
+| `links` | 127 | Doc links to a file or folder |
 | `documents` | 76 | Doc explains a file or folder (front matter covers) |
-| `built_from` | 31 | Output made from a source |
+| `built_from` | 32 | Output made from a source |
 | `affects` | 26 | Decision shaped a path |
 | `governs` | 26 | Rule applies to a path |
 | `explained_in` | 25 | Rule or decision is explained in a doc |
-| `renders` | 23 | Page or endpoint produces a route |
+| `renders` | 24 | Page or endpoint produces a route |
 | `uses_asset` | 21 | Uses an image |
 | `reads` | 20 | Code reads a content collection |
 | `loads` | 16 | Collection loads a data or content file |
-| `tests` | 13 | Test visits a route |
+| `tests` | 14 | Test visits a route |
 | `feeds` | 11 | Project file supplies a project route |
 | `syncs_with` | 11 | Same facts in two files that do not read each other |
 | `superseded_by` | 8 | History doc replaced by a reference doc |
@@ -77,7 +77,7 @@ grep '"website/src/lib/url.ts"' docs/graph/graph.json   # raw lines, one node or
 
 ## Coverage
 
-84 of 84 code, data, config and CI files are explained by a reference doc (front matter `covers`). `--check` fails on any file that is not.
+85 of 85 code, data, config and CI files are explained by a reference doc (front matter `covers`). `--check` fails on any file that is not.
 
 ## Products and outputs
 
@@ -129,7 +129,7 @@ flowchart LR
   classDef out fill:#fbf1cf,stroke:#8a6300,color:#12161c
   classDef prod fill:#12161c,stroke:#12161c,color:#ffffff
   classDef ext fill:#ffffff,stroke:#aeb8c3,color:#4c5866
-  pages["pages (11 + 2 endpoints)"]:::code
+  pages["pages (11 + 3 endpoints)"]:::code
   layouts["layouts"]:::code
   components["components"]:::code
   lib["lib"]:::code
@@ -160,8 +160,8 @@ flowchart LR
   pages -->|14| collections
   pages -->|27| components
   pages -->|10| layouts
-  pages -->|26| lib
-  pages -->|4| packages
+  pages -->|27| lib
+  pages -->|5| packages
   pages -->|2| scripts
   pages -->|1| styles
   schema -->|1| lib

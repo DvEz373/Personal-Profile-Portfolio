@@ -3,6 +3,38 @@ import AxeBuilder from "@axe-core/playwright";
 
 const pages = ["", "experience/", "education/", "projects/", "projects/sonodirect/", "projects/tw-fault-locator/", "skills/", "about/", "namecard/", "namecard/print/"];
 
+// axe marks some colour-contrast checks "incomplete": it cannot decide them (text over a gradient or an image,
+// symbols, one-character text). Each kind below was resolved by sampling the rendered pixels in both themes
+// (accessibility audit, 2026-11-02). A node outside this list fails the test until someone measures it and adds it.
+const CONTRAST_REVIEWED: { within: string; why: string }[] = [
+  { within: ".schematic", why: "text inside the decorative ornament (aria-hidden): incidental, exempt from WCAG 1.4.3" },
+  { within: ".page-head, .hero, .project > .head", why: "text over the 7% drafting grid: 4.97:1 or more (caveat in --sun-ink), the rest 6.2:1 or more" },
+  { within: ".card", why: "card text next to the cover image: 5.43:1 or more" },
+  { within: "[aria-hidden='true']", why: "arrows and chart axis labels: 6.0:1 or more" },
+  { within: "[data-shown]", why: "'Showing n of m' on the page background: 6.64:1 or more" },
+  { within: ".photo .tag-label", why: "label on its dark plate over the photo: 11.6:1" },
+  { within: ".site-header", why: "header text on its 82% paper backdrop: 4.54:1 or more over the darkest content" },
+  { within: ".scale", why: "Skills legend text beside the pips: 6.64:1 or more" },
+  { within: ".cmdk .kbd", why: "key caps in the palette footer: 7.1:1 or more" },
+  { within: ".project .spec", why: "datasheet label on the panel beside the lead figure: 7.13:1 or more" },
+];
+
+async function axeFindings(page: Page, impacts = ["minor", "moderate", "serious", "critical"]) {
+  const results = await new AxeBuilder({ page }).analyze();
+  const violations = results.violations.filter((v) => impacts.includes(v.impact ?? "")).map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`);
+  const unreviewed: string[] = [];
+  for (const n of results.incomplete.find((r) => r.id === "color-contrast")?.nodes ?? []) {
+    const target = String(n.target[0]);
+    const known = await page
+      .locator(target)
+      .first()
+      .evaluate((el, list) => list.some((s) => el.closest(s)), CONTRAST_REVIEWED.map((r) => r.within))
+      .catch(() => false);
+    if (!known) unreviewed.push(target);
+  }
+  return { violations, unreviewed };
+}
+
 function collectErrors(page: Page) {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -41,13 +73,134 @@ for (const path of pages) {
     expect(text).not.toMatch(/placeholder|image to come|replace with/i);
   });
 
-  test(`page /${path} has no serious accessibility violations`, async ({ page }) => {
+  for (const scheme of ["light", "dark"] as const) {
+    test(`page /${path} has no accessibility violations and no unreviewed contrast checks (${scheme})`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: scheme });
+      await page.goto(path);
+      const { violations, unreviewed } = await axeFindings(page);
+      expect(violations).toEqual([]);
+      expect(unreviewed, "incomplete colour-contrast nodes not in CONTRAST_REVIEWED").toEqual([]);
+    });
+  }
+
+  test(`page /${path} has one h1 and no skipped heading levels`, async ({ page }) => {
     await page.goto(path);
-    const results = await new AxeBuilder({ page }).analyze();
-    const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
-    expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
+    // Read the accessibility tree, which is what screen readers list, not the raw DOM.
+    const levels = [...(await page.locator("body").ariaSnapshot()).matchAll(/- heading ".*?" \[level=(\d)\]/g)].map((m) => Number(m[1]));
+    expect(levels.filter((l) => l === 1)).toHaveLength(1);
+    levels.forEach((l, i) => expect(l, `heading ${i + 1} jumps from h${levels[i - 1]} to h${l}`).toBeLessThanOrEqual((levels[i - 1] ?? 0) + 1));
   });
 }
+
+// States a first-load scan never sees (the scan above only checks pages as they load).
+const openStates: { name: string; path: string; phone?: boolean; open: (page: Page) => Promise<unknown> }[] = [
+  { name: "command palette open", path: "", open: (page) => page.locator("header [data-cmdk-open]").click() },
+  { name: "phone menu open", path: "skills/", phone: true, open: (page) => page.locator("[data-menu-toggle]").click() },
+  { name: "project filter applied", path: "projects/", open: (page) => page.locator('[data-filter="ai"]').click() },
+  {
+    name: "every role open and a filter applied",
+    path: "experience/",
+    open: async (page) => {
+      await page.locator("details:not([open]) > summary").evaluateAll((s) => s.forEach((el) => (el.parentElement as HTMLDetailsElement).open = true));
+      await page.locator('[data-filter="internship"]').click();
+    },
+  },
+  { name: "name card QR open", path: "namecard/", open: (page) => page.getByRole("button", { name: "Show QR" }).click() },
+];
+for (const state of openStates) {
+  test(`no accessibility violations with the ${state.name}`, async ({ page }, info) => {
+    test.skip(state.phone === true && info.project.name !== "mobile", "phone layout only");
+    for (const scheme of ["light", "dark"] as const) {
+      await page.emulateMedia({ colorScheme: scheme });
+      await page.goto(state.path);
+      await state.open(page);
+      await page.waitForTimeout(450); // let open and filter transitions finish
+      const { violations, unreviewed } = await axeFindings(page);
+      expect(violations, scheme).toEqual([]);
+      expect(unreviewed, scheme).toEqual([]);
+    }
+  });
+}
+
+test("forced colours keep the career chart and the pressed filter visible", async ({ page }) => {
+  // Windows High Contrast paints author backgrounds as Canvas; the bars and the pressed state were lost (2026-11-02).
+  await page.emulateMedia({ forcedColors: "active" });
+  await page.goto("experience/");
+  await page.locator('[data-filter="internship"]').click();
+  await page.waitForTimeout(350);
+  const v = await page.evaluate(() => {
+    const css = (sel: string) => getComputedStyle(document.querySelector(sel)!);
+    return {
+      chart: css(".gantt").backgroundColor,
+      bar: css(".gantt .bar:not([data-dim])").backgroundColor,
+      dimEdge: parseFloat(css(".gantt .bar[data-dim]").borderTopWidth),
+      pressed: css('.chip[aria-pressed="true"]').backgroundColor,
+      unpressed: css('.chip[aria-pressed="false"]').backgroundColor,
+    };
+  });
+  expect(v.bar).not.toBe(v.chart);
+  expect(v.dimEdge).toBeGreaterThan(0);
+  expect(v.pressed).not.toBe(v.unpressed);
+});
+
+test("filter chips read as label and count", async ({ page }) => {
+  await page.goto("experience/");
+  // The count used to join the label in the spoken name ("Internship2").
+  await expect(page.getByRole("button", { name: "Internship 2", exact: true })).toHaveCount(1);
+});
+
+test("the phone menu comes next in the Tab order and closes when focus moves on", async ({ page }, info) => {
+  test.skip(info.project.name !== "mobile", "phone layout only");
+  // The links used to come before the button, so Tab went behind the open menu (WCAG 2.4.3, 2.4.11; 2026-11-02).
+  await page.goto("projects/");
+  const button = page.locator("[data-menu-toggle]");
+  await button.focus();
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Tab");
+  await expect(page.locator("[data-nav] a").first()).toBeFocused();
+  const links = await page.locator("[data-nav] a").count();
+  for (let i = 1; i < links; i++) await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(button).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator("header [data-cmdk-open]")).toBeFocused();
+});
+
+test("project cards are headed links with short names", async ({ page }) => {
+  for (const path of ["", "projects/"]) {
+    await page.goto(path);
+    const cards = page.locator(".card");
+    expect(await cards.count()).toBeGreaterThanOrEqual(4);
+    for (const card of await cards.all()) {
+      const link = card.locator("h3 a");
+      await expect(link).toHaveCount(1);
+      // The whole card used to be one link whose name ran to 280 characters.
+      expect((await link.innerText()).length, `/${path}`).toBeLessThanOrEqual(80);
+    }
+  }
+});
+
+test("motion that starts by itself stops within five seconds", async ({ page }) => {
+  // WCAG 2.2.2: the live dot and the header ornaments used to loop forever (2026-11-04).
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  for (const path of ["", "experience/", "projects/sonodirect/", "skills/"]) {
+    await page.goto(path);
+    const endless = await page.evaluate(() =>
+      document
+        .getAnimations()
+        // Only clock-driven, running animations: scroll-driven reveals and hover-only art are not automatic.
+        .filter((a) => a.timeline === document.timeline && a.playState === "running")
+        .filter((a) => Number(a.effect?.getComputedTiming().endTime) > 5000)
+        .map((a) => `${(a as CSSAnimation).animationName ?? "?"} on ${(a.effect as KeyframeEffect).target?.getAttribute("class")}`),
+    );
+    expect(endless, `/${path}`).toEqual([]);
+  }
+});
+
+test("robots.txt allows crawling and names the sitemap", async ({ request }) => {
+  const res = await request.get("robots.txt");
+  expect(res.status()).toBe(200);
+  expect(await res.text()).toMatch(/^Sitemap: https?:\/\/\S+\/sitemap-index\.xml$/m);
+});
 
 test("content is in the HTML before any JavaScript runs", async ({ request }) => {
   const html = await (await request.get("")).text();
@@ -91,8 +244,11 @@ test("command palette opens with the keyboard and navigates", async ({ page, isM
   await expect(page.locator("h1")).toHaveText("SonoDirect");
 });
 
-test("search button opens the palette", async ({ page }) => {
+test("search button opens the palette", async ({ page, isMobile }) => {
   await page.goto("");
+  // The name contains the visible "Ctrl K" (WCAG 2.5.3 Label in Name); phones hide the key hint.
+  const name = isMobile ? "Search and quick actions" : "Search and quick actions Ctrl K";
+  await expect(page.getByRole("button", { name, exact: true })).toHaveCount(1);
   await page.locator("header [data-cmdk-open]").click();
   await expect(page.locator("[data-cmdk]")).toHaveAttribute("open", "");
   await expect(page.locator("[data-cmdk-list] [role=option]").first()).toBeVisible();
@@ -115,6 +271,10 @@ test("experience filters and the career chart work", async ({ page }) => {
   await page.locator('[data-filter="all"]').click();
   await page.locator('.bar[data-target="teep-ntust"]').click();
   await expect(page.locator("#teep-ntust details")).toHaveAttribute("open", "");
+  // Focus lands on the opened role, not on the page body (2026-11-02).
+  await page.locator('.bar[data-target="teep-ntust"]').focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#teep-ntust summary")).toBeFocused();
 });
 
 test("project theme filters show client and academic work together", async ({ page }) => {
@@ -189,7 +349,7 @@ test("zoomed card covers load an image wide enough to stay sharp", async ({ page
       const cover = Math.max(el.offsetWidth, (el.offsetHeight * el.naturalWidth) / el.naturalHeight);
       return [el.naturalWidth, cover * zoom];
     });
-    const href = await img.evaluate((el) => el.closest("a")?.getAttribute("href") ?? "");
+    const href = await img.evaluate((el) => el.closest(".card")?.querySelector("a")?.getAttribute("href") ?? "");
     expect(natural, href).toBeGreaterThanOrEqual(drawn * 0.95);
   }
 });
@@ -295,6 +455,8 @@ test("unknown pages show the 404 page", async ({ page }) => {
   const res = await page.goto("no-such-page/");
   expect(res?.status()).toBe(404);
   await expect(page.locator("h1")).toHaveText("This page isn't connected.");
+  // A canonical here pointed at /404/, an address that does not exist.
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
 });
 
 test("name card links contact routes and shows a scannable QR", async ({ page, request }) => {

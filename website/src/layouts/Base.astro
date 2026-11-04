@@ -17,9 +17,11 @@ interface Props {
   image?: string;
   /** Show the contact band above the footer links. About has its own contact list. */
   contact?: boolean;
+  /** Emit <link rel="canonical">. Off on the 404 page, whose own address is not a real page. */
+  canonical?: boolean;
 }
 
-const { title, description, image = "og.jpg", contact = true } = Astro.props;
+const { title, description, image = "og.jpg", contact = true, canonical: withCanonical = true } = Astro.props;
 const profile = await getProfile();
 const fullTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.headline}, ${profile.headlineAccent}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -33,7 +35,7 @@ const ogImage = new URL(url(image), Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {withCanonical && <link rel="canonical" href={canonical} />}
     <meta name="author" content={profile.name} />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:type" content="profile" />
@@ -52,7 +54,8 @@ const ogImage = new URL(url(image), Astro.site);
     <meta name="theme-color" content="#0c0f14" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href={url("favicon.svg")} type="image/svg+xml" />
     <link rel="sitemap" href={url("sitemap-index.xml")} />
-    <Font cssVariable="--font-sans" preload />
+    <!-- Preload the upright face only: italic appears once on the whole site, below the fold, and loads on demand. -->
+    <Font cssVariable="--font-sans" preload={[{ style: "normal" }]} />
     <script is:inline>
       // Set the theme before first paint, and again after each client-side navigation.
       (function () {
